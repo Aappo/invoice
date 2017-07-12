@@ -1,3 +1,0 @@
-export const TOP_LOAD_START = 'TOP_LOAD_START';
-export const TOP_LOAD_SUCCESS = 'TOP_LOAD_SUCCESS';
-export const TOP_LOAD_ERROR = 'TOP_LOAD_ERROR';

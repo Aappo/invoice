@@ -1,3 +1,0 @@
-export const UOMS_LOAD_START = 'UOMS_LOAD_START';
-export const UOMS_LOAD_SUCCESS = 'UOMS_LOAD_SUCCESS';
-export const UOMS_LOAD_ERROR = 'UOMS_LOAD_ERROR';

@@ -20,7 +20,7 @@ describe("invoice approval flow", () => {
   describe("available transitions", () => {
 
     it("inspectionRequired", (done) => {
-      const invoice = { status: 'inspectionRequired' };
+      const invoice = { statusId: 'inspectionRequired' };
       machine.availableTransitions({ object: invoice }).then(({ transitions }) => {
         transitions.forEach((transition) => {
           assert(['inspect', 'sendToClarification'].includes(transition.event));
@@ -30,7 +30,7 @@ describe("invoice approval flow", () => {
     });
 
     it("requireClarification", (done) => {
-      const invoice = { status: 'requireClarification' };
+      const invoice = { statusId: 'requireClarification' };
       machine.availableTransitions({ object: invoice }).then(({ transitions }) => {
         transitions.forEach((transition) => {
           assert(['clarifyForInspection', 'clarifyForApproval'].includes(transition.event));
@@ -40,7 +40,7 @@ describe("invoice approval flow", () => {
     });
 
     it("approvalRequired", (done) => {
-      const invoice = { status: 'approvalRequired' };
+      const invoice = { statusId: 'approvalRequired' };
       machine.availableTransitions({ object: invoice }).then(({ transitions }) => {
         transitions.forEach((transition) => {
           assert(['approve', 'sendToClarification'].includes(transition.event));
@@ -53,7 +53,7 @@ describe("invoice approval flow", () => {
   describe("send event", () => {
 
     it("inspect invoice", (done) => {
-      const invoice = { status: 'inspectionRequired' };
+      const invoice = { statusId: 'inspectionRequired' };
       machine.sendEvent({ event: 'inspect', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
         done();
@@ -61,7 +61,7 @@ describe("invoice approval flow", () => {
     });
 
     it("set invoice to clarification for inspection", (done) => {
-      const invoice = { status: 'inspectionRequired' };
+      const invoice = { statusId: 'inspectionRequired' };
       machine.sendEvent({ event: 'sendToClarification', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'requireClarification');
         done();
@@ -69,7 +69,7 @@ describe("invoice approval flow", () => {
     });
 
     it("clarify invoice for inspection", (done) => {
-      const invoice = { status: 'requireClarification' };
+      const invoice = { statusId: 'requireClarification' };
       machine.sendEvent({ event: 'clarifyForInspection', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'inspectionRequired');
         done();
@@ -77,7 +77,7 @@ describe("invoice approval flow", () => {
     });
 
     it("approve invoice", (done) => {
-      const invoice = { status: 'approvalRequired' };
+      const invoice = { statusId: 'approvalRequired' };
       machine.sendEvent({ event: 'approve', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'archived');
         done();
@@ -85,7 +85,7 @@ describe("invoice approval flow", () => {
     });
 
     it("set invoice to clarification for approval", (done) => {
-      const invoice = { status: 'approvalRequired' };
+      const invoice = { statusId: 'approvalRequired' };
       machine.sendEvent({ event: 'sendToClarification', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'requireClarification');
         done();
@@ -93,7 +93,7 @@ describe("invoice approval flow", () => {
     });
 
     it("clarify invoice for approval", (done) => {
-      const invoice = { status: 'requireClarification' };
+      const invoice = { statusId: 'requireClarification' };
       machine.sendEvent({ event: 'clarifyForApproval', object: invoice }).then(() => {
         assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
         done();

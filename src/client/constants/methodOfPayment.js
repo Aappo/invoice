@@ -1,3 +1,0 @@
-export const MOP_LOAD_START = 'MOP_LOAD_START';
-export const MOP_LOAD_SUCCESS = 'MOP_LOAD_SUCCESS';
-export const MOP_LOAD_ERROR = 'MOP_LOAD_ERROR';

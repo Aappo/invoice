@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const path = require('path');
 const invoiceRoutes = require('./invoiceReceipt');
 const invoiceItemsRoutes = require('./invoiceReceiptItems');
 const staticResources = require('./staticResources');
@@ -14,7 +15,7 @@ const invoiceReceiptExport = require('./invoiceReceiptExport');
 const glAccount = require('./glAccount');
 const approval = require('./approval');
 const epilogue = require('epilogue');
-const userIdentityMiddleWare = require('useridentity-middleware');
+const exphbs = require('express-handlebars');
 
 /**
  * Initializes all routes for RESTful access.
@@ -27,7 +28,9 @@ const userIdentityMiddleWare = require('useridentity-middleware');
  */
 module.exports.init = function(app, db, config) {
 
-  app.use(userIdentityMiddleWare);
+  app.engine('handlebars', exphbs());
+  app.set('view engine', 'handlebars');
+  app.set('views', path.normalize(__dirname + '/../templates'));
 
   epilogue.initialize({
     app: app,

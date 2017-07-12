@@ -1,3 +1,0 @@
-export const TOD_LOAD_START = 'TOD_LOAD_START';
-export const TOD_LOAD_SUCCESS = 'TOD_LOAD_SUCCESS';
-export const TOD_LOAD_ERROR = 'TOD_LOAD_ERROR';

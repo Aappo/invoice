@@ -19,13 +19,7 @@ module.exports = (app, db) => {
       return db.models.InvoiceReceipt.findAll();
     },
     update: (invoice) => {
-      return db.models.InvoiceReceipt.update(invoice,{
-        where: {
-          id: {
-            $eq: invoice.id
-          }
-        }
-      })
+      return user.changed().length > 0 ? invoice.save() : Promise.resolve();
     }
   });
 
@@ -34,15 +28,36 @@ module.exports = (app, db) => {
 
   app.get('/api/approval/tasks', (req, res) => {
     invoiceTaskManager.list({}).then((tasks) => {
-      res.send({tasks: tasks})
+      res.send(tasks)
     })
   });
 
-  app.get('/api/approval/availableEvents/:id', (req, res) => {
-
+  app.get('/api/approval/events/:id', (req, res) => {
+    db.models.InvoiceReceipt.findById(req.params.id).then((invoice) => {
+      if(invoice) {
+       invoiceTaskManager.machine.availableTransitions({
+         object: invoice.get({
+           plain: true
+         })
+       }).then((transitions) => {
+         res.send({transitions});
+       })
+      } else {
+        res.send({})
+      }
+    })
   });
 
-  app.put('/api/approval/sendEvent/:id/:event', (req, res) => {
-
+  app.post('/api/approval/events/:id/:event', (req, res) => {
+    db.models.InvoiceReceipt.findById(req.params.id).then((invoice) => {
+      invoiceTaskManager.sendEvent({
+        object: invoice.get({
+          plain: true
+        }),
+        event: req.params.event
+      }).then((updatedInvoice) => {
+        res.send(JSON.stringify(updatedInvoice))
+      }).catch((errors) => res.send(errors))
+    })
   })
 };

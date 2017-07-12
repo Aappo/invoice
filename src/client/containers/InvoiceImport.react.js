@@ -1,35 +1,22 @@
 import React, { PropTypes, Component } from 'react';
 import InvoiceImportMarkup from '../components/InvoiceImport';
+import request from 'superagent-bluebird-promise';
+import Promise from 'bluebird';
+import { INVOICE_IMPORT_CHUNK_SIZE } from '../constants/invoiceImport';
+import _ from 'lodash';
 import messages from './i18n/InvoiceImport';
-import { connect } from 'react-redux';
-import { importInvoices, cleanupImportReducer } from '../actions/invoice/import';
 
-@connect(
-  state => ({
-    importInProgress: state.invoiceImport.importInProgress,
-    importPercentage: state.invoiceImport.importPercentage,
-    importResult: state.invoiceImport.importResult
-  }),
-  (dispatch) => {
-    return {
-      handleImportInvoices: (invoices) => {
-        dispatch(importInvoices(invoices))
-      },
-      cleanImportResult: () => {
-        dispatch(cleanupImportReducer())
-      }
-    }
-  }
-)
 export default class InvoiceImport extends Component {
 
-  static propTypes = {
-    handleImportInvoices: PropTypes.func.isRequired,
-    importInProgress: PropTypes.bool.isRequired,
-    importPercentage: PropTypes.number,
-    importResult: PropTypes.array,
-    cleanImportResult: PropTypes.func.isRequired,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      importInProgress: false,
+      importPercentage: 0,
+      importSize: 0,
+      importResult: []
+    };
+  }
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired,
@@ -40,16 +27,42 @@ export default class InvoiceImport extends Component {
     this.context.i18n.register('InvoiceImport', messages);
   }
 
+  _calculateImportPercentage(currentPercentage = 0, importSize) {
+    if (_.isNil(importSize) || importSize === 0) {
+      return 100;
+    }
+    return currentPercentage + INVOICE_IMPORT_CHUNK_SIZE / importSize * 100;
+  };
+
+  handleImportInvoices(invoices) {
+    return Promise.resolve(this.setState({ importSize: _.size(invoices), importInProgress: true })
+    ).then(() => Promise.all(
+      _(invoices).chunk(INVOICE_IMPORT_CHUNK_SIZE).map((invoiceChunk) => {
+        return request.post(`/invoice/api/invoices/import`).set(
+          'Accept', 'application/json'
+        ).send(invoiceChunk).then((response) => {
+          return Promise.resolve(this.setState({
+            importResult: this.state.importResult.concat(response.body),
+            importPercentage: this._calculateImportPercentage(this.state.importPercentage, this.state.importSize)
+          }));
+        })
+      })
+    )).then(() => this.setState({ importInProgress: false, importSize: 0, importPercentage: 0 }));
+  }
+
+  cleanImportResult() {
+    this.setState({ importInProgress: false, importPercentage: 0, importSize: 0, importResult: [] });
+  }
+
   render() {
-    const { importInProgress, importPercentage, handleImportInvoices, importResult, cleanImportResult } = this.props;
     return (
       <div>
         <InvoiceImportMarkup
-          onImport={handleImportInvoices}
-          importInProgress={importInProgress}
-          importPercentage={importPercentage}
-          importResult={importResult}
-          cleanImportResult={cleanImportResult}
+          onImport={::this.handleImportInvoices}
+          importInProgress={this.state.importInProgress}
+          importPercentage={this.state.importPercentage}
+          importResult={this.state.importResult}
+          cleanImportResult={::this.cleanImportResult}
         />
       </div>
     );

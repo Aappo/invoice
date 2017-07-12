@@ -16,7 +16,7 @@ const SidebarMenu = () => (
       </div>
       <ul className="nav navbar-nav">
         <li key="InvoiceOverview">
-          <Link to="/invoice/">
+          <Link to="/invoice">
             Invoice Overview
           </Link>
         </li>

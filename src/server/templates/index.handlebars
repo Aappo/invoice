@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
+    <script type="application/javascript" src="/invoice/static/bundle.js"></script>
+  <title>Invoice</title>
+</head>
+
+<body>
+<span id="root"></span>
+<script>
+    window.invoice.renderApprovalApplication(
+            document.getElementById("root"), {
+                locale: 'en',
+                formatPatterns: {
+                    'en': {
+                        'datePattern': 'MM/dd/yyyy',
+                        'integerPattern': '#,##0',
+                        'numberPattern': '#,##0.00',
+                        'numberDecimalSeparator': '.',
+                        'numberGroupingSeparator': ',',
+                        'numberGroupingSeparatorUse': true
+                    },
+                    'de': {
+                        'datePattern': "dd.MM.yyyy",
+                        'integerPattern': "#,##0",
+                        'numberPattern': "#,##0.00",
+                        'numberDecimalSeparator': ",",
+                        'numberGroupingSeparator': ".",
+                        'numberGroupingSeparatorUse': true
+                    }
+                }
+            }
+    );
+</script>
+</body>
+</html>
