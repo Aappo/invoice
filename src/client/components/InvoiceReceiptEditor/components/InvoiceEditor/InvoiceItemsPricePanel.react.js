@@ -1,26 +1,21 @@
 import React, { PropTypes } from 'react';
-import { formattedTotalSum } from '../../../../utils/MathUtils';
 import { Button, Glyphicon } from 'react-bootstrap';
 
-const InvoiceItemsPricePanel = ({ invoice, items, onAddPositions }, context) => {
-  if (!invoice) {
-    return null;
-  }
-
+const InvoiceItemsPricePanel = ({ priceInfo, onAddPositions }, context) => {
   const { i18n } = context;
-  let itemsTotalNetPriceSum = formattedTotalSum(i18n, items, 'totalNetPrice');
-  let itemsTotalTaxAmountPriceSum = formattedTotalSum(i18n, items, 'taxAmount');
-  let itemsTotalGrossPriceSum = formattedTotalSum(i18n, items, 'totalGrossPrice');
   return (
     <div className="form-submit text-right">
       <span className="invoiceReceiptItemsTotalPriceSum">
-        {`${i18n.getMessage('Labels.totalNetPrice')}: ${itemsTotalNetPriceSum} ${invoice.currencyId} `}
+        {`${i18n.getMessage('Labels.totalNetPrice')}:
+          ${priceInfo ? `${priceInfo.totalNetPrice} ${priceInfo.currency}` : ''} `}
       </span>
       <span className="invoiceReceiptItemsTotalPriceSum">
-        {`${i18n.getMessage('Labels.totalTaxAmount')}: ${itemsTotalTaxAmountPriceSum} ${invoice.currencyId} `}
+        {`${i18n.getMessage('Labels.totalTaxAmount')}:
+          ${priceInfo ? `${priceInfo.totalTaxAmount} ${priceInfo.currency}` : ''} `}
       </span>
       <span className="invoiceReceiptItemsTotalPriceSum">
-        {`${i18n.getMessage('Labels.totalGrossPrice')}: ${itemsTotalGrossPriceSum} ${invoice.currencyId} `}
+        {`${i18n.getMessage('Labels.totalGrossPrice')}:
+          ${priceInfo ? `${priceInfo.totalGrossPrice} ${priceInfo.currency}` : ''} `}
       </span>
       <Button onClick={onAddPositions}>
         <Glyphicon glyph="plus"/>&nbsp;
@@ -31,8 +26,7 @@ const InvoiceItemsPricePanel = ({ invoice, items, onAddPositions }, context) => 
 };
 
 InvoiceItemsPricePanel.propTypes = {
-  items: PropTypes.array.isRequired,
-  invoice: PropTypes.object,
+  priceInfo: PropTypes.object,
   onAddPositions: PropTypes.func.isRequired
 };
 

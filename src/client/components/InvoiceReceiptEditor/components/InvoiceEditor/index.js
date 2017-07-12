@@ -1,12 +1,13 @@
 import './InvoiceEditor.less';
 import React, { Component, PropTypes } from 'react';
+import SplitScreenEditor from './SplitScreenEditor.react';
+import SelectCustomerWizard from './SelectCustomerWizard';
+import SimpleEditor from './SimpleEditor.react';
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
 import _ from 'lodash';
-import InvoiceForm from './InvoiceForm.react';
-import SelectCustomerWizard from './SelectCustomerWizard';
 import messages from '../../i18n/InvoiceEditor';
-import InvoiceItemsPricePanel from './InvoiceItemsPricePanel.react';
+import { formattedTotalSum } from '../../../../utils/MathUtils';
 import {
   fetchInvoiceReceipt,
   fetchInvoiceReceiptItems,
@@ -21,190 +22,205 @@ import {
   fetchCurrencies
 } from '../../common/fetchers';
 
-export default class InvoiceEditor extends Component {
+/**
+ * Creates invoice editor higher order component providing basic invoice operations.
+ *
+ * @param WrappedEditorComponent - component to be wrapped
+ * @returns {InvoiceEditor}
+ */
+const createInvoiceEditor = (WrappedEditorComponent) => {
 
-  static propTypes = {
-    invoiceId: PropTypes.number,
-    createMode: PropTypes.bool,
-    onCancel: PropTypes.func
-  };
+  return class InvoiceEditor extends Component {
 
-  static contextTypes = {
-    i18n: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
-    currentUserData: PropTypes.object.isRequired,
-    showNotification: PropTypes.func.isRequired,
-    hideNotification: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    createMode: false,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      invoice: {},
-      isMasterDataReady: false,
-      isInvoiceDataReady: false,
-      statuses: [
-        { 'statusId': '070', 'description': 'rejected' },
-        { 'statusId': '100', 'description': 'created' },
-        { 'statusId': '390', 'description': 'approved' },
-        { 'statusId': '400', 'description': 'transferred' },
-        { 'statusId': '800', 'description': 'deleted' },
-        { 'statusId': '820', 'description': 'registered' }
-      ],
-      statusLabel: (statusId) => {
-        let status = _.find(this.state.statuses, { statusId: statusId });
-        return status ? status.description : statusId;
-      }
+    static propTypes = {
+      invoiceId: PropTypes.number,
+      createMode: PropTypes.bool,
+      onCancel: PropTypes.func
     };
-  }
 
-  componentWillMount() {
-    this.context.i18n.register('InvoiceEditor', messages);
-    this._loadMasterData();
-  }
+    static contextTypes = {
+      i18n: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
+      currentUserData: PropTypes.object.isRequired,
+      showNotification: PropTypes.func.isRequired
+    };
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.createMode && nextProps.invoiceId !== this.props.invoiceId) {
-      if (nextProps.invoiceId) {
-        this._loadInvoiceData(nextProps.invoiceId);
-      } else {
-        this._unloadInvoiceData();
+    static defaultProps = {
+      createMode: false,
+    };
+
+    constructor(props) {
+      super(props);
+      this.state = {
+        invoice: {},
+        isMasterDataReady: false,
+        isInvoiceDataReady: false,
+        statuses: [
+          { 'statusId': '070', 'description': 'rejected' },
+          { 'statusId': '100', 'description': 'created' },
+          { 'statusId': '390', 'description': 'approved' },
+          { 'statusId': '400', 'description': 'transferred' },
+          { 'statusId': '800', 'description': 'deleted' },
+          { 'statusId': '820', 'description': 'registered' }
+        ],
+        statusLabel: (statusId) => {
+          let status = _.find(this.state.statuses, { statusId: statusId });
+          return status ? status.description : statusId;
+        }
+      };
+    }
+
+    componentWillMount() {
+      this.context.i18n.register('InvoiceEditor', messages);
+      this._loadMasterData();
+      if (!this.props.createMode && this.props.invoiceId) {
+        this._loadInvoiceData(this.props.invoiceId);
       }
     }
-  }
 
-  _loadMasterData() {
-    Promise.props({
-      termsOfDelivery: fetchTermsOfDelivery(),
-      termsOfPayment: fetchTermsOfPayment(),
-      methodsOfPayment: fetchMethodsOfPayment(),
-      currencies: fetchCurrencies(),
-      customers: fetchCustomers(),
-      isMasterDataReady: true
-    }).then((masterData) => this.setState(masterData)
-    ).catch((error) => {
-      throw Error(error);
-    });
-  }
+    componentWillReceiveProps(nextProps) {
+      if (!nextProps.createMode && nextProps.invoiceId !== this.props.invoiceId) {
+        if (nextProps.invoiceId) {
+          this._loadInvoiceData(nextProps.invoiceId);
+        } else {
+          this._unloadInvoiceData();
+        }
+      }
+    }
 
-  _loadInvoiceData(invoiceId) {
-    Promise.resolve(this.context.showNotification('Messages.loadingData')
-    ).then(() => fetchInvoiceReceipt(invoiceId)
-    ).then((invoice) => {
+    _loadMasterData() {
       return Promise.props({
-        invoice: invoice,
-        customer: fetchCustomer(invoice.customerId),
-        supplier: fetchSupplier(invoice.supplierId),
-        items: fetchInvoiceReceiptItems(invoice.key),
+        termsOfDelivery: fetchTermsOfDelivery(),
+        termsOfPayment: fetchTermsOfPayment(),
+        methodsOfPayment: fetchMethodsOfPayment(),
+        currencies: fetchCurrencies(),
+        customers: fetchCustomers(),
+        isMasterDataReady: true
+      }).then((masterData) => this.setState(masterData));
+    }
+
+    _loadInvoiceData(invoiceId) {
+      return Promise.resolve(this.context.showNotification('Messages.loadingData')
+      ).then(() => fetchInvoiceReceipt(invoiceId)
+      ).then((invoice) =>
+        Promise.props({
+          invoice: invoice,
+          customer: fetchCustomer(invoice.customerId),
+          supplier: fetchSupplier(invoice.supplierId),
+          isInvoiceDataReady: true
+        })
+      ).then((invoiceData) => Promise.resolve(this.setState(invoiceData, () => this.calculateItemsPrice()))
+      ).catch((error) => {
+        this.context.showNotification('Messages.loadingDataError', 'error', 10, false);
+        throw Error(error);
+      })
+    }
+
+    _unloadInvoiceData() {
+      const newState = _.omit(this.state, ['invoice', 'customer', 'supplier', 'items']);
+      newState.isInvoiceDataReady = false;
+      this.setState(newState);
+    }
+
+    initInvoiceData(customerId) {
+      return Promise.props({
+        invoice: {
+          supplierId: this.context.currentUserData.supplierid,
+          customerId: customerId,
+          statusId: _.find(this.state.statuses, { statusId: '100' }).statusId,
+          intrastatId: '000',
+          bookingDate: new Date()
+        },
+        supplier: fetchSupplier(this.context.currentUserData.supplierid),
+        supplierAddresses: fetchSupplierAddresses(this.context.currentUserData.supplierid),
+        supplierContacts: fetchSupplierContacts(this.context.currentUserData.supplierid),
+        customer: fetchCustomer(customerId),
         isInvoiceDataReady: true
+      }).then((invoiceData) => this.setState(invoiceData));
+    }
+
+    updateInvoice(payload, reset) {
+      return request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
+        'Accept', 'application/json'
+      ).send(payload).then((response) => Promise.resolve(response.body)
+      ).then((invoice) => Promise.resolve(this.setState({ invoice: invoice }))
+      ).then(() => this.context.showNotification('Labels.saved', 'success')
+      ).catch((error) => {
+        this.context.showNotification('Labels.notSaved', 'error', 10);
+        throw Error(error);
       });
     }
-    ).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => {
-      this.context.showNotification('Messages.loadingDataError', 'error', 10, false);
-      throw Error(error);
-    }).finally(() => this.context.hideNotification());
-  }
 
-  _unloadInvoiceData() {
-    const newState = _.omit(this.state, ['invoice', 'customer', 'supplier', 'items']);
-    newState.isInvoiceDataReady = false;
-    this.setState(newState);
-  }
+    createInvoice(payload, reset) {
+      return request.post(`/invoice/api/invoices`).set(
+        'Accept', 'application/json'
+      ).send(_.assign({}, this.state.invoice, payload)
+      ).then((response) => Promise.resolve(reset())
+      ).then(() => this.context.showNotification('Labels.saved', 'success')
+      ).catch((error) => {
+        this.context.showNotification('Labels.notSaved', 'error', 10);
+        throw Error(error);
+      });
+    }
 
-  initInvoiceData(customerId) {
-    Promise.props({
-      invoice: {
-        supplierId: this.context.currentUserData.supplierid,
-        customerId: customerId,
-        statusId: _.find(this.state.statuses, { statusId: '100' }).statusId,
-        intrastatId: '000',
-        bookingDate: new Date()
-      },
-      supplier: fetchSupplier(this.context.currentUserData.supplierid),
-      supplierAddresses: fetchSupplierAddresses(this.context.currentUserData.supplierid),
-      supplierContacts: fetchSupplierContacts(this.context.currentUserData.supplierid),
-      customer: fetchCustomer(customerId),
-      items: [],
-      isInvoiceDataReady: true
-    }).then((invoiceData) => this.setState(invoiceData)
-    ).catch((error) => {
-      throw Error(error);
-    })
-  }
+    calculateItemsPrice() {
+      return fetchInvoiceReceiptItems(this.state.invoice.key).then((items) => {
+        let totalNetPrice, totalTaxAmount, totalGrossPrice;
+        if (items.length !== 0) {
+          totalNetPrice = formattedTotalSum(this.context.i18n, items, 'totalNetPrice');
+          totalTaxAmount = formattedTotalSum(this.context.i18n, items, 'taxAmount');
+          totalGrossPrice = formattedTotalSum(this.context.i18n, items, 'totalGrossPrice');
+        }
+        this.setState({
+          itemsPriceInfo: {
+            currency: this.state.invoice.currencyId,
+            totalNetPrice: isNaN(totalNetPrice) ? 0 : totalNetPrice,
+            totalTaxAmount: isNaN(totalTaxAmount) ? 0 : totalTaxAmount,
+            totalGrossPrice: isNaN(totalGrossPrice) ? 0 : totalGrossPrice,
+          }
+        });
+      });
+    }
 
-  updateInvoice(payload, reset) {
-    request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
-      'Accept', 'application/json'
-    ).send(payload).then((response) => Promise.resolve(response.body)
-    ).then((invoice) => Promise.resolve(this.setState({ invoice: invoice }))
-    ).then(() => this.context.showNotification('Labels.saved', 'success')
-    ).catch((error) => {
-      this.context.showNotification('Labels.notSaved', 'error', 10);
-      throw Error(error);
-    }).finally(() => this.context.hideNotification());
-  }
+    render() {
+      if (this.state.isMasterDataReady) {
+        if (this.state.isInvoiceDataReady) {
+          return (
+            <WrappedEditorComponent
+              {...this.props}
 
-  createInvoice(payload, reset) {
-    request.post(`/invoice/api/invoices`).set(
-      'Accept', 'application/json'
-    ).send(_.assign({}, this.state.invoice, payload)
-    ).then((response) => Promise.resolve(reset())
-    ).then(() => this.context.showNotification('Labels.saved', 'success')
-    ).catch((error) => {
-      this.context.showNotification('Labels.notSaved', 'error', 10);
-      throw Error(error);
-    }).finally(() => this.context.hideNotification());
-  }
+              updateInvoice={::this.updateInvoice}
+              createInvoice={::this.createInvoice}
+              calculateItemsPrice={::this.calculateItemsPrice}
 
-
-  render() {
-    if (this.state.isMasterDataReady) {
-      if (this.state.isInvoiceDataReady) {
-        const { createMode } = this.props;
-        return (
-          <div className={`${createMode ? 'create' : 'edit'}-invoice`}>
-            <InvoiceForm
-              formHeader={createMode ? this.context.i18n.getMessage('Labels.createIR') : ''}
               invoice={this.state.invoice}
-              items={this.state.items}
+              itemsPriceInfo={this.state.itemsPriceInfo}
               customer={this.state.customer}
               supplier={this.state.supplier}
               supplierAddresses={this.state.supplierAddresses}
               supplierContacts={this.state.supplierContacts}
-
               termsOfDelivery={this.state.termsOfDelivery}
               termsOfPayment={this.state.termsOfPayment}
               methodsOfPayment={this.state.methodsOfPayment}
               currencies={this.state.currencies}
-
               statusLabel={this.state.statusLabel}
-              onCancel={this.props.onCancel}
-              onSave={createMode ? ::this.createInvoice : ::this.updateInvoice}
-              displayMode={createMode ? 'two-column' : 'one-column'}
             />
-
-            <br/>
-            <InvoiceItemsPricePanel
-              items={this.state.items}
-              invoice={this.state.invoice.invoiceReceiptId ? this.state.invoice : undefined}
-              onAddPositions={() => (this.context.router.push(`/invoice/edit/${this.props.invoiceId}/items`))}
-            />
-          </div>
-        );
+          )
+        } else {
+          return this.props.createMode ?
+            <SelectCustomerWizard
+              customers={this.state.customers}
+              onSubmit={(customerId) => this.initInvoiceData(customerId)}
+            /> : null;
+        }
       } else {
-        return this.props.createMode ?
-          <SelectCustomerWizard
-            customers={this.state.customers}
-            onSubmit={(customerId) => this.initInvoiceData(customerId)}
-          /> : null;
+        return null;
       }
-    } else {
-      return null;
     }
   }
-}
+};
+
+const SimpleInvoiceEditor = createInvoiceEditor(SimpleEditor);
+const SplitScreenInvoiceEditor = createInvoiceEditor(SplitScreenEditor);
+
+export { SimpleInvoiceEditor, SplitScreenInvoiceEditor };

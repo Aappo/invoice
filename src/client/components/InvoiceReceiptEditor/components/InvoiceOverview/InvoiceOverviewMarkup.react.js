@@ -4,7 +4,7 @@ import SearchForm from './SearchForm.react';
 import { Pagination } from 'react-bootstrap';
 import { COUNT } from '../../../../constants/pagination';
 import InvoiceDeleteModal from "./InvoiceDeleteModal.react";
-import InvoiceEditorSplitScreen from '../InvoiceEditor/InvoiceEditorSplitScreen.react';
+import { SplitScreenInvoiceEditor } from '../InvoiceEditor';
 import ActionBar from './ActionBar.react';
 
 export default class InvoiceOverviewMarkup extends Component {
@@ -64,7 +64,7 @@ export default class InvoiceOverviewMarkup extends Component {
         </div>
         <br/><br/>
         <div className="row">
-          <InvoiceEditorSplitScreen invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
+          <SplitScreenInvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
           {/*<div className="col-md-6">*/}
             {/*/!* Rendering static pdf for test purposes *!/*/}
             {/*<object width="100%" height="100%"*/}

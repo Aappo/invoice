@@ -8,6 +8,10 @@ services:
      - registrator
      - redis
      - acl
+     - auth
+     - user
+     - customer
+     - supplier
     volumes:
      - .:/home/node/invoice
     labels:
@@ -162,8 +166,8 @@ services:
     command: 'npm run dev'
 
   kong:
-    #image: opuscapita/kong:dev
-    image: opuscapita/kong:1.0.14-dev-236 # temp fix until :dev image works again
+    image: opuscapita/kong:dev
+    #image: opuscapita/kong:1.0.14-dev-236
     environment:
       KONG_DATABASE: 'postgres'
       KONG_PG_HOST: $HOST_IP

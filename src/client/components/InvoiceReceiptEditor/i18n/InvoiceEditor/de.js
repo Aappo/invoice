@@ -5,6 +5,7 @@ Labels.notSaved = 'Achtung: Rechnung konnte nicht gespeichert werden!';
 Labels.questionInvoiceItemDelete = 'Wollen Sie die Rechnung/Rechnungsposition wirklich löschen?';
 Labels.questionInvoiceDelete = 'Möchten Sie die Rechnung wirklich löschen?';
 Labels.invoiceDeleted = 'Rechnung wurde gelöscht.';
+Labels.invoiceItemDeleted = 'Die Rechnungsposition (mit der ID {id}) wurde gelöscht.';
 Labels.saveFailed = 'Speichern fehlgeschlagen..';
 Labels.createIR = 'Rechnung erfassen » Rechnungskopf';
 Labels.editIR = 'Rechnung bearbeiten';

@@ -14,7 +14,7 @@ function roundDecimalNumber(number) {
 function calculateTotalSum(i18n, list, field) {
   let numericListValues = _.filter(list, (item) => {
     try {
-      let itemFieldValue = i18n.parseDecimalNumber(item[field]);
+      let itemFieldValue = typeof item[field] === 'number' ? item[field] : i18n.parseDecimalNumber(item[field]);
       return !_.isNaN(itemFieldValue) && !_.isNil(itemFieldValue);
     } catch (e) {
       return false;
@@ -22,7 +22,8 @@ function calculateTotalSum(i18n, list, field) {
   });
 
   if (_.size(numericListValues) > 0) {
-    return roundDecimalNumber(_.sumBy(numericListValues, (item) => i18n.parseDecimalNumber(item[field])));
+    return roundDecimalNumber(_.sumBy(numericListValues, (item) =>
+      typeof item[field] === 'number' ? item[field] : i18n.parseDecimalNumber(item[field])));
   } else if (_.size(list) > 0) {
     return NaN;
   } else {

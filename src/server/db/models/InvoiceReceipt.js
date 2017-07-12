@@ -327,6 +327,14 @@ module.exports.init = function(db, config) {
         field: 'AccountingRecordID'
       },
       /**
+       * Approval workflow assignee
+       */
+      assignee: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        field: 'Assignee'
+      },
+      /**
        * Intrastat is the system for collecting information and producing statistics
        * on the trade in goods between countries of the European Union (EU). It began
        * operation on 1 January 1993, when it replaced customs declarations as the

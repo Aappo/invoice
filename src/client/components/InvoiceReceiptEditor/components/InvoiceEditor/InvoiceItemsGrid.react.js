@@ -7,7 +7,7 @@ import { Button, Glyphicon, Table } from 'react-bootstrap';
  *
  * @param items
  */
-const InvoiceItemsOverview = ({ items }, context) => (
+const InvoiceItemsGrid = ({ items, onDelete }, context) => (
   <Table key={_.uniqueId()}>
     <thead>
     <tr>
@@ -63,7 +63,10 @@ const InvoiceItemsOverview = ({ items }, context) => (
             <Button bsStyle="link" onClick={_.noop}>
               <Glyphicon glyph="edit"/>
             </Button>
-            <Button bsStyle="link" onClick={_.noop}>
+            <Button
+              bsStyle="link"
+              onClick={() => onDelete(item.key)}
+            >
               <Glyphicon glyph="trash"/>
             </Button>
           </td>
@@ -75,12 +78,12 @@ const InvoiceItemsOverview = ({ items }, context) => (
   </Table>
 );
 
-InvoiceItemsOverview.propTypes = {
+InvoiceItemsGrid.propTypes = {
   items: PropTypes.array
 };
 
-InvoiceItemsOverview.contextTypes = {
+InvoiceItemsGrid.contextTypes = {
   i18n: PropTypes.object.isRequired
 };
 
-export default InvoiceItemsOverview;
+export default InvoiceItemsGrid;

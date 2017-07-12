@@ -5,6 +5,7 @@ Labels.notSaved = 'Invoice Receipt was not saved.';
 Labels.questionInvoiceItemDelete = 'Do you really want to delete Invoice/Invoice Position?';
 Labels.questionInvoiceDelete = 'Do you really want to delete Invoice?';
 Labels.invoiceDeleted = 'Invoice Receipt was deleted successfully.';
+Labels.invoiceItemDeleted = 'Invoice Receipt Item with key {id} was deleted.';
 Labels.saveFailed = 'Object saving failed.';
 Labels.createIR = 'Create Invoice » Invoice Header';
 Labels.editIR = 'Edit Invoice';

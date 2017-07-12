@@ -1,10 +1,14 @@
 import React from 'react';
 import InvoiceOverview from './components/InvoiceOverview';
-import InvoiceEditor from './components/InvoiceEditor';
+import { SimpleInvoiceEditor, SplitScreenInvoiceEditor } from './components/InvoiceEditor';
 import InvoiceItemEditor from './components/InvoiceItemEditor';
 
-const InvoiceCreator = (props) => (
-  <InvoiceEditor {...props} createMode={true}/>
-);
+const InvoiceCreator = (props) => <SimpleInvoiceEditor {...props} createMode={true}/>;
 
-export { InvoiceOverview, InvoiceEditor, InvoiceCreator, InvoiceItemEditor };
+export {
+  InvoiceOverview,
+  InvoiceCreator,
+  SimpleInvoiceEditor,
+  SplitScreenInvoiceEditor,
+  InvoiceItemEditor
+};
