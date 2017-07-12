@@ -60,6 +60,11 @@
         "type": "rest",
         "resourceId": "/api/invoices/[^/]+/items",
         "actions": ["view", "create", "edit"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/approval/[%w | %p]*",
+        "actions": ["view", "edit"]
       }
     ]
   }

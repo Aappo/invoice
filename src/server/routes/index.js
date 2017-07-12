@@ -12,6 +12,7 @@ const unitsOfMeasure = require('./unitsOfMeasure');
 const invoicereceiptImport = require('./invoicereceiptImport');
 const invoiceReceiptExport = require('./invoiceReceiptExport');
 const glAccount = require('./glAccount');
+const approval = require('./approval');
 const epilogue = require('epilogue');
 const userIdentityMiddleWare = require('useridentity-middleware');
 
@@ -45,6 +46,7 @@ module.exports.init = function(app, db, config) {
   userData(app, db);
   unitsOfMeasure(app, db);
   invoicereceiptImport(app, db);
+  approval(app, db);
 
   // Always return a promise.
   return Promise.resolve();

@@ -1,0 +1,38 @@
+{
+  "name": "InvoiceApproval",
+  "initialState": "inspectionRequired",
+  "finalStates": ["archived"],
+  "objectStateFieldName": "status",
+  "transitions": [
+    {
+      "from": "inspectionRequired",
+      "event": "inspect",
+      "to": "approvalRequired"
+    },
+    {
+      "from": "inspectionRequired",
+      "event": "sendToClarification",
+      "to": "clarificationRequired"
+    },
+    {
+      "from": "clarificationRequired",
+      "event": "clarifyForInspection",
+      "to": "inspectionRequired"
+    },
+    {
+      "from": "approvalRequired",
+      "event": "approve",
+      "to": "archived"
+    },
+    {
+      "from": "approvalRequired",
+      "event": "sendToClarification",
+      "to": "clarificationRequired"
+    },
+    {
+      "from": "clarificationRequired",
+      "event": "clarifyForApproval",
+      "to": "approvalRequired"
+    }
+  ]
+}
