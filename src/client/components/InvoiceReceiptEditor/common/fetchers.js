@@ -84,3 +84,10 @@ export const fetchUnitsOfMeasure = () => {
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
+
+export const fetchInvoiceStatuses = () => {
+  return request.get(`/invoice/api/statuses/invoice`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};

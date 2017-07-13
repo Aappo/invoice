@@ -16,19 +16,26 @@ module.exports = (app, db) => {
 
   const invoiceTaskManager = new TaskManager({
     machine: machine,
-    search: (searchParams) => {
-      return db.models.InvoiceReceipt.findAll();
+    search: ({count = 5, offset = 0}) => {
+      return db.models.InvoiceReceipt.findAll({
+        limit: parseInt(count),
+        offset: parseInt(offset)
+      });
     },
     update: (invoice) => {
       return invoice.save();
     }
   });
 
-  // invoiceTaskManager.run(5000);
-
+  invoiceTaskManager.run(5000);
 
   app.get('/api/approval/tasks', (req, res) => {
-    invoiceTaskManager.list({}).then((tasks) => {
+    invoiceTaskManager.list({
+      searchParams: {
+        count: req.query.count,
+        offset: req.query.offset
+      }
+    }).then((tasks) => {
       res.send(tasks)
     })
   });
@@ -51,7 +58,12 @@ module.exports = (app, db) => {
 
 
   app.get('/api/approval/events', (req, res) => {
-    return invoiceTaskManager.list({}).then((tasks) => {
+    return invoiceTaskManager.list({
+      searchParams: {
+        count: req.query.count,
+        offset: req.query.offset
+      }
+    }).then((tasks) => {
       return Promise.props(
         _.reduce(tasks, (accum, task) => {
           accum[task.key] = invoiceTaskManager.machine.availableTransitions({

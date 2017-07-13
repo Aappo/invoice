@@ -11,22 +11,20 @@ import {
   MenuItem
 } from 'react-bootstrap';
 
-const SearchResult = (
-  {
-    invoices,
-    statusLabel,
-    onEdit,
-    showDeleteModal,
-    isEditable,
-    selectedInvoiceId,
-    checkedInvoices,
-    markForExport,
-    unMarkForExport,
-    transitions,
-    onEventSend
-  },
-  context
-) => {
+const SearchResult = ({
+  invoices,
+  statusLabel,
+  onEdit,
+  onDelete,
+  isEditable,
+  selectedInvoiceId,
+  checkedInvoices,
+  markForExport,
+  unMarkForExport,
+  transitions,
+  onEventSend
+},
+  context) => {
   if (_.size(invoices) === 0) {
     return (
       <MessageInfo message="No Items"/>
@@ -91,22 +89,30 @@ const SearchResult = (
                 <td>
                   <span className="label label-default">{statusLabel(inv.statusId)}</span>
                 </td>
-                <td className="invoice-btn-group">
-                  {transitions[inv.key] &&  transitions[inv.key].map((transition) => {
-                    return(
-                      <Button key={`${inv.key}_${transition.event}`} bsStyle="link" onClick={() => {onEventSend(inv.key, transition.event)}}>
-                        {transition.event}
-                      </Button>
-                    );
-                  })}
-                  <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
-                    <Glyphicon glyph="edit"/>
+                <td className="invoice-btn-group text-right">
+                  {transitions[inv.key].length > 0 &&  <ButtonGroup>
+                    <DropdownButton bsSize="small" title="Approval" id="bg-nested-dropdown" pullRight>
+                      {transitions[inv.key].map((transition) => {
+                        return (
+                        <MenuItem
+                          key={`${inv.key}_${transition.event}`}
+                          eventKey={inv.key}
+                          onClick={() => {
+                            onEventSend(inv.key, transition.event)
+                          }}
+                        >
+                          {transition.event}
+                        </MenuItem>
+                        );
+                      })}
+                    </DropdownButton>
+                  </ButtonGroup>}
+                  <Button bsSize="small" onClick={() => onEdit(inv.key)}>
+                    {isEditable(inv.statusId) ? <Glyphicon glyph="edit"/> : <Glyphicon glyph="eye-open"/>}
                   </Button>
-                  <Button bsStyle="link" onClick={() => showDeleteModal({ isShown: true, invoiceId: inv.key })}
-                    disabled={!isEditable(inv.statusId)}
-                  >
+                  {isEditable(inv.statusId) && <Button bsSize="small" onClick={() => onDelete(inv.key)}>
                     <Glyphicon glyph="trash"/>
-                  </Button>
+                  </Button>}
                 </td>
               </tr>
             )
@@ -122,7 +128,7 @@ SearchResult.propTypes = {
   invoices: PropTypes.array,
   transitions: PropTypes.object,
   statusLabel: PropTypes.func.isRequired,
-  showDeleteModal: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   isEditable: PropTypes.func.isRequired,
   selectedInvoiceId: PropTypes.number,

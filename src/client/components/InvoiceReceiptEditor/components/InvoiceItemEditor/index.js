@@ -7,7 +7,8 @@ import { fetchUnitsOfMeasure } from '../../common/fetchers';
 export default class InvoiceItemEditor extends Component {
 
   static propTypes = {
-    onItemCreate: PropTypes.func
+    onItemCreate: PropTypes.func,
+    readOnly: PropTypes.bool
   };
 
   static contextTypes = {
@@ -15,6 +16,10 @@ export default class InvoiceItemEditor extends Component {
     router: PropTypes.object.isRequired,
     showNotification: PropTypes.func.isRequired,
     hideNotification: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    readOnly: false
   };
 
   constructor(props) {
@@ -46,9 +51,11 @@ export default class InvoiceItemEditor extends Component {
   // TODO: get rid of router usage
   render() {
     return (
-      <InvoiceItemForm unitsOfMeasure={this.state.unitsOfMeasure}
+      <InvoiceItemForm
+        unitsOfMeasure={this.state.unitsOfMeasure}
         onSave={this.handleCreateInvoiceItem.bind(this, this.context.router.params.id)}
         onBack={() => (this.context.router.push('/invoice/'))}
+        readOnly={this.props.readOnly}
       />
     )
   }

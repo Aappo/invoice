@@ -27,17 +27,19 @@ export default class InvoiceForm extends Component {
     statusLabel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func,
-    displayMode: PropTypes.oneOf(['one-column', 'two-column'])
+    displayMode: PropTypes.oneOf(['one-column', 'two-column']),
+    readOnly: PropTypes.bool
+  };
+
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
   };
 
   static defaultProps = {
     supplierAddresses: [],
     supplierContacts: [],
-    displayMode: 'two-column'
-  };
-
-  static contextTypes = {
-    i18n: PropTypes.object.isRequired
+    displayMode: 'two-column',
+    readOnly: false
   };
 
   constructor(props) {
@@ -83,7 +85,8 @@ export default class InvoiceForm extends Component {
       termsOfDelivery,
       currencies,
       onCancel,
-      displayMode
+      displayMode,
+      readOnly
     } = this.props;
     const leftColumnFields = [
       <InvoiceHeaderStaticFields
@@ -99,6 +102,7 @@ export default class InvoiceForm extends Component {
         name='extInvoiceReceiptId'
         required={true}
         value={this.props.invoice.extInvoiceReceiptId}
+        disabled={readOnly}
       />,
       <FormsyDateInput
         key='invoiceDate'
@@ -106,12 +110,14 @@ export default class InvoiceForm extends Component {
         name='invoiceDate'
         required={true}
         value={invoice.invoiceDate}
+        disabled={readOnly}
       />,
       <FormsyDateRange
         key='periodOfService'
         label="Labels.periodOfService"
         name="periodOfService"
         value={{ from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo }}
+        disabled={readOnly}
       />
     ];
 
@@ -128,18 +134,21 @@ export default class InvoiceForm extends Component {
         label="Labels.accountingRecordId"
         name='accountingRecordId'
         value={invoice.accountingRecordId}
+        disabled={readOnly}
       />,
       <FormsyTextInput
         key='referenceInformation'
         label="Labels.referenceInformation"
         name='referenceInformation'
         value={invoice.referenceInformation}
+        disabled={readOnly}
       />,
       <FormsyDateInput
         key='dueDate'
         label="Labels.dueDate"
         name='dueDate'
         value={invoice.dueDate}
+        disabled={readOnly}
       />,
       <FormsySelect
         key='termsOfPaymentId'
@@ -156,6 +165,7 @@ export default class InvoiceForm extends Component {
           )
         }
         defaultOption={<option value="" defaultValue={true}/>}
+        disabled={readOnly}
       />,
       <FormsySelect
         key='methodOfPaymentId'
@@ -172,6 +182,7 @@ export default class InvoiceForm extends Component {
           )
         }
         defaultOption={<option value="" defaultValue={true}/>}
+        disabled={readOnly}
       />,
       <FormsySelect
         key='termsOfDeliveryId'
@@ -187,6 +198,7 @@ export default class InvoiceForm extends Component {
           )
         }
         defaultOption={<option value="" defaultValue={true}/>}
+        disabled={readOnly}
       />,
       <FormsyTextInput
         key='commentary'
@@ -194,15 +206,17 @@ export default class InvoiceForm extends Component {
         name='commentary'
         value={invoice.commentary}
         componentClass="textarea"
+        disabled={readOnly}
       />
     ];
 
 
     return (
-      <Formsy.Form onSubmit={::this._submitForm}
-                   validationErrors={this.state.validationErrors}
-                   mapping={this._mapInputs}
-                   onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
+      <Formsy.Form
+        onSubmit={::this._submitForm}
+        validationErrors={this.state.validationErrors}
+        mapping={this._mapInputs}
+        onChange={(currentValues) => this.setState({ validationErrors: validate(currentValues) })}
       >
         {formHeader && <h1>{formHeader}</h1>}
         <div className="form-horizontal">
@@ -237,6 +251,7 @@ export default class InvoiceForm extends Component {
                   )
                 }
                 defaultOption={<option value="" defaultValue={true}/>}
+                disabled={readOnly}
               />
             </div>
             <div className="col-md-6">
@@ -244,16 +259,21 @@ export default class InvoiceForm extends Component {
                 label="Labels.orderNumber"
                 name='orderNumber'
                 value={invoice.orderNumber}
+                disabled={readOnly}
               />
             </div>
           </div>
           <div className="form-submit text-right">
-            {onCancel ? (
+            {onCancel ?
               <button className="btn btn-link" type="button" onClick={() => onCancel()}>
                 {this.context.i18n.getMessage('Commands.cancel')}
-              </button>
-            ) : null}
-            <button className="btn btn-primary" type="submit">{this.context.i18n.getMessage('Commands.save')}</button>
+              </button> : null
+            }
+            {!readOnly ?
+              <button className="btn btn-primary" type="submit">
+                {this.context.i18n.getMessage('Commands.save')}
+              </button> : null
+            }
           </div>
         </div>
       </Formsy.Form>

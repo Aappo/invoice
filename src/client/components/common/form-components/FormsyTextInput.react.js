@@ -7,6 +7,7 @@ import { Decorator as FormsyElement } from 'formsy-react';
 export default class FormsyTextInput extends Component {
 
   static propTypes = {
+    disabled: PropTypes.bool,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
     value: PropTypes.string,
@@ -37,6 +38,7 @@ export default class FormsyTextInput extends Component {
           value={this.props.getValue() || ''}
           onChange={(e) => this.props.setValue(e.currentTarget.value || undefined)}
           onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+          disabled={this.props.disabled}
         />
       </FormGroupMarkup>
     )

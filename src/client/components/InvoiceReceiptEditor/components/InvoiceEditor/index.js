@@ -19,7 +19,8 @@ import {
   fetchTermsOfDelivery,
   fetchTermsOfPayment,
   fetchMethodsOfPayment,
-  fetchCurrencies
+  fetchCurrencies,
+  fetchInvoiceStatuses
 } from '../../common/fetchers';
 
 /**
@@ -29,12 +30,12 @@ import {
  * @returns {InvoiceEditor}
  */
 const createInvoiceEditor = (WrappedEditorComponent) => {
-
   return class InvoiceEditor extends Component {
 
     static propTypes = {
       invoiceId: PropTypes.number,
       createMode: PropTypes.bool,
+      readOnly: PropTypes.bool,
       onCancel: PropTypes.func
     };
 
@@ -47,6 +48,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
 
     static defaultProps = {
       createMode: false,
+      readOnly: false
     };
 
     constructor(props) {
@@ -54,19 +56,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
       this.state = {
         invoice: {},
         isMasterDataReady: false,
-        isInvoiceDataReady: false,
-        statuses: [
-          { 'statusId': '070', 'description': 'rejected' },
-          { 'statusId': '100', 'description': 'created' },
-          { 'statusId': '390', 'description': 'approved' },
-          { 'statusId': '400', 'description': 'transferred' },
-          { 'statusId': '800', 'description': 'deleted' },
-          { 'statusId': '820', 'description': 'registered' }
-        ],
-        statusLabel: (statusId) => {
-          let status = _.find(this.state.statuses, { statusId: statusId });
-          return status ? status.description : statusId;
-        }
+        isInvoiceDataReady: false
       };
     }
 
@@ -95,6 +85,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
         methodsOfPayment: fetchMethodsOfPayment(),
         currencies: fetchCurrencies(),
         customers: fetchCustomers(),
+        statuses: fetchInvoiceStatuses(),
         isMasterDataReady: true
       }).then((masterData) => this.setState(masterData));
     }
@@ -182,6 +173,11 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
       });
     }
 
+    statusLabel(statusId) {
+      let status = _.find(this.state.statuses, { statusId: statusId });
+      return status ? status.description : statusId;
+    }
+
     render() {
       if (this.state.isMasterDataReady) {
         if (this.state.isInvoiceDataReady) {
@@ -192,6 +188,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
               updateInvoice={::this.updateInvoice}
               createInvoice={::this.createInvoice}
               calculateItemsPrice={::this.calculateItemsPrice}
+              statusLabel={::this.statusLabel}
 
               invoice={this.state.invoice}
               itemsPriceInfo={this.state.itemsPriceInfo}
@@ -203,7 +200,6 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
               termsOfPayment={this.state.termsOfPayment}
               methodsOfPayment={this.state.methodsOfPayment}
               currencies={this.state.currencies}
-              statusLabel={this.state.statusLabel}
             />
           )
         } else {

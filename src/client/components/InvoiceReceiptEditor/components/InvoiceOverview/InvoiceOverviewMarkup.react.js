@@ -16,6 +16,7 @@ export default class InvoiceOverviewMarkup extends Component {
     onDelete: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     showDeleteModal: PropTypes.func.isRequired,
+    hideDeleteModal: PropTypes.func.isRequired,
     invoices: PropTypes.array,
     transitions: PropTypes.object,
     statuses: PropTypes.array.isRequired,
@@ -27,7 +28,8 @@ export default class InvoiceOverviewMarkup extends Component {
     markForExport: PropTypes.func.isRequired,
     unMarkForExport: PropTypes.func.isRequired,
     exportLink: PropTypes.string.isRequired,
-    checkedInvoices: PropTypes.array
+    checkedInvoices: PropTypes.array,
+    readOnly: PropTypes.bool
   };
 
   render() {
@@ -43,17 +45,16 @@ export default class InvoiceOverviewMarkup extends Component {
               onEventSend={this.props.onEventSend}
               statusLabel={this.props.statusLabel}
               onEdit={this.props.onEdit}
-              showDeleteModal={this.props.showDeleteModal}
+              onDelete={this.props.showDeleteModal}
               isEditable={this.props.isEditable}
               selectedInvoiceId={this.props.editInvoiceId}
               checkedInvoices={this.props.checkedInvoices}
               markForExport={this.props.markForExport}
               unMarkForExport={this.props.unMarkForExport}
             />
-            <br/>
             <ActionBar exportLink={this.props.exportLink}/>
             <Pagination
-              className={this.props.pagination.last === this.props.pagination.length ? 'hidden' : 'shown'}
+              className="pull-right"
               prev={true}
               next={true}
               ellipsis={true}
@@ -68,7 +69,11 @@ export default class InvoiceOverviewMarkup extends Component {
         </div>
         <br/><br/>
         <div className="row">
-          <SplitScreenInvoiceEditor invoiceId={this.props.editInvoiceId} onCancel={this.props.onCancel}/>
+          <SplitScreenInvoiceEditor
+            invoiceId={this.props.editInvoiceId}
+            onCancel={this.props.onCancel}
+            readOnly={this.props.readOnly}
+          />
           {/*<div className="col-md-6">*/}
             {/*/!* Rendering static pdf for test purposes *!/*/}
             {/*<object width="100%" height="100%"*/}
@@ -81,7 +86,7 @@ export default class InvoiceOverviewMarkup extends Component {
         </div>
         <InvoiceDeleteModal {...this.props.deleteModal}
           onDelete={(id) => this.props.onDelete(id, this.refs.searchForm.refs.searchFormMarkup.getModel())}
-          onCancel={() => this.props.showDeleteModal({ isShown: false })}
+          onCancel={this.props.hideDeleteModal}
         />
       </div>
     )

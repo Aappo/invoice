@@ -14,7 +14,8 @@ export default class InvoiceItemForm extends Component {
     item: PropTypes.object,
     unitsOfMeasure: PropTypes.array,
     onSave: PropTypes.func.isRequired,
-    onBack: PropTypes.func.isRequired
+    onBack: PropTypes.func.isRequired,
+    readOnly: PropTypes.bool
   };
 
   static contextTypes = {
@@ -24,7 +25,8 @@ export default class InvoiceItemForm extends Component {
 
   static defaultProps = {
     item: {},
-    unitsOfMeasure: []
+    unitsOfMeasure: [],
+    readOnly: false
   };
 
   constructor(props) {
@@ -44,7 +46,7 @@ export default class InvoiceItemForm extends Component {
   }
 
   render() {
-    const { item } = this.props;
+    const { item, readOnly } = this.props;
     return (
       <div>
         <h1>
@@ -60,25 +62,28 @@ export default class InvoiceItemForm extends Component {
                 <FormsyTextInput
                   label='Labels.productId'
                   name='productId'
-                  value={item.productId || ''}
+                  value={item.productId}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.productDescShort"
                   name='productDescShort'
                   required={true}
-                  value={item.productDescShort || ''}
+                  value={item.productDescShort}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.quantity"
                   name='quantity'
                   required={true}
-                  value={item.quantity || ''}
+                  value={item.quantity}
+                  disabled={readOnly}
                 />
                 <FormsySelect
                   label="Labels.uom"
                   name='uomId'
                   required={true}
-                  value={item.uomId || ''}
+                  value={item.uomId}
                   values={this.props.unitsOfMeasure}
                   toOptionConverter={
                     (uom) => (
@@ -88,18 +93,21 @@ export default class InvoiceItemForm extends Component {
                     )
                   }
                   defaultOption={<option value="" defaultValue={true}/>}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.netPrice"
                   name='netPrice'
                   required={true}
                   value={item.netPrice}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label="Labels.priceUnit"
                   name='priceUnit'
                   required={true}
-                  value={this.props.item.priceUnit || ''}
+                  value={this.props.item.priceUnit}
+                  disabled={readOnly}
                 />
               </div>
               <div className="col-md-6">
@@ -107,16 +115,19 @@ export default class InvoiceItemForm extends Component {
                   label='Labels.ean'
                   name='extProductId'
                   value={item.extProductId}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label='Labels.taxRate'
                   name='taxPercentage'
                   value={item.taxPercentage}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label='Labels.totalNetPrice'
                   name='totalNetPrice'
                   value={item.totalNetPrice}
+                  disabled={readOnly}
                 />
                 <FormsyTextInput
                   label='Labels.taxAmount'
@@ -128,6 +139,7 @@ export default class InvoiceItemForm extends Component {
                   label='Labels.totalGrossPrice'
                   name='totalGrossPrice'
                   value={item.totalGrossPrice}
+                  disabled={readOnly}
                 />
               </div>
             </div>

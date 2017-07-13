@@ -80,6 +80,11 @@
         "type": "rest",
         "resourceId": "/api/invoices/import",
         "actions": ["create"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/statuses",
+        "actions": ["view"]
       }
     ]
   }

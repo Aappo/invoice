@@ -7,7 +7,7 @@ import { Button, Glyphicon, Table } from 'react-bootstrap';
  *
  * @param items
  */
-const InvoiceItemsGrid = ({ items, onDelete }, context) => (
+const InvoiceItemsGrid = ({ items, onDelete, readOnly }, context) => (
   <Table key={_.uniqueId()}>
     <thead>
     <tr>
@@ -59,17 +59,24 @@ const InvoiceItemsGrid = ({ items, onDelete }, context) => (
             {(item.purchaseOrderId || item.purchaseOrderItemNo) ?
                 `${item.purchaseOrderId || ''}/${item.purchaseOrderItemNo || ''}` : 'n/a'}
           </td>
-          <td className="invoice-btn-group">
-            <Button bsStyle="link" onClick={_.noop}>
-              <Glyphicon glyph="edit"/>
-            </Button>
-            <Button
-              bsStyle="link"
-              onClick={() => onDelete(item.key)}
-            >
-              <Glyphicon glyph="trash"/>
-            </Button>
-          </td>
+          {readOnly ?
+            <td className="invoice-btn-group">
+              <Button bsStyle="link" onClick={_.noop}>
+                <Glyphicon glyph="eye-open"/>
+              </Button>
+            </td> :
+            <td className="invoice-btn-group">
+              <Button bsStyle="link" onClick={_.noop}>
+                <Glyphicon glyph="edit"/>
+              </Button>
+              <Button
+                bsStyle="link"
+                onClick={() => onDelete(item.key)}
+              >
+                <Glyphicon glyph="trash"/>
+              </Button>
+            </td>
+          }
         </tr>
       )
     })
@@ -79,11 +86,17 @@ const InvoiceItemsGrid = ({ items, onDelete }, context) => (
 );
 
 InvoiceItemsGrid.propTypes = {
-  items: PropTypes.array
+  items: PropTypes.array,
+  onDelete: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool
 };
 
 InvoiceItemsGrid.contextTypes = {
   i18n: PropTypes.object.isRequired
+};
+
+InvoiceItemsGrid.defaultProps = {
+  readOnly: false
 };
 
 export default InvoiceItemsGrid;

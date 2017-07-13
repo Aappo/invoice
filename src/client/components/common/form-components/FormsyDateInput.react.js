@@ -8,6 +8,7 @@ import { parseDate } from './parseDate';
 export default class FormsyDateInput extends Component {
 
   static propTypes = {
+    disabled: PropTypes.bool,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
     value: PropTypes.oneOfType([
@@ -41,6 +42,7 @@ export default class FormsyDateInput extends Component {
           value={parseDate(this.props.getValue())}
           onChange={(value) => this.props.setValue(value || undefined)}
           onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+          disabled={this.props.disabled}
           variants={[]}
         />
       </FormGroupMarkup>

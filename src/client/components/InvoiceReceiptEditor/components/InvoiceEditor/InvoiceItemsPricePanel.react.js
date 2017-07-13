@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 
-const InvoiceItemsPricePanel = ({ priceInfo, onAddPositions }, context) => {
+const InvoiceItemsPricePanel = ({ priceInfo, onAddPositions, readOnly }, context) => {
   const { i18n } = context;
   return (
     <div className="form-submit text-right">
@@ -17,21 +17,28 @@ const InvoiceItemsPricePanel = ({ priceInfo, onAddPositions }, context) => {
         {`${i18n.getMessage('Labels.totalGrossPrice')}:
           ${priceInfo ? `${priceInfo.totalGrossPrice} ${priceInfo.currency}` : ''} `}
       </span>
-      <Button onClick={onAddPositions}>
-        <Glyphicon glyph="plus"/>&nbsp;
-        {i18n.getMessage('Commands.addPositions')}
-      </Button>
+      {!readOnly ?
+        <Button onClick={onAddPositions}>
+          <Glyphicon glyph="plus"/>&nbsp;
+          {i18n.getMessage('Commands.addPositions')}
+        </Button> : null
+      }
     </div>
   );
 };
 
 InvoiceItemsPricePanel.propTypes = {
   priceInfo: PropTypes.object,
-  onAddPositions: PropTypes.func.isRequired
+  onAddPositions: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool
 };
 
 InvoiceItemsPricePanel.contextTypes = {
   i18n: PropTypes.object.isRequired
+};
+
+InvoiceItemsPricePanel.defaultProps = {
+  readOnly: false
 };
 
 export default InvoiceItemsPricePanel;

@@ -10,17 +10,10 @@ import { fetchInvoiceReceiptItems } from '../../common/fetchers';
 
 export default class SplitScreenEditor extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      deleteModal: { isShown: false }
-    }
-  }
-
   static propTypes = {
     invoiceId: PropTypes.number,
     onCancel: PropTypes.func,
+    readOnly: PropTypes.bool,
 
     /* Props injected from higher order component (marked as not required) */
     updateInvoice: PropTypes.func,
@@ -43,6 +36,18 @@ export default class SplitScreenEditor extends Component {
     router: PropTypes.object.isRequired,
     showNotification: PropTypes.func.isRequired
   };
+
+  static defaultProps = {
+    readOnly: false
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      deleteModal: { isShown: false }
+    }
+  }
 
   componentDidMount() {
     if (this.props.invoiceId) {
@@ -93,6 +98,7 @@ export default class SplitScreenEditor extends Component {
   }
 
   render() {
+    const { readOnly } = this.props;
     return (
       <div>
         <div className="row">
@@ -104,6 +110,7 @@ export default class SplitScreenEditor extends Component {
           <div className="col-md-6">
             <div className="edit-invoice">
               <InvoiceForm
+                readOnly={readOnly}
                 invoice={this.props.invoice}
                 customer={this.props.customer}
                 supplier={this.props.supplier}
@@ -122,13 +129,18 @@ export default class SplitScreenEditor extends Component {
               />
               <br/>
               <InvoiceItemsPricePanel
+                readOnly={readOnly}
                 priceInfo={this.props.itemsPriceInfo}
                 onAddPositions={() => (this.context.router.push(`/invoice/edit/${this.props.invoiceId}/items`))}
               />
             </div>
           </div>
         </div>
-        <InvoiceItemsGrid items={this.state.items} onDelete={::this.showDeleteModal}/>
+        <InvoiceItemsGrid
+          readOnly={readOnly}
+          items={this.state.items}
+          onDelete={::this.showDeleteModal}
+        />
         <InvoiceItemDeleteModal
           {...this.state.deleteModal}
           onDelete={::this.deleteInvoiceItem}
@@ -137,4 +149,4 @@ export default class SplitScreenEditor extends Component {
       </div>
     )
   }
-};
+}

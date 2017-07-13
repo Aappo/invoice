@@ -14,7 +14,9 @@ const ApprovalApplication = ({ locale, formatPatterns, userData }) => (
       <Router history={browserHistory}>
         <Route component={Layout} path="/invoice">
           <IndexRedirect to="/invoice/approval"/>
-          <Route path="/invoice/approval" component={InvoiceOverview}/>
+          <Route path="/invoice/approval" component={
+            () => <InvoiceOverview readOnly={true}/>
+          }/>
           <Route path="/invoice/import" component={InvoiceImport}/>
         </Route>
       </Router >

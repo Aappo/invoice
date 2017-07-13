@@ -7,6 +7,7 @@ import { Decorator as FormsyElement } from 'formsy-react';
 export default class FormsyDateRange extends Component {
 
   static propTypes = {
+    disabled: PropTypes.bool,
     values: PropTypes.array,
     value: PropTypes.string,
     label: PropTypes.string.isRequired,
@@ -40,6 +41,7 @@ export default class FormsyDateRange extends Component {
           value={this.props.getValue() || ''}
           onChange={(e) => this.props.setValue(e.currentTarget.value || undefined)}
           onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+          disabled={this.props.disabled}
         >
           {this.props.defaultOption ? this.props.defaultOption : null}
           {this.props.values.map(this.props.toOptionConverter)}

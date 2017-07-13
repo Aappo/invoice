@@ -8,6 +8,7 @@ import { parseDate } from './parseDate';
 export default class FormsyDateRange extends Component {
 
   static propTypes = {
+    disabled: PropTypes.bool,
     label: PropTypes.string.isRequired,
     required: PropTypes.bool,
     value: PropTypes.object,
@@ -42,6 +43,7 @@ export default class FormsyDateRange extends Component {
           ] : []}
           onChange={(values) => this.props.setValue({ from: values[0], to: values[1] })}
           onBlur={(e) => this.props.isPristine() && this.props.setValue(this.props.getValue())}
+          disabled={this.props.disabled}
           variants={[]}
         />
       </FormGroupMarkup>
