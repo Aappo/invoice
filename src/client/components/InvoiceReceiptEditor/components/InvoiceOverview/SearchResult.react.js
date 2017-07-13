@@ -1,7 +1,15 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import MessageInfo from '../../../common/MessageInfo.react';
-import { Button, Table, Glyphicon, Checkbox } from 'react-bootstrap';
+import {
+  Button,
+  Table,
+  Glyphicon,
+  Checkbox,
+  ButtonGroup,
+  DropdownButton,
+  MenuItem
+} from 'react-bootstrap';
 
 const SearchResult = (
   {
@@ -13,7 +21,9 @@ const SearchResult = (
     selectedInvoiceId,
     checkedInvoices,
     markForExport,
-    unMarkForExport
+    unMarkForExport,
+    transitions,
+    onEventSend
   },
   context
 ) => {
@@ -82,6 +92,13 @@ const SearchResult = (
                   <span className="label label-default">{statusLabel(inv.statusId)}</span>
                 </td>
                 <td className="invoice-btn-group">
+                  {transitions[inv.key] &&  transitions[inv.key].map((transition) => {
+                    return(
+                      <Button key={`${inv.key}_${transition.event}`} bsStyle="link" onClick={() => {onEventSend(inv.key, transition.event)}}>
+                        {transition.event}
+                      </Button>
+                    );
+                  })}
                   <Button bsStyle="link" onClick={() => onEdit(inv.key)}>
                     <Glyphicon glyph="edit"/>
                   </Button>
@@ -103,6 +120,7 @@ const SearchResult = (
 
 SearchResult.propTypes = {
   invoices: PropTypes.array,
+  transitions: PropTypes.object,
   statusLabel: PropTypes.func.isRequired,
   showDeleteModal: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
@@ -110,6 +128,7 @@ SearchResult.propTypes = {
   selectedInvoiceId: PropTypes.number,
   markForExport: PropTypes.func.isRequired,
   unMarkForExport: PropTypes.func.isRequired,
+  onEventSend: PropTypes.func.isRequired,
   checkedInvoices: PropTypes.array
 };
 

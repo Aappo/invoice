@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = function(app, db) {
 
-  app.get('/', function (req, res) {
+  app.get(['/', '/approval'], function (req, res) {
     if (req.opuscapita.userData().customerid) {
       res.render('index', { currentUserData: req.opuscapita.userData() || {} });
     } else {

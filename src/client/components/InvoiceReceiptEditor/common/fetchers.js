@@ -51,28 +51,28 @@ export const fetchSupplierContacts = (id) => {
 };
 
 export const fetchTermsOfDelivery = () => {
-  return request.get('/invoice/api/termsOfDelivery/').set(
+  return request.get('/invoice/api/termsOfDelivery').set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
 
 export const fetchTermsOfPayment = () => {
-  return request.get('/invoice/api/termsOfPayment/').set(
+  return request.get('/invoice/api/termsOfPayment').set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
 
 export const fetchMethodsOfPayment = () => {
-  return request.get('/invoice/api/methodOfPayment/').set(
+  return request.get('/invoice/api/methodOfPayment').set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
 
 export const fetchCurrencies = () => {
-  return request.get('/isodata/currencies/').set(
+  return request.get('/isodata/currencies').set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(Array.from(Object.values(response.body)))
   ).catch((error) => { throw Error(error); })

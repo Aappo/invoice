@@ -61,18 +61,30 @@ export default class InvoiceOverview extends Component {
   }
 
   handleSearchInvoices(searchParams = {}, offset = 0, count = COUNT) {
-    return Promise.resolve(this.context.showNotification('Messages.loadingData')).then(() =>
-      request.get('/invoice/api/invoices').
-      query(searchParams).
-      query({ offset: offset, count: count }).
-      set(
-        'Accept', 'application/json'
+    return Promise.resolve(
+      this.context.showNotification('Messages.loadingData')
+    ).then(() =>
+      Promise.props({
+          invoicesResponse: request.get('/invoice/api/invoices').query(
+            searchParams
+          ).query({
+            offset: offset,
+            count: count
+          }).set('Accept', 'application/json'),
+        transitionsResponse: request.get('/invoice/api/approval/events').query(
+            searchParams
+          ).query({
+            offset: offset,
+            count: count
+          })
+        }
       )
     ).then((response) => {
       this.setState({
-        invoices: response.body,
-        pagination: contentRange.parse(response.header['content-range']),
-        exportLink: this._calculateExportLink(response.body, []),
+        invoices: response.invoicesResponse.body,
+        transitions: response.transitionsResponse.body,
+        pagination: contentRange.parse(response.invoicesResponse.header['content-range']),
+        exportLink: this._calculateExportLink(response.invoicesResponse.body, []),
         editInvoiceId: null
       });
     }).catch((error) => {
@@ -81,12 +93,20 @@ export default class InvoiceOverview extends Component {
     });
   }
 
+  handleEventSend(id, event) {
+    request.post(
+      `/invoice/api/approval/events/${id}/${event}`
+    ).set(
+      'Accept', 'application/json'
+    ).then((res) => this.handleSearchInvoices());
+  }
+
   handleDeleteInvoice(id, searchParams = {}) {
     Promise.resolve(
       this.setState({ deleteModal: { isShown: false } })
     ).then(() => (
-      request.delete(`/invoice/api/invoices/${id}`).set(
-        'Accept', 'application/json')
+        request.delete(`/invoice/api/invoices/${id}`).set(
+          'Accept', 'application/json')
       )
     ).then(() => Promise.resolve(this.context.showNotification('Labels.invoiceDeleted', 'success'))
     ).then(() => {
@@ -136,7 +156,9 @@ export default class InvoiceOverview extends Component {
     return (
       <InvoiceOverviewMarkup
         onSearch={::this.handleSearchInvoices}
+        onEventSend={::this.handleEventSend}
         invoices={this.state.invoices}
+        transitions={this.state.transitions}
         checkedInvoices={this.state.checkedInvoices}
         statuses={this.state.statuses}
         statusLabel={this.state.statusLabel}

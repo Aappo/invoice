@@ -11,11 +11,13 @@ export default class InvoiceOverviewMarkup extends Component {
 
   static propTypes = {
     onSearch: PropTypes.func.isRequired,
+    onEventSend: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     showDeleteModal: PropTypes.func.isRequired,
     invoices: PropTypes.array,
+    transitions: PropTypes.object,
     statuses: PropTypes.array.isRequired,
     statusLabel: PropTypes.func.isRequired,
     pagination: PropTypes.object.isRequired,
@@ -37,6 +39,8 @@ export default class InvoiceOverviewMarkup extends Component {
             <br/>
             <SearchResult
               invoices={this.props.invoices}
+              transitions={this.props.transitions}
+              onEventSend={this.props.onEventSend}
               statusLabel={this.props.statusLabel}
               onEdit={this.props.onEdit}
               showDeleteModal={this.props.showDeleteModal}

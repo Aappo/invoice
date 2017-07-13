@@ -12,10 +12,10 @@
     {
       "from": "inspectionRequired",
       "event": "sendToClarification",
-      "to": "clarificationRequired"
+      "to": "inspClrRequired"
     },
     {
-      "from": "clarificationRequired",
+      "from": "inspClrRequired",
       "event": "clarifyForInspection",
       "to": "inspectionRequired"
     },
@@ -27,10 +27,10 @@
     {
       "from": "approvalRequired",
       "event": "sendToClarification",
-      "to": "clarificationRequired"
+      "to": "appClrRequired"
     },
     {
-      "from": "clarificationRequired",
+      "from": "appClrRequired",
       "event": "clarifyForApproval",
       "to": "approvalRequired"
     }

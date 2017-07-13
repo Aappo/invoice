@@ -68,8 +68,13 @@
       },
       {
         "type": "rest",
-        "resourceId": "/api/approval/[%w | %p]*",
-        "actions": ["view", "edit"]
+        "resourceId": "/api/approval/tasks",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/approval/events/[%w | %p]*",
+        "actions": ["view", "create"]
       },
       {
         "type": "rest",
