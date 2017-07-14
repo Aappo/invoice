@@ -12,6 +12,7 @@ jobs:
           name: Deployment script
           command: |
             docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME:base -f Dockerfile.base .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push opuscapita/$CIRCLE_PROJECT_REPONAME:base
             export azureswarm_branch=develop
             if [[ "$CIRCLE_BRANCH" == "master" ]]; then export azureswarm_branch=master; fi
