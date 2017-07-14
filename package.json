@@ -47,7 +47,6 @@
     "content-range": "1.1.0",
     "react-dropzone": "^3.7.3",
     "async": "^2.3.0",
-    "@opuscapita/react-dates": "0.2.6",
     "formsy-react": "0.19.2",
     "moment": "2.18.1",
     "react-pdf": "1.6.1",
