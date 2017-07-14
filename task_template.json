@@ -8,9 +8,9 @@
     "host":["consul:172.17.0.1"],
     "env":[
            "SERVICE_NAME=${serviceName}",
-           "SERVICE_3001_CHECK_HTTP=/api/health/check",
-           "SERVICE_3001_CHECK_INTERVAL=15s",
-           "SERVICE_3001_CHECK_TIMEOUT=3s",
+           "SERVICE_3003_CHECK_HTTP=/api/health/check",
+           "SERVICE_3003_CHECK_INTERVAL=15s",
+           "SERVICE_3003_CHECK_TIMEOUT=3s",
            "NODE_ENV=production"
            ],
     "oc-db-init":{"populate-test-data":"true"},
