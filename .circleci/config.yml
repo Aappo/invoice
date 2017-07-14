@@ -11,6 +11,7 @@ jobs:
       - run:
           name: Deployment script
           command: |
+            docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME:base -f Dockerfile.base .
             export azureswarm_branch=develop
             if [[ "$CIRCLE_BRANCH" == "master" ]]; then export azureswarm_branch=master; fi
             curl https://raw.githubusercontent.com/gr4per/azureswarm/$azureswarm_branch/buildscript.sh > buildscript.sh
