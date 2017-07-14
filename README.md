@@ -18,7 +18,7 @@ git clone https://github.com/OpusCapita/invoice;
 
 git checkout develop;
 
-docker build -t opuscapita/invoice:base-dev -f Dockerfile.base . ;
+docker build -t opuscapita/invoice-base:dev -f Dockerfile.base . ;
 
 docker-compose up;
 

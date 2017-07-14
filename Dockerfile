@@ -1,4 +1,4 @@
-FROM opuscapita/invoice:base-dev
+FROM opuscapita/invoice-base:dev
 MAINTAINER OpusCapita
 
 # NOTE: "node" user and corresponding "/home/node" dir are created by "node:6-alpine" image.
@@ -27,3 +27,5 @@ USER node
 # NOTE: a port can be any, not necessarily different from exposed ports of other containers.
 EXPOSE 3003
 CMD [ "npm", "start" ]
+HEALTHCHECK --interval=15s --timeout=3s --retries=12 \
+  CMD curl --silent --fail http://localhost:3003/api/health/check || exit 1
