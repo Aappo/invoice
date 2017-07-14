@@ -1,4 +1,4 @@
-FROM opuscapita/invoice-base:dev
+FROM opuscapita/invoice:dev
 MAINTAINER OpusCapita
 
 # NOTE: "node" user and corresponding "/home/node" dir are created by "node:6-alpine" image.
