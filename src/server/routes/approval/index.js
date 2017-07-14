@@ -5,8 +5,9 @@ const {
 const { TaskManager }= require('@opuscapita/fsm-task-manager');
 const _ = require('lodash');
 const Promise = require('bluebird');
+var NotFoundError = require('epilogue').Errors.NotFoundError;
 
-module.exports = (app, db) => {
+module.exports = (app, epilogue, db) => {
 
   const machine = new Machine({
     machineDefinition: new MachineDefinition({
@@ -29,15 +30,42 @@ module.exports = (app, db) => {
 
   invoiceTaskManager.run(5000);
 
-  app.get('/api/approval/tasks', (req, res) => {
-    invoiceTaskManager.list({
-      searchParams: {
-        count: req.query.count,
-        offset: req.query.offset
+  const notFoundCallback = (req, res, context) => {throw new NotFoundError();}
+
+
+  epilogue.resource({
+    model: db.models.InvoiceReceipt,
+    endpoints: [
+      '/approval/tasks',
+      '/approval/tasks/:id'
+    ]
+  }).use({
+    list: {
+      fetch: {
+        before: (req, res, context) => {
+          const { query } = req;
+          invoiceTaskManager.list({searchParams: query}).then((foundTasks) => {
+            context.instance = foundTasks;
+            context.continue();
+          })
+        }
       }
-    }).then((tasks) => {
-      res.send(tasks)
-    })
+    },
+    create: {
+      write: {
+        before: notFoundCallback
+      }
+    },
+    delete: {
+      fetch: {
+        before: notFoundCallback
+      }
+    },
+    read: {
+      fetch: {
+        before: notFoundCallback
+      }
+    }
   });
 
   app.get('/api/approval/events/:id', (req, res) => {

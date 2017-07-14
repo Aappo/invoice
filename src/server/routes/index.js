@@ -51,7 +51,7 @@ module.exports.init = function(app, db, config) {
   userData(app, db);
   unitsOfMeasure(app, db);
   invoicereceiptImport(app, db);
-  approval(app, db);
+  approval(app, epilogue, db);
 
   // Always return a promise.
   return Promise.resolve();

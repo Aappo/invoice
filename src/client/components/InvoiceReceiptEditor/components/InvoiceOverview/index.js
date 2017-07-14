@@ -74,7 +74,7 @@ export default class InvoiceOverview extends Component {
       this.context.showNotification('Messages.loadingData')
     ).then(() =>
       Promise.props({
-          invoicesResponse: request.get('/invoice/api/invoices').query(
+          invoicesResponse: request.get('/invoice/api/approval/tasks').query(
             searchParams
           ).query({
             offset: offset,

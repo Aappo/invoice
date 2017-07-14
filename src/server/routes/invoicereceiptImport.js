@@ -13,9 +13,14 @@ const _ = require('lodash');
 const importInvoiceItems = (db, invoiceReceiptItems, invoice) => {
   return Promise.all(
     _.map(invoiceReceiptItems, (item) => {
-      return db.models.InvoiceReceiptItem.create(_.extend(
-        item, { invoiceReceiptSn: invoice.key }
-      )).then((createdItem) => {
+      return db.models.CostDistribution.create().then((costDistribution) => {
+        return db.models.InvoiceReceiptItem.create(_.extend(
+          item, {
+            invoiceReceiptSn: invoice.key,
+            costDistributionSn: costDistribution.key
+          }
+        ))
+      }).then((createdItem) => {
         return Promise.resolve({ created: true });
       }).catch((failedItem) => {
         return Promise.resolve({ failed: true });
