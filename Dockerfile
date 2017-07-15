@@ -1,4 +1,4 @@
-FROM opuscapita/invoice:dev
+FROM opuscapita/invoice:base
 MAINTAINER OpusCapita
 
 # NOTE: "node" user and corresponding "/home/node" dir are created by "node:6-alpine" image.
@@ -17,7 +17,6 @@ WORKDIR /home/node/invoice
 COPY . tmp
 
 # Change owner since COPY/ADD assignes UID/GID 0 to all copied content.
-whoami
 RUN chown -Rf node:node tmp; rsync -a tmp/ ./ && rm -rf tmp
 
 # Set the user name or UID to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow
