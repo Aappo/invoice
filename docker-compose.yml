@@ -25,6 +25,9 @@ services:
       GATEWAY_SCHEME: $GATEWAY_SCHEME
       GATEWAY_IP: $GATEWAY_IP
       GATEWAY_PORT: $GATEWAY_PORT
+      SERVICE_3003_CHECK_HTTP: /api/health/check
+      SERVICE_3003_CHECK_INTERVAL: 15s
+      SERVICE_3003_CHECK_TIMEOUT: 3s
     ports:
      - '${INVOICE_PORT}:${INVOICE_PORT}'
     command: "npm run dev"
