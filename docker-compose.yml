@@ -12,8 +12,6 @@ services:
      - user
      - customer
      - supplier
-    volumes:
-     - .:/home/node/invoice
     labels:
       SERVICE_NAME: 'invoice'
     environment:
