@@ -20,7 +20,7 @@ git checkout develop;
 
 docker build -t opuscapita/invoice-base:dev -f Dockerfile.base . ;
 
-docker-compose up;
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up;
 
 ```
 

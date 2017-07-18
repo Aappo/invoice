@@ -6,7 +6,7 @@ module.exports = function(app, db) {
 
   app.get(['/', '/approval'], function (req, res) {
     if (req.opuscapita.userData().customerid) {
-      res.render('index', { currentUserData: req.opuscapita.userData() || {} });
+      res.render('index', { userData: req.opuscapita.userData() || {} });
     } else {
       res.sendFile(path.normalize(__dirname + '/../static/index.html'));
     }
@@ -17,7 +17,8 @@ module.exports = function(app, db) {
     '/edit/:id/items',
     '/create',
     '/import',
-    '/glAccounts'
+    '/glAccounts',
+    '/taskList'
   ], (req, res) => {
     res.sendFile(path.normalize(__dirname + '/../static/index.html'));
   });

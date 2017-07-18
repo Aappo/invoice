@@ -6358,7 +6358,7 @@ input.input-lg[type] {
   height: 46px;
 }
 .input-group.date {
-  /*width: 1px;*/
+  width: 1px;
   position: relative;
 }
 .form-control.auto-width {
@@ -6371,14 +6371,14 @@ input.input-lg[type] {
   z-index: auto;
 }
 .input-group.date span.input-group-addon {
-  /*background: transparent;*/
-  /*border-color: transparent;*/
-  /*position: absolute;*/
-  /*right: 20px;*/
-  /*top: 8px;*/
-  /*z-index: 2;*/
-  /*padding: 0;*/
-  /*color: #aaa;*/
+  background: transparent;
+  border-color: transparent;
+  position: absolute;
+  right: 20px;
+  top: 8px;
+  z-index: 2;
+  padding: 0;
+  color: #aaa;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -6699,12 +6699,12 @@ footer:before {
 }
 footer.sellside {
   border-top: 1px solid #cccccc;
-  /*background: ;*/
-  /*padding: ;*/
-  /*margin: ;*/
+  background: ;
+  padding: ;
+  margin: ;
 }
 footer .copyright {
-  /*border-top: ;*/
+  border-top: ;
   padding: 1em 0;
 }
 footer .release-info {
