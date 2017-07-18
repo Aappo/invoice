@@ -11,16 +11,25 @@ module.exports = (app, epilogue, db) => {
 
   const machine = new Machine({
     machineDefinition: new MachineDefinition({
-      schema: require('../../workflow/InvoiceApproval.json')
+      schema: require('../../workflow/InvoiceApproval.json'),
+      conditions: {
+        userHasRole: ({ role, request }) => {
+          const roles = request ? request.roles : [];
+          return roles.includes(role);
+        }
+      }
     })
   });
 
   const invoiceTaskManager = new TaskManager({
     machine: machine,
-    search: ({count = 5, offset = 0}) => {
+    search: ({ count = 5, offset = 0, customerId }) => {
       return db.models.InvoiceReceipt.findAll({
         limit: parseInt(count),
-        offset: parseInt(offset)
+        offset: parseInt(offset),
+        where: {
+          customerId: customerId
+        }
       });
     },
     update: (invoice) => {
@@ -42,9 +51,10 @@ module.exports = (app, epilogue, db) => {
   }).use({
     list: {
       fetch: {
-        before: (req, res, context) => {
-          const { query } = req;
-          invoiceTaskManager.list({searchParams: query}).then((foundTasks) => {
+        action: (req, res, context) => {
+          invoiceTaskManager.list(
+            { searchParams: Object.assign({}, req.query, { customerId: req.opuscapita.userData().customerid }) }
+          ).then((foundTasks) => {
             context.instance = foundTasks;
             context.continue();
           })
@@ -74,7 +84,8 @@ module.exports = (app, epilogue, db) => {
        invoiceTaskManager.machine.availableTransitions({
          object: invoice.get({
            plain: true
-         })
+         }),
+         request: { roles: req.opuscapita.userData('roles') }
        }).then((transitions) => {
          res.send(transitions.transitions);
        }).catch((err) => console.log(err))
@@ -87,17 +98,15 @@ module.exports = (app, epilogue, db) => {
 
   app.get('/api/approval/events', (req, res) => {
     return invoiceTaskManager.list({
-      searchParams: {
-        count: req.query.count,
-        offset: req.query.offset
-      }
+      searchParams: Object.assign({}, req.query, { customerId: req.opuscapita.userData().customerid })
     }).then((tasks) => {
       return Promise.props(
         _.reduce(tasks, (accum, task) => {
           accum[task.key] = invoiceTaskManager.machine.availableTransitions({
             object: task.get({
               plain: true
-            })
+            }),
+            request: { roles: req.opuscapita.userData('roles') }
           }).then((transitions) => Promise.resolve(transitions.transitions));
 
           return accum;
@@ -110,7 +119,8 @@ module.exports = (app, epilogue, db) => {
     db.models.InvoiceReceipt.findById(req.params.id).then((invoice) => {
       invoiceTaskManager.sendEvent({
         object: invoice,
-        event: req.params.event
+        event: req.params.event,
+        request: { roles: req.opuscapita.userData('roles') }
       }).then((updatedInvoice) => {
         res.send(JSON.stringify(updatedInvoice))
       }).catch((errors) => {
