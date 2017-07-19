@@ -7,12 +7,28 @@
     {
       "from": "inspectionRequired",
       "event": "inspect",
-      "to": "approvalRequired"
+      "to": "approvalRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ]
     },
     {
       "from": "inspectionRequired",
       "event": "sendToClarification",
-      "to": "inspClrRequired"
+      "to": "inspClrRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ]
     },
     {
       "from": "inspClrRequired",
@@ -22,12 +38,28 @@
     {
       "from": "approvalRequired",
       "event": "approve",
-      "to": "archived"
+      "to": "archived",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ]
     },
     {
       "from": "approvalRequired",
       "event": "sendToClarification",
-      "to": "appClrRequired"
+      "to": "appClrRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ]
     },
     {
       "from": "appClrRequired",
