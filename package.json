@@ -16,8 +16,8 @@
     "exclude": []
   },
   "dependencies": {
-    "@opuscapita/fsm-core": "0.0.1-beta.1",
-    "@opuscapita/fsm-task-manager": "0.0.1-beta.2",
+    "@opuscapita/fsm-core": "0.0.1-beta.5",
+    "@opuscapita/fsm-task-manager": "0.0.1-beta.4",
     "@opuscapita/react-dates": "0.2.6",
     "async": "^2.3.0",
     "bluebird": "3.0.5",
