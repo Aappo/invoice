@@ -6,32 +6,27 @@ import Details from './details/Details.react';
 
 import './WideLayout.less';
 
+const WideLayout = ({list, invoice, getInvoice, updateInvoice}) => (
+  <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
+    <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">
+      <MyTasksList
+        list={list}
+        invoice={invoice}
+        getInvoice={getInvoice}
+      />
+    </div>
+    <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
+      <Action invoice={invoice} updateInvoice={updateInvoice}/>
+      <Details invoice={invoice} />
+    </div>
+  </div>
+);
 
-class WideLayout extends React.Component {
-
-  static propTypes = {
-    list: PropTypes.array.isRequired,
-    invoice: PropTypes.object.isRequired,
-    getInvoice: PropTypes.func.isRequired,
-  };
-
-  render() {
-    return (
-      <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
-        <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">
-          <MyTasksList
-            list={this.props.list}
-            invoice={this.props.invoice}
-            getInvoice={this.props.getInvoice}
-          />
-        </div>
-        <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
-          <Action invoice={this.props.invoice} />
-          <Details invoice={this.props.invoice} />
-        </div>
-      </div>
-    );
-  }
-}
+WideLayout.propTypes = {
+  list: PropTypes.array.isRequired,
+  invoice: PropTypes.object.isRequired,
+  getInvoice: PropTypes.func.isRequired,
+  updateInvoice: PropTypes.func.isRequired
+};
 
 export default WideLayout;

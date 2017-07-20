@@ -8,6 +8,35 @@ export const fetchInvoiceReceipts = () => {
   ).catch((error) => { throw Error(error); })
 };
 
+export const fetchApprovalTasks = ({searchParams, offset = 0, count = 10000}) => {
+  return request.get('/invoice/api/approval/tasks').query(
+    searchParams
+  ).query({
+    offset: offset,
+    count: count
+  }).then((response) => Promise.resolve(response.body)).catch((error) => {
+    throw Error(error);
+  })
+};
+
+export const fetchTaskActions = (id) => {
+  return request.get(`/invoice/api/approval/events/${id}`).then((response) => {
+    return Promise.resolve(response.body)
+  }).catch((error) => {
+    throw Error(error);
+  })
+};
+
+export const sendInvoiceEvent = (id, event, comment) => {
+  return request.post(`/invoice/api/approval/events/${id}/${event}`).set(
+    'Accept', 'application/json'
+  ).send({comment}).then((response) => {
+    return Promise.resolve(response.body)
+  }).catch((error) => {
+    throw Error(error);
+  })
+};
+
 export const fetchInvoiceReceipt = (id) => {
   return request.get(`/invoice/api/invoices/${id}`).set(
     'Accept', 'application/json'

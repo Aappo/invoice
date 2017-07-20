@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Promise from 'bluebird';
-import mockInvoice from './data/invoice';
-import ModelUtils from './models/Utils';
 import {
-  fetchInvoiceReceipts,
+  fetchTaskActions,
+  fetchApprovalTasks,
   fetchInvoiceReceipt,
   fetchCustomer,
   fetchSupplier,
   fetchSupplierContacts,
   fetchSupplierAddresses
 } from './data/fetchers';
+import _ from 'lodash';
 
 export default function withDataHandler(WrappedComponent) {
   class DataHandler extends Component {
@@ -20,7 +20,7 @@ export default function withDataHandler(WrappedComponent) {
     };
 
     componentDidMount() {
-      fetchInvoiceReceipts().then((invoces) => {
+      fetchApprovalTasks({}).then((invoces) => {
         if(invoces.length > 0) {
           return Promise.props({
             taskList: invoces,
@@ -32,6 +32,13 @@ export default function withDataHandler(WrappedComponent) {
       })
     }
 
+    loadInvoice(id) {
+      return fetchInvoiceReceipt(id).cath((err) => {
+        console.error(err);
+        throw Error(err);
+      })
+    }
+
     loadInvoiceData(id) {
       return fetchInvoiceReceipt(id).then((invoice) => {
         return Promise.props({
@@ -39,7 +46,8 @@ export default function withDataHandler(WrappedComponent) {
           customer: fetchCustomer(invoice.customerId),
           supplier: fetchSupplier(invoice.supplierId),
           supplierContacts: fetchSupplierContacts(invoice.supplierId),
-          supplierAddresses: fetchSupplierAddresses(invoice.supplierId)
+          supplierAddresses: fetchSupplierAddresses(invoice.supplierId),
+          transitions: fetchTaskActions(invoice.key)
         })
       })
     }
@@ -48,20 +56,47 @@ export default function withDataHandler(WrappedComponent) {
       return this.loadInvoiceData(id).then((invoice) => {
         this.setState({invoice})
       }).catch((err) => {
-        throw Error(error)
+        throw Error(err);
+      })
+    }
+
+    /**
+     * id - is the invoice (or task key to update and the updater -
+     * is the function to call for invoice, invoice with 'id' will be
+     * passed to it as an argument)
+     * @param id
+     * @param updater
+     */
+    updateInvoice(id, updater) {
+      return Promise.resolve(
+        updater(
+          _.find(this.state.taskList, {key: id})
+        )
+      ).then(() => {
+        return Promise.props({
+          invoice: fetchInvoiceReceipt(id),
+          invoiceData: this.loadInvoiceData(id)
+        }).then(({invoice, invoiceData}) => {
+          this.setState({
+            invoice: invoiceData,
+            taskList: _.map(this.state.taskList, (task) => {
+              return task.key === id? invoice : task
+            })
+          })
+        })
+      }).catch((err) => {
+        console.error(err);
+        throw Error(err);
       })
     }
 
     render() {
-      // const queue = ModelUtils.flattenQueueResponse(
-      //   require('./data/queue.json'));
-      const invoice = mockInvoice(1);
-
       return (
         <WrappedComponent
           list={this.state.taskList}
           invoice={this.state.invoice}
           getInvoice={::this.getInvoice}
+          updateInvoice={::this.updateInvoice}
         />
       );
     }
