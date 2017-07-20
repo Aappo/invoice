@@ -81,6 +81,13 @@ module.exports = (app, epilogue, db) => {
               )
             }
           ).then((foundTasks) => {
+            if (req.query.assignedToMe === 'true') {
+              return Promise.filter(foundTasks, (task) => invoiceTaskManager.machine.availableTransitions({
+                object: task.get({ plain: true }), request: { roles: req.opuscapita.userData('roles') }
+              }).then((transitions) => transitions.transitions.length > 0));
+            }
+            return Promise.resolve(foundTasks);
+          }).then((foundTasks) => {
             context.instance = foundTasks;
             context.continue();
           })

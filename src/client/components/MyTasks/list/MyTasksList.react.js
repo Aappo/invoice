@@ -21,9 +21,10 @@ export default class MyTasksList extends PureComponent {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.list.length !== nextProps.list.length &&
-        !nextProps.list.length === 0) {
-      this.props.getInvoice(nextProps.list[0]['key']);
+    if (this.props.list.length !== nextProps.list.length && nextProps.list.length !== 0) {
+      // Jump one task backward
+      this.setState({ selected: this.state.selected ? this.state.selected - 1 : 0 },
+        () => this.props.getInvoice(nextProps.list[this.state.selected]['key']));
     }
   }
 

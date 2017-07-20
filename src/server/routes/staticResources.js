@@ -18,7 +18,8 @@ module.exports = function(app, db) {
     '/create',
     '/import',
     '/glAccounts',
-    '/taskList'
+    '/taskList',
+    '/allTaskList'
   ], (req, res) => {
     res.sendFile(path.normalize(__dirname + '/../static/index.html'));
   });

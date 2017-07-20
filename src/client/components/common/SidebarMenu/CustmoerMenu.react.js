@@ -13,6 +13,11 @@ export default () => (
         Import Invoices
       </Link>
     </li>
+    <li key="AllTaskList">
+      <Link to="/invoice/allTaskList">
+        All Tasks List
+      </Link>
+    </li>
     <li key="TaskList">
       <Link to="/invoice/taskList">
         My Tasks List
