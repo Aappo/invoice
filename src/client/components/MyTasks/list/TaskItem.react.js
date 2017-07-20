@@ -49,6 +49,10 @@ const TaskItem = ({ invoice }, { i18n }) => (
   </div>
 );
 
+TaskItem.propTypes = {
+  invoice: PropTypes.object.isRequired
+};
+
 TaskItem.contextTypes = {
   i18n: PropTypes.object.isRequired
 };

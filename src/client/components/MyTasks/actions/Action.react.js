@@ -11,7 +11,7 @@ import { sendInvoiceEvent } from '../data/fetchers';
 
 export default class Action extends Component {
   static propTypes = {
-    invoice: PropTypes.object.isRequired,
+    invoice: PropTypes.object,
     updateInvoice: PropTypes.func.isRequired
   };
 
@@ -22,14 +22,14 @@ export default class Action extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentary: props.invoice.commentary
+      commentary: props.invoice ? (props.invoice.commentary && '') : ''
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { invoice : { commentary } } = nextProps;
-    if (this.state.commentary !== commentary) {
-      this.setState({ commentary: commentary ? commentary : "" })
+    const { invoice } = nextProps;
+    if (invoice && this.state.commentary !== invoice.commentary) {
+      this.setState({ commentary: invoice.commentary ? invoice.commentary : '' })
     }
   }
 
@@ -41,6 +41,7 @@ export default class Action extends Component {
 
   render() {
     const { invoice } = this.props;
+    const transitions = invoice ? invoice.transitions : [];
 
     return (
       <div id="action">
@@ -54,7 +55,7 @@ export default class Action extends Component {
               <form>
                 <FormGroup controlId="formControlsTextarea">
                   <FormControl
-                    readOnly={!invoice.transitions || invoice.transitions.length === 0}
+                    readOnly={transitions.length === 0}
                     componentClass="textarea"
                     placeholder="Comment"
                     value={this.state.commentary}
@@ -64,8 +65,7 @@ export default class Action extends Component {
               </form>
             </div>
             <ButtonGroup>
-              {invoice.transitions && invoice.transitions.length > 0 &&
-              invoice.transitions.map((transition) => (
+              {transitions.length > 0 && transitions.map((transition) => (
                 <Button
                   key={`${invoice.key}_${transition.event}`}
                   onClick={() => this.handleSendEvent(invoice.key, transition.event)}

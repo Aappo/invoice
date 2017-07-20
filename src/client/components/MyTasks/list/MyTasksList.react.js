@@ -8,7 +8,6 @@ export default class MyTasksList extends PureComponent {
 
   static propTypes = {
     list: PropTypes.array.isRequired,
-    invoice: PropTypes.object.isRequired,
     getInvoice: PropTypes.func.isRequired,
     sortBy: PropTypes.string
   };

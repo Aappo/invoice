@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Promise from 'bluebird';
 import {
   fetchTaskActions,
@@ -7,36 +7,62 @@ import {
   fetchCustomer,
   fetchSupplier,
   fetchSupplierContacts,
-  fetchSupplierAddresses
+  fetchSupplierAddresses,
+  fetchTermsOfDelivery,
+  fetchTermsOfPayment,
+  fetchMethodsOfPayment,
+  fetchCurrencies,
+  fetchInvoiceReceiptItems
 } from './data/fetchers';
 import _ from 'lodash';
 
 export default function withDataHandler(WrappedComponent) {
   class DataHandler extends Component {
 
-    state = {
-      taskList: [],
-      invoice: {}
+    static childContextTypes = {
+      termsOfDelivery: PropTypes.array.isRequired,
+      termsOfPayment: PropTypes.array.isRequired,
+      methodsOfPayment: PropTypes.array.isRequired,
+      currencies: PropTypes.array.isRequired,
     };
 
-    componentDidMount() {
-      fetchApprovalTasks({}).then((invoces) => {
-        if(invoces.length > 0) {
-          return Promise.props({
-            taskList: invoces,
-            invoice: this.loadInvoiceData(invoces[0].key)
-          }).then((result) => this.setState(result))
-        } else {
-          this.setState({taskList: invoces})
-        }
-      })
+    state = {
+      taskList: [],
+      // Common data loaded once and set to context
+      isMasterDataReady: false,
+      termsOfDelivery: [],
+      termsOfPayment: [],
+      methodsOfPayment: [],
+      currencies: []
+    };
+
+    getChildContext() {
+      return {
+        termsOfDelivery: this.state.termsOfDelivery,
+        termsOfPayment: this.state.termsOfDelivery,
+        methodsOfPayment: this.state.methodsOfPayment,
+        currencies: this.state.currencies
+      }
     }
 
-    loadInvoice(id) {
-      return fetchInvoiceReceipt(id).cath((err) => {
-        console.error(err);
-        throw Error(err);
-      })
+    componentDidMount() {
+      this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
+        fetchApprovalTasks({}).then((invoices) => {
+          return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].key).then((invoiceData) => {
+            this.setState({ taskList: invoices, invoice: invoiceData });
+          }));
+        })
+      })));
+    }
+
+    loadMasterData() {
+      return Promise.props({
+        termsOfDelivery: fetchTermsOfDelivery(),
+        termsOfPayment: fetchTermsOfPayment(),
+        methodsOfPayment: fetchMethodsOfPayment(),
+        currencies: fetchCurrencies(),
+        isMasterDataReady: true
+      });
     }
 
     loadInvoiceData(id) {
@@ -47,6 +73,7 @@ export default function withDataHandler(WrappedComponent) {
           supplier: fetchSupplier(invoice.supplierId),
           supplierContacts: fetchSupplierContacts(invoice.supplierId),
           supplierAddresses: fetchSupplierAddresses(invoice.supplierId),
+          items: fetchInvoiceReceiptItems(invoice.key),
           transitions: fetchTaskActions(invoice.key)
         })
       })
@@ -54,7 +81,7 @@ export default function withDataHandler(WrappedComponent) {
 
     getInvoice(id) {
       return this.loadInvoiceData(id).then((invoice) => {
-        this.setState({invoice})
+        this.setState({ invoice })
       }).catch((err) => {
         throw Error(err);
       })
@@ -70,17 +97,17 @@ export default function withDataHandler(WrappedComponent) {
     updateInvoice(id, updater) {
       return Promise.resolve(
         updater(
-          _.find(this.state.taskList, {key: id})
+          _.find(this.state.taskList, { key: id })
         )
       ).then(() => {
         return Promise.props({
           invoice: fetchInvoiceReceipt(id),
           invoiceData: this.loadInvoiceData(id)
-        }).then(({invoice, invoiceData}) => {
+        }).then(({ invoice, invoiceData }) => {
           this.setState({
             invoice: invoiceData,
             taskList: _.map(this.state.taskList, (task) => {
-              return task.key === id? invoice : task
+              return task.key === id ? invoice : task
             })
           })
         })
@@ -90,8 +117,12 @@ export default function withDataHandler(WrappedComponent) {
       })
     }
 
+    getInvoice(id) {
+      this.loadInvoiceData(id).then((invoice) => Promise.resolve(this.setState({ invoice: invoice })));
+    }
+
     render() {
-      return (
+      return this.state.isMasterDataReady && (
         <WrappedComponent
           list={this.state.taskList}
           invoice={this.state.invoice}

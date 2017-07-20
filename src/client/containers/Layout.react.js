@@ -10,7 +10,7 @@ const Layout = (props, { userData }) => (
     <div className="main-content">
       <HeaderMenu currentUserData={userData}/>
       <div className="content-wrap">
-        <div className="container">
+        <div className="container-fluid">
           <NotificationProvider>
             {props.children}
           </NotificationProvider>

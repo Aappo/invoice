@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react';
+import InvoiceDetails from './InvoiceDetails.react';
+import InvoiceItemsGrid from '../../InvoiceReceiptEditor/components/InvoiceEditor/InvoiceItemsGrid.react';
 
 import './Details.less';
 
 
 class Details extends React.Component {
+
   static propTypes = {
-    invoice: PropTypes.object.isRequired,
-  }
+    invoice: PropTypes.object,
+  };
 
   constructor(props) {
     super(props);
-
     this.state = {
       selectedTab: 1,
     };
@@ -59,8 +61,16 @@ class Details extends React.Component {
         return this.getInvoiceImageControl('/invoice/static/test_workarea/invoiceReceipt_TEST.pdf');
       case 2:
         return (
-          Details
+          <InvoiceDetails invoice={this.props.invoice} />
         );
+      case 3:
+        return (
+          <InvoiceItemsGrid
+            items={this.props.invoice.items}
+            readOnly={true}
+            onDelete={() => {}}
+          />
+        )
       default:
         return null;
     }
@@ -101,9 +111,23 @@ class Details extends React.Component {
                 Invoice details
               </a>
             </li>
+            <li key={3} className={this.state.selectedTab === 3 ? 'doing' : ''}>
+              <a
+                id={3}
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.selectTab(3);
+                }}
+              >
+                Invoice positions
+              </a>
+            </li>
           </ul>
         </div>
-        { this.getContent() }
+        <div id="content">
+          { this.props.invoice && this.getContent() }
+        </div>
       </div>
     );
   }

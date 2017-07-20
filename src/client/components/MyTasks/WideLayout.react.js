@@ -11,7 +11,6 @@ const WideLayout = ({list, invoice, getInvoice, updateInvoice}) => (
     <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">
       <MyTasksList
         list={list}
-        invoice={invoice}
         getInvoice={getInvoice}
       />
     </div>
@@ -24,7 +23,7 @@ const WideLayout = ({list, invoice, getInvoice, updateInvoice}) => (
 
 WideLayout.propTypes = {
   list: PropTypes.array.isRequired,
-  invoice: PropTypes.object.isRequired,
+  invoice: PropTypes.object,
   getInvoice: PropTypes.func.isRequired,
   updateInvoice: PropTypes.func.isRequired
 };
