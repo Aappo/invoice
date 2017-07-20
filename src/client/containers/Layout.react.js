@@ -1,25 +1,27 @@
-import React, {PropTypes} from 'react';
-import SidebarMenu from '../components/common/SidebarMenu.react';
+import React, { PropTypes } from 'react';
+import SidebarMenu from '../components/common/SidebarMenu';
 import NotificationProvider from '../components/common/NotificationProvider.react';
 import { HeaderMenu } from 'ocbesbn-react-components';
 
 // TODO: Not place NotificationProvider in representational component
-const Layout = (props, {currentUserData}) => (
-  <span>
+const Layout = (props, { userData }) => (
+  <div className="page-container">
     <SidebarMenu/>
-    <section className="content" style={{ 'backgroundColor': 'white' }}>
-      <HeaderMenu currentUserData={currentUserData} />
-      <div className="container-fluid">
-        <NotificationProvider>
-          {props.children}
-        </NotificationProvider>
+    <div className="main-content">
+      <HeaderMenu currentUserData={userData}/>
+      <div className="content-wrap">
+        <div className="container-fluid">
+          <NotificationProvider>
+            {props.children}
+          </NotificationProvider>
+        </div>
       </div>
-    </section>
-  </span>
+    </div>
+  </div>
 );
 
 Layout.contextTypes = {
-  currentUserData: PropTypes.object.isRequired
+  userData: PropTypes.object.isRequired
 };
 
 export default Layout;

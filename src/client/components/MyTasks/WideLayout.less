@@ -1,0 +1,26 @@
+
+@content-margin: 5px;
+
+.oc-invoices-my-tasks-wide {
+  background-color: #D3DADE;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  overflow-y: auto;
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    margin: @content-margin;
+    flex: 4;
+    min-width: 400px;
+  }
+
+  &-invoice {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+    //height: 100%;
+    min-width: 400px;
+  }
+}

@@ -1,15 +1,16 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
+    <link rel="stylesheet" href="/invoice/static/css/sidebar-layout.css">
     <script type="application/javascript" src="/invoice/static/bundle.js"></script>
-  <title>Invoice</title>
+    <title>Invoice</title>
 </head>
 
-<body>
-<span id="root"></span>
+<body class="page-body" style="overflow: auto;">
+<div id="root"></div>
 <script>
     window.invoice.renderApprovalApplication(
             document.getElementById("root"), {
