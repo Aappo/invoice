@@ -3,7 +3,7 @@ import InvoiceImportMarkup from '../components/InvoiceImport';
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
 import { INVOICE_IMPORT_CHUNK_SIZE } from '../constants/invoiceImport';
-import _ from 'lodash';
+import lodash from 'lodash';
 import messages from './i18n/InvoiceImport';
 
 export default class InvoiceImport extends Component {
@@ -28,14 +28,14 @@ export default class InvoiceImport extends Component {
   }
 
   _calculateImportPercentage(currentPercentage = 0, importSize) {
-    if (_.isNil(importSize) || importSize === 0) {
+    if (lodash.isNil(importSize) || importSize === 0) {
       return 100;
     }
     return currentPercentage + INVOICE_IMPORT_CHUNK_SIZE / importSize * 100;
   };
 
   handleImportInvoices(invoices) {
-    return Promise.resolve(this.setState({ importSize: _.size(invoices), importInProgress: true })
+    return Promise.resolve(this.setState({ importSize: lodash.size(invoices), importInProgress: true })
     ).then(() => Promise.all(
       _(invoices).chunk(INVOICE_IMPORT_CHUNK_SIZE).map((invoiceChunk) => {
         return request.post(`/invoice/api/invoices/import`).set(

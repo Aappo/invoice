@@ -3,7 +3,7 @@ import Formsy from 'formsy-react';
 import FormsyTextInput from '../common/form-components/FormsyTextInput.react';
 import FormsyDateRange from '../common/form-components/FormsyDateRange.react';
 import { Button } from 'react-bootstrap';
-import _ from 'lodash';
+import lodash from 'lodash';
 import { validateForm } from '../common/form-components/validateForm';
 
 const constraints = {
@@ -17,7 +17,7 @@ const constraints = {
     presence: {
       message: "^GlAccount.isRequired"
     }
-  },
+  }
 };
 const validate = validateForm(constraints);
 
@@ -45,7 +45,7 @@ export default class GlAccountForm extends PureComponent {
 
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    if (_.isEmpty(errors)) {
+    if (lodash.isEmpty(errors)) {
       this.props.onSubmit(model, resetForm, invalidateForm);
     } else {
       invalidateForm(errors);
@@ -54,7 +54,7 @@ export default class GlAccountForm extends PureComponent {
 
   _mapInputs(inputs) {
     return {
-      ..._.omit(inputs, 'validRange'),
+      ...lodash.omit(inputs, 'validRange'),
       validFrom: inputs.validRange.from,
       validTo: inputs.validRange.to
     };

@@ -28,7 +28,7 @@ export default class SearchForm extends Component {
                 />
                 <FormsySelect
                   label="Labels.status"
-                  name='statusId'
+                  name='status'
                   values={this.props.statuses}
                   toOptionConverter={
                     (status) => (

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import GlAccountEditorWrapper from '../components/GLAccountEditor';
 import request from 'superagent-bluebird-promise';
-import _ from 'lodash';
+import lodash from 'lodash';
 import messages from './i18n/GlAccountEditor';
 import contentRange from 'content-range';
 
@@ -63,11 +63,11 @@ export default class GLAccountEditor extends Component {
       'Accept', 'application/json'
     ).send(glAccount).then((response) => Promise.resolve(
       this.setState({
-        glAccounts: _.concat(this.state.glAccounts, response.body)
+        glAccounts: lodash.concat(this.state.glAccounts, response.body)
       })
     )).then(() => reset()
     ).catch((response) => {
-      if (_.get(response, 'body.errors[0].field') === 'PRIMARY') {
+      if (lodash.get(response, 'body.errors[0].field') === 'PRIMARY') {
         invalidateForm({ id: 'GlAccount.isUnique' });
       } else {
         throw Error(response);
@@ -80,7 +80,7 @@ export default class GLAccountEditor extends Component {
       'Accept', 'application/json'
     ).send(glAccountData).then((response) => {
       this.setState({
-        glAccounts: _.map(this.state.glAccounts, (glAccount) => {
+        glAccounts: lodash.map(this.state.glAccounts, (glAccount) => {
           if (glAccount.id === glAccountData.id) {
             return response.body;
           } else {
@@ -105,7 +105,7 @@ export default class GLAccountEditor extends Component {
           ...this.state.modals,
           delete: false
         },
-        glAccounts: _.reject(this.state.glAccounts, { id: id })
+        glAccounts: lodash.reject(this.state.glAccounts, { id: id })
       });
     })
   }

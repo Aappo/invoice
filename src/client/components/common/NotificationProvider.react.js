@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import NotificationSystem from 'react-notification-system';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 export default class NotificationProvider extends Component {
 
@@ -18,7 +18,7 @@ export default class NotificationProvider extends Component {
       showNotification: (message, level = 'info', autoDismiss = 2, dismissible = true, attributes = {}) => {
         this.refs.notificationSystem.addNotification(
           {
-            uid: _.uniqueId('notification_'),
+            uid: lodash.uniqueId('notification_'),
             level,
             autoDismiss,
             dismissible,

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import { Button, Glyphicon, Table } from 'react-bootstrap';
 
 /**
@@ -8,7 +8,7 @@ import { Button, Glyphicon, Table } from 'react-bootstrap';
  * @param items
  */
 const InvoiceItemsGrid = ({ items, onDelete, readOnly }, context) => (
-  <Table key={_.uniqueId()}>
+  <Table key={lodash.uniqueId()}>
     <thead>
     <tr>
       <th>#</th>
@@ -16,9 +16,6 @@ const InvoiceItemsGrid = ({ items, onDelete, readOnly }, context) => (
       <th>{context.i18n.getMessage('Labels.status')}</th>
       <th className="text-right">{context.i18n.getMessage('Labels.quantity')}</th>
       <th className="text-right">{context.i18n.getMessage('Labels.price')}</th>
-      <th className="text-right">{context.i18n.getMessage('Labels.totalNetPrice')}</th>
-      <th className="text-right">{context.i18n.getMessage('Labels.taxRate')}</th>
-      <th className="text-right">{context.i18n.getMessage('Labels.taxAmount')}</th>
       <th>{context.i18n.getMessage('Labels.poPoiRef')}</th>
       <th/>
     </tr>
@@ -26,7 +23,7 @@ const InvoiceItemsGrid = ({ items, onDelete, readOnly }, context) => (
     <tbody>
     {items && items.map((item) => {
       return (
-        <tr key={`invoice-receipt-item-${item.key}`}>
+        <tr key={`invoice-receipt-item-${item.id}`}>
           <td>
             {item.orderItemNo}
           </td>
@@ -36,42 +33,32 @@ const InvoiceItemsGrid = ({ items, onDelete, readOnly }, context) => (
           <td className="text-left">
               <span className="label label-default">
                 <nobr>
-                  {item.statusId}
+                  {item.status}
                 </nobr>
               </span>
           </td>
           <td className="text-right">
-            {item.quantity}&nbsp;{item.uomId}
+            {item.quantityCharged}&nbsp;{item.unitOfMeasureId}
           </td>
           <td className="text-right">
-            {item.netPrice}&nbsp;{item.currencyId || '-'}/{item.priceUnit}
-          </td>
-          <td className="text-right">
-            {item.totalNetPrice}&nbsp;{item.currency || '-'}
-          </td>
-          <td className="text-right">
-            {item.taxRate || '-'}
-          </td>
-          <td className="text-right">
-            {item.taxAmount || '-'}
+            {item.netPrice}&nbsp;{item.currencyId || '-'}
           </td>
           <td>
-            {(item.purchaseOrderId || item.purchaseOrderItemNo) ?
-                `${item.purchaseOrderId || ''}/${item.purchaseOrderItemNo || ''}` : 'n/a'}
+            {item.purchaseOrderId || 'n/a'}
           </td>
           {readOnly ?
             <td className="invoice-btn-group">
-              <Button bsStyle="link" onClick={_.noop}>
+              <Button bsStyle="link" onClick={lodash.noop}>
                 <Glyphicon glyph="eye-open"/>
               </Button>
             </td> :
             <td className="invoice-btn-group">
-              <Button bsStyle="link" onClick={_.noop}>
+              <Button bsStyle="link" onClick={lodash.noop}>
                 <Glyphicon glyph="edit"/>
               </Button>
               <Button
                 bsStyle="link"
-                onClick={() => onDelete(item.key)}
+                onClick={() => onDelete(item.id)}
               >
                 <Glyphicon glyph="trash"/>
               </Button>

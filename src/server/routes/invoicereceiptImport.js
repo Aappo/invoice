@@ -1,33 +1,31 @@
 'use strict';
-const _ = require('lodash');
+
+const lodash = require('lodash');
 
 /**
- * Import invoice receipt items and returns promise that will be associated with
+ * Import purchase invoice items and returns promise that will be associated with
  * statistical object {created: n, failed: k}
  *
  * @param db - db model {models, sequelize and etc. object}
- * @param invoiceReceiptItems - invoice receipt items array JSON representation
- * @param invoice - InvoiceReceipt instatnce that will be associated with imported items
+ * @param purchaseInvoiceItems - purchase invoice items array JSON representation
+ * @param invoice - PurchaseInvoice instatnce that will be associated with imported items
  * @return {Promise.<TResult>}
  */
-const importInvoiceItems = (db, invoiceReceiptItems, invoice) => {
+const importInvoiceItems = (db, purchaseInvoiceItems, invoice) => {
   return Promise.all(
-    _.map(invoiceReceiptItems, (item) => {
-      return db.models.CostDistribution.create().then((costDistribution) => {
-        return db.models.InvoiceReceiptItem.create(_.extend(
-          item, {
-            invoiceReceiptSn: invoice.key,
-            costDistributionSn: costDistribution.key
-          }
-        ))
-      }).then((createdItem) => {
+    lodash.map(purchaseInvoiceItems, item => {
+      return db.models.PurchaseInvoiceItem.create(lodash.extend(
+        item, {
+          purchaseInvoiceId: invoice.id
+        }
+      )).then(createdItem => {
         return Promise.resolve({ created: true });
-      }).catch((failedItem) => {
+      }).catch(failedItem => {
         return Promise.resolve({ failed: true });
       })
     })
   ).then((itemImportStatistic) => {
-    return Promise.resolve(_.reduce(itemImportStatistic, (statisticAccumulator, itemImportResult) => {
+    return Promise.resolve(lodash.reduce(itemImportStatistic, (statisticAccumulator, itemImportResult) => {
       /* eslint-disable no-param-reassign */
       if (itemImportResult.created) {
         statisticAccumulator.created++;
@@ -43,46 +41,43 @@ const importInvoiceItems = (db, invoiceReceiptItems, invoice) => {
 /**
  * Creates error callback for invoice import failure
  *
- * @param invoiceReceiptId
+ * @param purchaseInvoiceId
  * @return {function()}
  */
-const invoiceImportFailedCallback = (invoiceReceiptId) => {
+const invoiceImportFailedCallback = purchaseInvoiceId => {
   return () => {
     return Promise.resolve({
       failed: true,
-      invoiceReceiptId: invoiceReceiptId
+      purchaseInvoiceId: purchaseInvoiceId
     });
   }
 };
 
 /**
- * Removes invoice receipt items of the invoice, then starts import of invoice items and finally collects
+ * Removes purchase invoice items of the invoice, then starts import of invoice items and finally collects
  * statistic and resolves it with a promise
  *
- * @param invoice InvoiceReceipt instance
+ * @param invoice PurchaseInvoice instance
  * @param invoiceData - invoice JSON representation
  * @param db - db model {models, sequelize and etc. object}
- * @param originalStatisticObject - object {invoiceReceiptId: <id>, updated/crated: true}
+ * @param originalStatisticObject - object {purchaseInvoiceId: <id>, updated/crated: true}
  * @return {Promise.<TResult>}
  */
 const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalStatisticObject) => {
-  // removing invoice receipt items
-  return db.models.InvoiceReceiptItem.destroy({
+  // removing purchase invoice items
+  return db.models.PurchaseInvoiceItem.destroy({
     where: {
-      invoiceReceiptSn: invoice.key
+      purchaseInvoiceId: invoice.id
     }
   }).then(() => {
     // statrting invoice item import
     return importInvoiceItems(
       db,
-      invoiceData.invoiceReceiptItems,
+      invoiceData.purchaseInvoiceItems,
       invoice
-    ).then((itemImportStatistic) => {
+    ).then(itemImportStatistic => {
       // collecting items import statistic
-      return Promise.resolve(_.extend(
-        originalStatisticObject,
-        { items: itemImportStatistic }
-      ));
+      return Promise.resolve(lodash.extend(originalStatisticObject, { items: itemImportStatistic }));
     })
   });
 };
@@ -90,39 +85,39 @@ const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalSt
 /**
  * Creates new invoice and items
  *
- * @param insertData - JSON invoice receipt representation
+ * @param insertData - JSON purchase invoice representation
  * @param db - db model {models, sequelize and etc. object}
  * @return {Promise.<TResult>}
  */
 const createInvoice = (insertData, db) => {
   // creating new invoice
-  return db.models.InvoiceReceipt.create(
-    _.omit(insertData, ['invoiceReceiptItems'])
-  ).then((newInvoice) => {
+  return db.models.PurchaseInvoice.create(
+    lodash.omit(insertData, ['purchaseInvoiceItems'])
+  ).then(newInvoice => {
     return collectInvoiceItemsImportStatistic(newInvoice, insertData, db, {
       created: true,
-      invoiceReceiptId: newInvoice.invoiceReceiptId
+      purchaseInvoiceId: newInvoice.id
     })
-  }).catch(invoiceImportFailedCallback(insertData.invoiceReceiptId))
+  }).catch(invoiceImportFailedCallback(insertData.purchaseInvoiceId))
 };
 
 /**
  * Updated @invoice2Update with passed @updateDate, existing items will be overwritten
  *
  * @param invoice2Update
- * @param updateData - Invoicereceipt instance
+ * @param updateData - PurchaseInvoice instance
  * @param db - db model {models, sequelize and etc. object}
  * @return {Promise.<TResult>}
  */
 const updateInvoice = (invoice2Update, updateData, db) => {
   return invoice2Update.update(
-    _.omit(updateData, ['invoiceReceiptItems'])
-  ).then((updatedInvoice) => {
+    lodash.omit(updateData, ['purchaseInvoiceItems'])
+  ).then(updatedInvoice => {
     return collectInvoiceItemsImportStatistic(updatedInvoice, updateData, db, {
       updated: true,
-      invoiceReceiptId: updatedInvoice.invoiceReceiptId
+      purchaseInvoiceId: updatedInvoice.id
     })
-  }).catch(invoiceImportFailedCallback(updateData.invoiceReceiptId))
+  }).catch(invoiceImportFailedCallback(updateData.purchaseInvoiceId))
 };
 
 /**
@@ -136,20 +131,16 @@ module.exports = function(app, db) {
     // importing all invoices in async way - each invoice - separate promise
     Promise.all(
       // converting invoice array to array of import promises
-      _.map(req.body, (invoice) => {
+      lodash.map(req.body, invoice => {
         // trying to get already existing invoice for invoiceReceiptId
-        return db.models.InvoiceReceipt.findOne({
-          where: {
-            invoiceReceiptId: invoice.invoiceReceiptId
-          }
-        }).then((existingInvoice) => {
+        return db.models.PurchaseInvoice.findById(invoice.id).then(existingInvoice => {
           // if we already have such invoice - update it otherwise - create new one
-          return _.isNil(existingInvoice) ?
+          return lodash.isNil(existingInvoice) ?
             createInvoice(invoice, db) :
             updateInvoice(existingInvoice, invoice, db);
         })
       })
-    ).then((importResults) => {
+    ).then(importResults => {
       res.json(importResults);
     })
   });

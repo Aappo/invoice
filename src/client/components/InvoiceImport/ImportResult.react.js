@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 const importResultLabel = (invoiceImportResult) => {
   let labelModel = {
@@ -34,7 +34,6 @@ const ImportResult = ({ importStatistics, cleanImportResult }, { i18n }) => (
   <Table responsive={true}>
     <thead>
     <tr>
-      <th className="text-nowrap">Invoice Receipt Id</th>
       <th className="text-nowrap">Imported Result</th>
       <th className="text-nowrap">Invoice Receipt Items</th>
       <th className="text-nowrap">
@@ -44,15 +43,14 @@ const ImportResult = ({ importStatistics, cleanImportResult }, { i18n }) => (
     </thead>
     <tbody>
     {
-      importStatistics.map((invoiceImportResult) => {
+      importStatistics.map(invoiceImportResult => {
         return (
-          <tr key={invoiceImportResult.invoiceReceiptId ? invoiceImportResult.invoiceReceiptId : _.uniqueId()}>
-            <td>{invoiceImportResult.invoiceReceiptId}</td>
+          <tr key={invoiceImportResult.purchaseInvoiceId || lodash.uniqueId()}>
             <td>
               {importResultLabel(invoiceImportResult)}
             </td>
             <td colSpan="2">
-              {!_.isEmpty(invoiceImportResult.items) && renderInvoiceItemsStatistic(invoiceImportResult.items)}
+              {!lodash.isEmpty(invoiceImportResult.items) && renderInvoiceItemsStatistic(invoiceImportResult.items)}
             </td>
           </tr>
         );

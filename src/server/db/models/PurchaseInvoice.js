@@ -56,6 +56,14 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      supplierId: {
+        field: 'SupplierID',
+        type: Sequelize.STRING(50),
+        validate: {
+          notEmpty: true
+        },
+        allowNull: true
+      },
       /**
        * coming from the customer, Customer may have multiple bank accounts, here we decide which one we use for the payment
        */
@@ -258,7 +266,7 @@ module.exports.init = function(db, config) {
       classMethods: {
         associate: function(models) {
           models.PurchaseInvoice.hasMany(models.PurchaseInvoiceItem, {
-            as: 'items',
+            as: 'purchaseInvoiceItems',
             foreignKey: 'purchaseInvoiceId',
             targetKey: 'id'
           });

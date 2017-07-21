@@ -47,6 +47,13 @@ module.exports = function(queryInterface) {
       },
       allowNull: true
     },
+    SupplierID: {
+      type: Sequelize.STRING(50),
+      validate: {
+        notEmpty: true
+      },
+      allowNull: true
+    },
     /**
      * coming from the customer, Customer may have multiple bank accounts, here we decide which one we use for the payment
      */
@@ -235,6 +242,11 @@ module.exports = function(queryInterface) {
         'PurchaseInvoice',
         ['CustomerID'],
         { indexName: 'PurchaseInvoice_CustomerID_idx' }
+      ),
+      queryInterface.addIndex(
+        'PurchaseInvoice',
+        ['SupplierID'],
+        { indexName: 'PurchaseInvoice_SupplierID_idx' }
       ),
       queryInterface.addIndex(
         'PurchaseInvoice',

@@ -1,10 +1,10 @@
 'use strict';
 
 const invoiceStatuses = require('../stubData/invoiceStatuses.json');
-const _ = require('lodash');
+const lodash = require('lodash');
 
 /**
- * Stub rest endpoint to load invoice receipt statuses
+ * Stub rest endpoint to load purchase invoice statuses
  * @param app
  * @param db
  */
@@ -14,6 +14,6 @@ module.exports = function(app, db) {
   });
 
   app.get('/api/statuses/invoice/:id', (req, res) => {
-    res.json(_.find(invoiceStatuses, { statusId: req.params.id }));
+    res.json(lodash.find(invoiceStatuses, { statusId: req.params.id }));
   });
 };

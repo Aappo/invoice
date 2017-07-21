@@ -6,7 +6,7 @@ import FormsyDateRange from '../../../common/form-components/FormsyDateRange.rea
 import FormsySelect from '../../../common/form-components/FormsySelect.react';
 import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
 import InvoiceHeaderStaticFields from './InvoiceHeaderStaticFields.react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import constraints from './InvoiceFormConstraints';
 import { validateForm } from '../../../common/form-components/validateForm';
 const validate = validateForm(constraints);
@@ -51,8 +51,8 @@ export default class InvoiceForm extends Component {
 
   _mapInputs(inputs) {
     /* eslint-disable no-param-reassign */
-    return _.transform(inputs, (result, value, key) => {
-      if (key === 'periodOfService' && !_.isNil(value)) {
+    return lodash.transform(inputs, (result, value, key) => {
+      if (key === 'periodOfService' && !lodash.isNil(value)) {
         result.periodOfServiceFrom = value.from;
         result.periodOfServiceTo = value.to;
       } else {
@@ -64,7 +64,7 @@ export default class InvoiceForm extends Component {
 
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    if (_.isEmpty(errors)) {
+    if (lodash.isEmpty(errors)) {
       this.props.onSave(model, resetForm);
     } else {
       invalidateForm(errors);
@@ -87,7 +87,7 @@ export default class InvoiceForm extends Component {
       onCancel,
       displayMode,
       readOnly
-    } = this.props;
+      } = this.props;
     const leftColumnFields = [
       <InvoiceHeaderStaticFields
         key='headerFields'
@@ -96,20 +96,12 @@ export default class InvoiceForm extends Component {
         supplierContacts={supplierContacts}
         customer={customer}
       />,
-      <FormsyTextInput
-        key='extInvoiceReceiptId'
-        label="Labels.extInvoiceReceiptId"
-        name='extInvoiceReceiptId'
-        required={true}
-        value={this.props.invoice.extInvoiceReceiptId}
-        disabled={readOnly}
-      />,
       <FormsyDateInput
-        key='invoiceDate'
-        label="Labels.invoiceDate"
-        name='invoiceDate'
+        key='invoicedOn'
+        label="Labels.invoicedOn"
+        name='invoicedOn'
         required={true}
-        value={invoice.invoiceDate}
+        value={invoice.invoicedOn}
         disabled={readOnly}
       />,
       <FormsyDateRange
@@ -125,24 +117,10 @@ export default class InvoiceForm extends Component {
       <FormGroupMarkup label="Labels.status" key='status'>
                 <span className="label label-default">
                   <nobr>
-                    {statusLabel(invoice.statusId)}
+                    {statusLabel(invoice.status)}
                   </nobr>
                 </span>
       </FormGroupMarkup>,
-      <FormsyTextInput
-        key='accountingRecordId'
-        label="Labels.accountingRecordId"
-        name='accountingRecordId'
-        value={invoice.accountingRecordId}
-        disabled={readOnly}
-      />,
-      <FormsyTextInput
-        key='referenceInformation'
-        label="Labels.referenceInformation"
-        name='referenceInformation'
-        value={invoice.referenceInformation}
-        disabled={readOnly}
-      />,
       <FormsyDateInput
         key='dueDate'
         label="Labels.dueDate"
@@ -165,47 +143,6 @@ export default class InvoiceForm extends Component {
           )
         }
         defaultOption={<option value="" defaultValue={true}/>}
-        disabled={readOnly}
-      />,
-      <FormsySelect
-        key='methodOfPaymentId'
-        label="Labels.methodOfPayment"
-        name="methodOfPaymentId"
-        required={true}
-        value={invoice.methodOfPaymentId}
-        values={methodsOfPayment}
-        toOptionConverter={
-          (mop) => (
-            <option key={`method-of-payment-${mop.id}`} value={mop.id}>
-              {mop.description}
-            </option>
-          )
-        }
-        defaultOption={<option value="" defaultValue={true}/>}
-        disabled={readOnly}
-      />,
-      <FormsySelect
-        key='termsOfDeliveryId'
-        label="Labels.termsOfDelivery"
-        name="termsOfDeliveryId"
-        value={invoice.termsOfDeliveryId}
-        values={termsOfDelivery}
-        toOptionConverter={
-          (tod) => (
-            <option key={`term-of-delivery-${tod.id}`} value={tod.id}>
-              {tod.description}
-            </option>
-          )
-        }
-        defaultOption={<option value="" defaultValue={true}/>}
-        disabled={readOnly}
-      />,
-      <FormsyTextInput
-        key='commentary'
-        label="Labels.comment"
-        name='commentary'
-        value={invoice.commentary}
-        componentClass="textarea"
         disabled={readOnly}
       />
     ];

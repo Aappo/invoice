@@ -1,5 +1,5 @@
 import validate from 'validate.js';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 /**
  * Returns function to validate form based on passed constraints
@@ -10,8 +10,8 @@ import _ from 'lodash';
 export const validateForm = (formConstraints) => {
   return (values) => {
     const validationResult = {};
-    _.forEach(validate(values, formConstraints), (value, key) => {
-      _.set(validationResult, key, value[0])
+    lodash.forEach(validate(values, formConstraints), (value, key) => {
+      lodash.set(validationResult, key, value[0])
     });
     return validationResult;
   }

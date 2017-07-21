@@ -1,8 +1,9 @@
 'use strict';
-const _ = require('lodash');
+
+const lodash = require('lodash');
 
 /**
- * Rest endpoint for exporting InvoiceReceipts into JSON format
+ * Rest endpoint for exporting PurchaseInvoices into JSON format
  *
  * @param app
  * @param db
@@ -10,23 +11,24 @@ const _ = require('lodash');
 module.exports = function(app, db) {
   app.get('/api/invoices/export', (req, res) => {
     console.log(req.query.exportIds);
-    console.log(_.map(req.query.exportIds, parseInt));
+    console.log(lodash.map(req.query.exportIds, parseInt));
 
-    db.models.InvoiceReceipt.findAll({
+    db.models.PurchaseInvoice.findAll({
       where: {
-        key: {
-          $in: _.map(_.castArray(req.query.exportIds), (stringId) => (parseInt(stringId, 10)))
+        id: {
+          $in: lodash.map(lodash.castArray(req.query.exportIds), stringId => (parseInt(stringId, 10)))
         }
       },
       include: [{
-        model: db.models.InvoiceReceiptItem, as: 'invoiceReceiptItems'
+        model: db.models.PurchaseInvoiceItem,
+        as: 'purchaseInvoiceItems'
       }]
-    }).then((invoiceReceipts) => {
+    }).then(invoices => {
       res.set({
         'Content-Disposition': `attachment; filename=invoiceExport-${Date.now()}.json`,
         'Content-type': 'text/csv'
       });
-      res.send((_.isEmpty(invoiceReceipts) || _.isNil(invoiceReceipts)) ? {} : invoiceReceipts);
+      res.send((lodash.isEmpty(invoices) || lodash.isNil(invoices)) ? {} : invoices);
     });
   });
 };

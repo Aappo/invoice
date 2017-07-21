@@ -36,7 +36,7 @@ module.exports = function(epilogue, db) {
       write: {
         before: (req, res, context) => {
           // eslint-enable no-param-reassign
-          context.attributes.purchaserInvoiceId = req.params.purchaseInvoiceId;
+          context.attributes.purchaseInvoiceId = req.params.purchaseInvoiceId;
           db.models.PurchaseInvoice.findById(req.params.purchaseInvoiceId).then(invoice => {
             if (!_.isNil(invoice)) {
               db.models.PurchaseInvoiceItem.max('orderItemNo', {
@@ -49,7 +49,7 @@ module.exports = function(epilogue, db) {
                 context.continue();
               });
             } else {
-              context.error(new Errors.BadRequestError("Invalid invoice receipt id"));
+              context.error(new Errors.BadRequestError("Invalid purchase invoice id"));
             }
           }).catch((err) => {
             console.error(err);
