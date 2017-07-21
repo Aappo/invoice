@@ -17,13 +17,22 @@ import {
 import _ from 'lodash';
 
 export default function withDataHandler(WrappedComponent) {
+
   class DataHandler extends Component {
+
+    static propTypes = {
+      assignedToMe: PropTypes.bool
+    };
 
     static childContextTypes = {
       termsOfDelivery: PropTypes.array.isRequired,
       termsOfPayment: PropTypes.array.isRequired,
       methodsOfPayment: PropTypes.array.isRequired,
       currencies: PropTypes.array.isRequired,
+    };
+
+    static defaultProps = {
+      assignedToMe: false
     };
 
     state = {
@@ -47,9 +56,9 @@ export default function withDataHandler(WrappedComponent) {
 
     componentDidMount() {
       this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
-        fetchApprovalTasks({}).then((invoices) => {
+        fetchApprovalTasks({ searchParams: { assignedToMe: this.props.assignedToMe } }).then((invoices) => {
           return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].key).then((invoiceData) => {
-            this.setState({ taskList: invoices, invoice: invoiceData });
+            return Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }));
           }));
         })
       })));
@@ -80,11 +89,8 @@ export default function withDataHandler(WrappedComponent) {
     }
 
     getInvoice(id) {
-      return this.loadInvoiceData(id).then((invoice) => {
-        this.setState({ invoice })
-      }).catch((err) => {
-        throw Error(err);
-      })
+      return this.loadInvoiceData(id).then((invoice) => Promise.resolve(this.setState({ invoice }))
+      ).catch((err) => { throw Error(err); });
     }
 
     /**
@@ -104,21 +110,25 @@ export default function withDataHandler(WrappedComponent) {
           invoice: fetchInvoiceReceipt(id),
           invoiceData: this.loadInvoiceData(id)
         }).then(({ invoice, invoiceData }) => {
-          this.setState({
-            invoice: invoiceData,
-            taskList: _.map(this.state.taskList, (task) => {
-              return task.key === id ? invoice : task
+          let updatedInvoice;
+          let updatedTaskList;
+          if (invoiceData.transitions.length === 0 && this.props.assignedToMe) {
+            updatedTaskList = _.filter(this.state.taskList, task => task.key !== invoiceData.key);
+          } else {
+            updatedInvoice = invoiceData;
+            updatedTaskList = _.map(this.state.taskList, task => task.key === id ? invoice : task);
+          }
+          return Promise.resolve(
+            this.setState({
+              invoice: updatedInvoice,
+              taskList: updatedTaskList
             })
-          })
+          );
         })
       }).catch((err) => {
         console.error(err);
         throw Error(err);
       })
-    }
-
-    getInvoice(id) {
-      this.loadInvoiceData(id).then((invoice) => Promise.resolve(this.setState({ invoice: invoice })));
     }
 
     render() {

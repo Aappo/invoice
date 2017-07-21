@@ -7,6 +7,7 @@ module.exports = function(app, db) {
   app.get([
     '/',
     '/taskList',
+    '/allTaskList',
     '/import'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
@@ -16,15 +17,4 @@ module.exports = function(app, db) {
       res.send('This page is restricted to customer assigned users.')
     }
   });
-  //
-  // app.get([
-  //   '/edit/:id',
-  //   '/edit/:id/items',
-  //   '/create',
-  //   '/import',
-  //   '/glAccounts',
-  //   '/taskList'
-  // ], (req, res) => {
-  //   res.sendFile(path.normalize(__dirname + '/../static/index.html'));
-  // });
 };

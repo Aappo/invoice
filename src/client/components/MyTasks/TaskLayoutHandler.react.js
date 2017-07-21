@@ -11,21 +11,29 @@ import messages from './i18n'
 
 export default class TaskLayoutHandler extends Component {
 
-  state = {
-    useNarrow: false,
+  static propTypes = {
+    assignedToMe: PropTypes.bool
   };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired
   };
 
-  componentDidMount() {
-    window.addEventListener('resize', ::this.switchLayout);
-    this.switchLayout();
-  }
+  static defaultProps = {
+    assignedToMe: false,
+  };
+
+  state = {
+    useNarrow: false,
+  };
 
   componentWillMount() {
     this.context.i18n.register('MyTasks', messages);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', ::this.switchLayout);
+    this.switchLayout();
   }
 
   componentWillUnmount() {
@@ -33,15 +41,17 @@ export default class TaskLayoutHandler extends Component {
   }
 
   switchLayout() {
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
     this.setState({
       useNarrow: window.innerWidth < NARROW_MODE_BREAK_POINT
     })
   }
 
   render() {
+    const { assignedToMe } = this.props;
     return (
-      this.state.useNarrow ?  <NarrowLayoutWithData /> : <WideLayoutWithData />
+      this.state.useNarrow ?
+        <NarrowLayoutWithData assignedToMe={assignedToMe} /> : <WideLayoutWithData assignedToMe={assignedToMe} />
     );
   }
 }
