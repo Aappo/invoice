@@ -27,6 +27,27 @@
     },
     {
       "from": "inspectionRequired",
+      "event": "postComment",
+      "to": "inspectionRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "inspectionRequired",
       "event": "sendToClarification",
       "to": "inspClrRequired",
       "guards": [
@@ -68,9 +89,51 @@
       ]
     },
     {
+      "from": "inspClrRequired",
+      "event": "postComment",
+      "to": "inspClrRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
       "from": "approvalRequired",
       "event": "approve",
       "to": "archived",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "approvalRequired",
+      "event": "postComment",
+      "to": "approvalRequired",
       "guards": [
         {
           "name": "userHasRole",
@@ -113,6 +176,27 @@
       "from": "appClrRequired",
       "event": "clarifyForApproval",
       "to": "approvalRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "appClrRequired",
+      "event": "postComment",
+      "to": "appClrRequired",
       "guards": [
         {
           "name": "userHasRole",

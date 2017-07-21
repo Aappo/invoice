@@ -16,7 +16,8 @@ let Action = {
     sendToClarification: 'Send To Clarification',
     clarifyForInspection: 'Clarify for Inspector',
     clarifyForApproval: 'Clarify for Approver',
-    approve: 'Approve'
+    approve: 'Approve',
+    postComment: 'Leave a Comment'
   }
 };
 Action.header = 'Approval';

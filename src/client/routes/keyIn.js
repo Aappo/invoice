@@ -5,6 +5,7 @@ import { InvoiceOverview, InvoiceCreator, InvoiceItemEditor } from '../component
 import InvoiceImport from '../containers/InvoiceImport.react';
 import GLAccountEditor from '../containers/GLAccountEditor.react';
 
+//deprecated and will be removed
 export default () => (
   <Route component={Layout}>
     <Route path="/invoice" component={InvoiceOverview}/>
