@@ -230,6 +230,10 @@ module.exports = function(queryInterface) {
         notEmpty: true
       },
       allowNull: true
+    },
+    Commentary: {
+      type: Sequelize.STRING(2000),
+      allowNull: true
     }
   }).then(() => {
     return Promise.all([

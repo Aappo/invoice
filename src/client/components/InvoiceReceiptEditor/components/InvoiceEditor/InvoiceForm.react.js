@@ -81,8 +81,6 @@ export default class InvoiceForm extends Component {
       invoice,
       statusLabel,
       termsOfPayment,
-      methodsOfPayment,
-      termsOfDelivery,
       currencies,
       onCancel,
       displayMode,
@@ -102,13 +100,6 @@ export default class InvoiceForm extends Component {
         name='invoicedOn'
         required={true}
         value={invoice.invoicedOn}
-        disabled={readOnly}
-      />,
-      <FormsyDateRange
-        key='periodOfService'
-        label="Labels.periodOfService"
-        name="periodOfService"
-        value={{ from: invoice.periodOfServiceFrom, to: invoice.periodOfServiceTo }}
         disabled={readOnly}
       />
     ];

@@ -15,6 +15,35 @@
             "role": "invoice-inspector"
           }
         }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "inspectionRequired",
+      "event": "postComment",
+      "to": "inspectionRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
       ]
     },
     {
@@ -28,12 +57,57 @@
             "role": "invoice-inspector"
           }
         }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
       ]
     },
     {
       "from": "inspClrRequired",
       "event": "clarifyForInspection",
-      "to": "inspectionRequired"
+      "to": "inspectionRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "inspClrRequired",
+      "event": "postComment",
+      "to": "inspClrRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-inspector"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
     },
     {
       "from": "approvalRequired",
@@ -44,6 +118,35 @@
           "name": "userHasRole",
           "arguments": {
             "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "approvalRequired",
+      "event": "postComment",
+      "to": "approvalRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
           }
         }
       ]
@@ -59,12 +162,57 @@
             "role": "invoice-approver"
           }
         }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
       ]
     },
     {
       "from": "appClrRequired",
       "event": "clarifyForApproval",
-      "to": "approvalRequired"
+      "to": "approvalRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "appClrRequired",
+      "event": "postComment",
+      "to": "appClrRequired",
+      "guards": [
+        {
+          "name": "userHasRole",
+          "arguments": {
+            "role": "invoice-approver"
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
     }
   ]
 }

@@ -42,7 +42,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     static contextTypes = {
       i18n: PropTypes.object.isRequired,
       router: PropTypes.object.isRequired,
-      currentUserData: PropTypes.object.isRequired,
+      userData: PropTypes.object.isRequired,
       showNotification: PropTypes.func.isRequired
     };
 
@@ -116,15 +116,15 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     initInvoiceData(customerId) {
       return Promise.props({
         invoice: {
-          supplierId: this.context.currentUserData.supplierid,
+          supplierId: this.context.userData.supplierid,
           customerId: customerId,
           statusId: lodash.find(this.state.statuses, { statusId: '100' }).statusId,
           intrastatId: '000',
           bookingDate: new Date()
         },
-        supplier: fetchSupplier(this.context.currentUserData.supplierid),
-        supplierAddresses: fetchSupplierAddresses(this.context.currentUserData.supplierid),
-        supplierContacts: fetchSupplierContacts(this.context.currentUserData.supplierid),
+        supplier: fetchSupplier(this.context.userData.supplierid),
+        supplierAddresses: fetchSupplierAddresses(this.context.userData.supplierid),
+        supplierContacts: fetchSupplierContacts(this.context.userData.supplierid),
         customer: fetchCustomer(customerId),
         isInvoiceDataReady: true
       }).then((invoiceData) => this.setState(invoiceData));

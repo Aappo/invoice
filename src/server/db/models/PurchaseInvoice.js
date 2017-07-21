@@ -260,6 +260,14 @@ module.exports.init = function(db, config) {
           notEmpty: true
         },
         allowNull: true
+      },
+      /**
+       * Internal comment (also see order text which is for external usage).
+       */
+      commentary: {
+        field: 'Commentary',
+        type: Sequelize.STRING(2000),
+        allowNull: true
       }
     },
     {

@@ -35,7 +35,7 @@ const ImportResult = ({ importStatistics, cleanImportResult }, { i18n }) => (
     <thead>
     <tr>
       <th className="text-nowrap">Imported Result</th>
-      <th className="text-nowrap">Invoice Receipt Items</th>
+      <th className="text-nowrap">Purchase Invoice Items</th>
       <th className="text-nowrap">
         <button className="btn btn-default" onClick={cleanImportResult}>Close</button>
       </th>

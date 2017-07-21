@@ -74,7 +74,7 @@ const SearchResult = ({
                   {context.i18n.formatDate(inv.dueDate)}
                 </td>
                 <td>
-                  {inv.totalGrossPrice}&nbsp;{inv.currency}
+                  {inv.totalGrossPrice}&nbsp;{inv.currencyId}
                 </td>
                 <td>
                   <span className="label label-default">{statusLabel(inv.status)}</span>

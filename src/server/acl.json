@@ -85,6 +85,11 @@
         "type": "rest",
         "resourceId": "/api/statuses",
         "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/taskList",
+        "actions": ["view"]
       }
     ]
   }

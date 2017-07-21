@@ -1,0 +1,63 @@
+
+#action {
+  display: flex;
+  margin: 5px;
+  background-color: white;
+
+  #oc-invoices-invoice-enquiry {
+      position: relative;
+      padding: 1px;
+      margin: 0px 5px 5px 0px;
+      width: 100%;
+
+      .oc-invoices-invoice-card {
+        display: flex;
+        flex-direction: column;
+        margin: 2px;
+
+        #enquiry-ok {
+          width: 150px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .backgrounddimming {
+        background-color: rgba(0,0,0,0.11);
+      }
+
+      .error {
+        color: #DD2515;
+      }
+  }
+
+  .oc-invoices-invoice-card {
+    padding: 0.7em;
+    margin: 0 0.7em 0.7em 5px;
+    background: #fff;
+
+    .oc-invoices-invoice-card-header {
+      font-size: 18px;
+      height: 30px;
+
+      .approval-title {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+
+  .oc-invoices-enquiry-border-default {
+      background-color: #fff;
+      opacity: 0;
+  }
+
+  .oc-invoices-enquiry-border-clear {
+      background-color: #FECA1D;
+      opacity: 1;
+  }
+
+  .oc-invoices-invoice-enquiry-option-text {
+      font-size: 12;
+  }
+}

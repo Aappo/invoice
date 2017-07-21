@@ -13,20 +13,20 @@ const loadCurrentUserData = function () {
 
 export default class UserInfoProvider extends PureComponent {
   static childContextTypes = {
-    currentUserData: PropTypes.object.isRequired
+    userData: PropTypes.object.isRequired
   };
 
   state = {
-    currentUserData: {}
+    userData: {}
   };
 
   componentDidMount() {
-    loadCurrentUserData().then((data) => (this.setState({currentUserData: {...data}})))
+    loadCurrentUserData().then((data) => (this.setState({userData: {...data}})))
   }
 
   getChildContext() {
     return {
-      currentUserData: this.state.currentUserData
+      userData: this.state.userData
     }
   }
 

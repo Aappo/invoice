@@ -1,0 +1,72 @@
+{
+  "Approve": [{
+    "InvId": 1,
+    "InvoiceNumber": "100000001_new32",
+    "InvoiceDate": "2017-06-15T00:00:00",
+    "PayerName": "A yritys",
+    "SupplierName": "C 1337 Tower Inc",
+    "GrossAmount": 6660.0000,
+    "Currency": "EUR",
+    "DueDate": "2016-11-22T00:00:00",
+    "Flags": [
+      14,
+      18,
+      29,
+      30,
+      33,
+      27,
+      37,
+      74,
+      86,
+      116
+    ],
+    "LockInfo": {
+      "IsLocked": true,
+      "UserFullName": "Tarja Roihu"
+    }
+  }],
+  "Inspect": [{
+    "InvId": 2,
+    "InvoiceNumber": "100000001_new32",
+    "InvoiceDate": "2017-06-15T00:00:00",
+    "PayerName": "B Kakkosyritys",
+    "SupplierName": "A 1337 Tower Inc",
+    "GrossAmount": 6660.0000,
+    "Currency": "EUR",
+    "DueDate": "2016-02-20T00:00:00",
+    "Flags": [
+      14,
+      18,
+      29,
+      30,
+      33,
+      37,
+      74,
+      86,
+      116
+    ],
+    "LockInfo": ""
+  }],
+  "Note": [{
+    "InvId": 3,
+    "InvoiceNumber": "100000001_new32",
+    "InvoiceDate": "2017-06-15T00:00:00",
+    "PayerName": "C Kakkosyritys",
+    "SupplierName": "B 1337 Tower Inc",
+    "GrossAmount": 6660.0000,
+    "Currency": "EUR",
+    "DueDate": "2016-02-20T00:00:00",
+    "Flags": [
+      14,
+      18,
+      29,
+      30,
+      33,
+      37,
+      74,
+      86,
+      116
+    ],
+    "LockInfo": ""
+  }]
+}

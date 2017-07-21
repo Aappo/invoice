@@ -1,6 +1,12 @@
+//TODO: separate code into several modules inside approval
+//logical separation will be like:
+//a: task manager init
+//b: get endpoints
+//c: post endpoints
+
 const { MachineDefinition, Machine } = require('@opuscapita/fsm-core');
-const { TaskManager }= require('@opuscapita/fsm-task-manager');
-const lodash = require('lodash');
+const { TaskManager } = require('@opuscapita/fsm-task-manager');
+const _ = require('lodash');
 const Promise = require('bluebird');
 var NotFoundError = require('epilogue').Errors.NotFoundError;
 
@@ -13,20 +19,28 @@ module.exports = (app, epilogue, db) => {
           const roles = request ? request.roles : [];
           return roles.includes(role);
         }
+      },
+      actions: {
+        updateComment: ({object, commentFieldName, request}) => {
+          object[commentFieldName] = request.comment;
+        }
       }
     })
   });
 
   const invoiceTaskManager = new TaskManager({
     machine: machine,
-    search: ({ count = 5, offset = 0, customerId }) => {
-      return db.models.PurchaseInvoice.findAll({
-        limit: parseInt(count),
-        offset: parseInt(offset),
-        where: {
-          customerId: customerId
+    search: ({ limit, offset = 0, customerId }) => {
+      let query = Object.assign(
+        {},
+        limit ? { limit } : {},
+        { offset },
+        {
+          where: customerId ? { customerId } : {}
         }
-      });
+      );
+
+      return db.models.PurchaseInvoice.findAll(query);
     },
     update: invoice => {
       return invoice.save();
@@ -39,6 +53,7 @@ module.exports = (app, epilogue, db) => {
     throw new NotFoundError();
   };
 
+
   epilogue.resource({
     model: db.models.PurchaseInvoice,
     endpoints: [
@@ -50,7 +65,17 @@ module.exports = (app, epilogue, db) => {
       fetch: {
         action: (req, res, context) => {
           invoiceTaskManager.list(
-            { searchParams: Object.assign({}, req.query, { customerId: req.opuscapita.userData().customerid }) }
+            {
+              searchParams: Object.assign(
+                {},
+                req.query,
+                req.query.count ? { limit: parseInt(req.query.count) } : {},
+                req.query.offset ? { offset: parseInt(req.query.offset) } : {},
+                {
+                  customerId: req.opuscapita.userData().customerid
+                }
+              )
+            }
           ).then(foundTasks => {
             context.instance = foundTasks;
             context.continue();
@@ -85,7 +110,7 @@ module.exports = (app, epilogue, db) => {
           request: { roles: req.opuscapita.userData('roles') }
         }).then(transitions => {
           res.send(transitions.transitions);
-        }).catch(err => console.log(err));
+        }).catch(err => console.log(err))
       } else {
         res.send({})
       }
@@ -95,10 +120,18 @@ module.exports = (app, epilogue, db) => {
 
   app.get('/api/approval/events', (req, res) => {
     return invoiceTaskManager.list({
-      searchParams: Object.assign({}, req.query, { customerId: req.opuscapita.userData().customerid })
+      searchParams: Object.assign(
+        {},
+        req.query,
+        req.query.count ? { limit: parseInt(req.query.count) } : {},
+        req.query.offset ? { offset: parseInt(req.query.offset) } : {},
+        {
+          customerId: req.opuscapita.userData().customerid
+        }
+      )
     }).then(tasks => {
       return Promise.props(
-        lodash.reduce(tasks, (accum, task) => {
+        _.reduce(tasks, (accum, task) => {
           accum[task.key] = invoiceTaskManager.machine.availableTransitions({
             object: task.get({
               plain: true
@@ -114,13 +147,16 @@ module.exports = (app, epilogue, db) => {
 
   app.post('/api/approval/events/:id/:event', (req, res) => {
     db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
-      invoiceTaskManager.sendEvent({
+      return invoiceTaskManager.sendEvent({
         object: invoice,
         event: req.params.event,
-        request: { roles: req.opuscapita.userData('roles') }
+        request: {
+          roles: req.opuscapita.userData('roles'),
+          comment: req.body.comment
+        }
       }).then(updatedInvoice => {
         res.send(updatedInvoice);
-      }).catch(errors => {
+      }).catch((errors) => {
         console.error(errors);
         res.status(500).send(errors);
       })
