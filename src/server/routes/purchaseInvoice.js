@@ -10,8 +10,8 @@ module.exports = function(epilogue, db) {
   epilogue.resource({
     model: db.models.PurchaseInvoice,
     endpoints: [
-      '/purchaseInvoices',
-      '/purchaseInvoices/:id'
+      '/invoices',
+      '/invoices/:id'
     ]
   });
 };
