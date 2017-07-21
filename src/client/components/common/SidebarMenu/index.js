@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import SupplierMenu from './SupplierMenu.react';
-import CustomerMenu from './CustmoerMenu.react';
+import CustomerMenu from './CustmerMenu.react';
 
 const logoStyle = {
   height: '1.885em',

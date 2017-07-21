@@ -7,10 +7,7 @@ import MyTasksView from '../components/MyTasks';
 
 export default () => (
   <Route component={Layout} path="/invoice">
-    <IndexRedirect to="/invoice/approval"/>
-    <Route path="/invoice/approval" component={
-      () => <InvoiceOverview readOnly={true}/>
-    }/>
+    <IndexRedirect to="/invoice/taskList"/>
     <Route path="/invoice/import" component={InvoiceImport}/>
     <Route path="/invoice/taskList" component={MyTasksView}/>
   </Route>
