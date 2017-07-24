@@ -36,19 +36,25 @@ export default class TaskLayoutHandler extends Component {
     this.switchLayout();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.useNarrow !== this.state.useNarrow;
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', ::this.switchLayout);
   }
 
   switchLayout() {
-    // console.log(window.innerWidth);
-    this.setState({
-      useNarrow: window.innerWidth < NARROW_MODE_BREAK_POINT
-    })
+    if (this.refs.taskLayout) {
+      this.setState({ useNarrow: window.innerWidth < NARROW_MODE_BREAK_POINT })
+    }
   }
 
   render() {
-    return React.createElement(this.state.useNarrow ?
-      withDataHandler(NarrowLayout, this.props.options) : withDataHandler(WideLayout, this.props.options), {}, null);
+    return React.createElement(
+      withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, this.props.options),
+      { ref: 'taskLayout' },
+      null
+    );
   }
 }
