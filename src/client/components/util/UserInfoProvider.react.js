@@ -21,7 +21,7 @@ export default class UserInfoProvider extends PureComponent {
   };
 
   componentDidMount() {
-    loadCurrentUserData().then((data) => (this.setState({userData: {...data}})))
+    loadCurrentUserData().then((data) => Promise.resolve(this.setState({userData: {...data}})));
   }
 
   getChildContext() {
