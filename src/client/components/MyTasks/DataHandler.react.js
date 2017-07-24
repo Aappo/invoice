@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import Promise from 'bluebird';
 import {
   fetchTaskActions,
-  fetchApprovalTasks,
   fetchInvoiceReceipt,
   fetchCustomer,
   fetchSupplier,
@@ -24,13 +23,12 @@ import _ from 'lodash';
  * @param filter - predicate defining if invoice should be displayed
  * @returns {DataHandler}
  */
-export default function withDataHandler(WrappedComponent,
-                                        { fetcher = () => fetchApprovalTasks({}),
-                                          filter = invoice => !!invoice }) {
+export default function withDataHandler(WrappedComponent, { fetcher, filter = invoice => !!invoice }) {
   class DataHandler extends Component {
 
     static propTypes = {
-      assignedToMe: PropTypes.bool
+      fetcher: PropTypes.func.isRequired,
+      filter: PropTypes.func.isRequired
     };
 
     static childContextTypes = {
@@ -41,7 +39,8 @@ export default function withDataHandler(WrappedComponent,
     };
 
     static defaultProps = {
-      assignedToMe: false
+      fetcher: fetcher,
+      filter: filter
     };
 
     state = {
@@ -65,7 +64,7 @@ export default function withDataHandler(WrappedComponent,
 
     componentDidMount() {
       this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
-        fetcher().then((invoices) => {
+        this.props.fetcher().then((invoices) => {
           return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].key).then((invoiceData) => {
             return Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }));
           }));
@@ -121,7 +120,7 @@ export default function withDataHandler(WrappedComponent,
         }).then(({ invoice, invoiceData }) => {
           let updatedInvoice;
           let updatedTaskList;
-          if (filter(invoiceData)) {
+          if (this.props.filter(invoiceData)) {
             updatedInvoice = invoiceData;
             updatedTaskList = _.map(this.state.taskList, task => task.key === id ? invoice : task);
           } else {
