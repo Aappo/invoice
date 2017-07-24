@@ -6,8 +6,12 @@ module.exports.init = function(db, config) {
    * PurchaseInvoiceItem
    * @class PurchaseInvoiceItem
    */
-  return db.define('PurchaseInvoiceItem', {
-      /** @lends PurchaseInvoiceItem */
+  return db.define('PurchaseInvoiceItem',
+    /** @lends PurchaseInvoiceItem */
+    {
+      /**
+       * Primary key.
+       */
       id: {
         field: 'PurchaseInvoiceItemSN',
         type: Sequelize.BIGINT,
@@ -16,7 +20,7 @@ module.exports.init = function(db, config) {
         allowNull: false
       },
       /**
-       * foreign key to an invoice which owns this item
+       * Foreign key to an invoice which owns this item.
        */
       purchaseInvoiceId: {
         field: 'PurchaseInvoiceSN',
@@ -30,7 +34,7 @@ module.exports.init = function(db, config) {
         onDelete: 'cascade'
       },
       /**
-       * line number staring from 1 per invoice
+       * Line number starting from 1 per invoice.
        */
       orderItemNo: {
         field: 'OrderItemNo',
@@ -38,7 +42,7 @@ module.exports.init = function(db, config) {
         allowNull: false
       },
       /**
-       * line item name
+       * Line item name.
        */
       productDescShort: {
         field: 'ProductDescShort',
@@ -49,7 +53,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * line item description
+       * Line item description.
        */
       productDescLong: {
         field: 'ProductDescLong',
@@ -59,6 +63,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * The productID as string.
+       */
       productId: {
         field: 'ProductID',
         type: Sequelize.STRING(100),
@@ -68,9 +75,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * buyer order reference, free text reference information.
-       * Optionally used field for matching, for example order number placed
-       * to this field by the supplier.
+       * Buyer order reference, free text reference information. Optionally used field for matching, for example order number placed to this field by the supplier.
        */
       orderReference: {
         field: 'OrderReference',
@@ -81,7 +86,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * buyer order number
+       * Buyer order number.
        */
       purchaseOrderId: {
         field: 'PurchaseOrderID',
@@ -91,16 +96,14 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * Order date.
+       */
       orderDate: {
         field: 'OrderDate',
         type: Sequelize.DATE,
         allowNull: true
       },
-      /**
-       * sta: unclear??
-       * deliveryNote or transportNote would be more describing term
-       * than noteNumber.
-       */
       deliveryNoId: {
         field: 'DeliveryNoID',
         type: Sequelize.STRING(50),
@@ -109,7 +112,6 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
-      // check with PROC with BusNetPortal (because we changd regarding SAP/ISO)
       unitOfMeasureId: {
         field: 'UnitOfMeasureID',
         type: Sequelize.STRING(3),
@@ -119,7 +121,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * item quantity charged per an invoice
+       * Item quantity charged per an invoice.
        */
       quantityCharged: {
         field: 'QuantityCharged',
@@ -127,7 +129,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * originally ordered quantity of an item
+       * Originally ordered quantity of an item.
        */
       quantityOrdered: {
         field: 'QuantityOrdered',
@@ -135,7 +137,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * delivered quantity of an item
+       * Delivered quantity of an item.
        */
       quantityDelivered: {
         field: 'QuantityDelivered',
@@ -153,8 +155,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Invoice line total amount VAT included =
-       * price per unit VAT included * number of units - discount (199.64 EUR) -- 10% discount calculated
+       * Invoice line total amount VAT included = price per unit VAT included * number of units - discount (199.64 EUR) -- 10% discount calculated.
        */
       totalGrossPriceDiscounted: {
         field: 'TotalGrossPriceDiscounted',
@@ -162,8 +163,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Invoice line total amount VAT excluded =
-       * price per unit VAT excluded * number of units - discount (161.00 EUR) -- 10% discount calculated
+       * Invoice line total amount VAT excluded = price per unit VAT excluded * number of units - discount (161.00 EUR) -- 10% discount calculated.
        */
       totalNetPriceDiscounted: {
         field: 'TotalNetPriceDiscounted',
@@ -171,8 +171,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Invoice line amount VAT included =
-       * price per unit VAT included * number of units (219.60 EUR)
+       * Invoice line amount VAT included = price per unit VAT included * number of units (219.60 EUR).
        */
       totalGrossPrice: {
         field: 'TotalGrossPrice',
@@ -180,8 +179,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Invoice line amount VAT excluded =
-       * price per unit VAT excluded * number of units (177.10 EUR)
+       * Invoice line amount VAT excluded = price per unit VAT excluded * number of units (177.10 EUR).
        */
       totalNetPrice: {
         field: 'TotalNetPrice',
@@ -189,7 +187,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * VAT percentage
+       * VAT percentage.
        */
       vatPercentage: {
         field: 'VatPercentage',

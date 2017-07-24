@@ -90,6 +90,11 @@
         "type": "rest",
         "resourceId": "/taskList",
         "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/allTaskList",
+        "actions": ["view"]
       }
     ]
   }

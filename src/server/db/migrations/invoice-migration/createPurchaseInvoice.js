@@ -185,6 +185,14 @@ module.exports = function(queryInterface) {
       allowNull: true
     },
     /**
+     * For early payment discount.
+     * default: total value of invoice
+     */
+    DiscountableValue: {
+      type: Sequelize.DECIMAL(19, 2),
+      allowNull: true
+    },
+    /**
      * earlyDiscount = discountableValue * TermsOfPayment.discountPerc1
      */
     EarlyDiscount: {

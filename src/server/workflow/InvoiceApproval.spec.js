@@ -13,6 +13,11 @@ const machineDefinition = new MachineDefinition({
       const roles = request ? request.roles : [];
       return roles.includes(role);
     }
+  },
+  actions: {
+    updateComment: ({ object, commentFieldName, request }) => {
+      object[commentFieldName] = request.comment;
+    }
   }
 });
 
@@ -37,26 +42,26 @@ describe("invoice approval flow", () => {
     describe("available transitions", () => {
 
       it("inspectionRequired", () => {
-        const invoice = { statusId: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired' };
         const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspClrRequired", () => {
-        const invoice = { statusId: 'inspClrRequired' };
-        const expected = ['clarifyForInspection'];
+        const invoice = { status: 'inspClrRequired' };
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired", () => {
-        const invoice = { statusId: 'approvalRequired' };
-        const expected = ['approve', 'sendToClarification'];
+        const invoice = { status: 'approvalRequired' };
+        const expected = ['approve', 'sendToClarification', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("appClrRequired", () => {
-        const invoice = { statusId: 'appClrRequired' };
-        const expected = ['clarifyForApproval'];
+        const invoice = { status: 'appClrRequired' };
+        const expected = ['clarifyForApproval', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
     });
@@ -64,7 +69,7 @@ describe("invoice approval flow", () => {
     describe("send event", () => {
 
       it("inspect invoice", (done) => {
-        const invoice = { statusId: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired' };
         machine.sendEvent({ event: 'inspect', object: invoice, request: request }).catch((error) => {
           assert.ok(true);
           done();
@@ -72,36 +77,37 @@ describe("invoice approval flow", () => {
       });
 
       it("set invoice to clarification for inspection", (done) => {
-        const invoice = { statusId: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired' };
         machine.sendEvent({ event: 'sendToClarification', object: invoice, request: request }).catch((error) => {
           assert.ok(true);
           done();
         });
       });
 
-      it("clarify invoice for inspection", () => {
-        const invoice = { statusId: 'inspClrRequired' };
-        return machine.sendEvent({ event: 'clarifyForInspection', object: invoice, request: request }).then(() => {
-          assert.equal(machine.currentState({ object: invoice }), 'inspectionRequired');
+      it("clarify invoice for inspection", (done) => {
+        const invoice = { status: 'inspClrRequired' };
+        machine.sendEvent({ event: 'clarifyForInspection', object: invoice, request: request }).catch((error) => {
+          assert.ok(true);
+          done();
         });
       });
 
       it("approve invoice", () => {
-        const invoice = { statusId: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired' };
         return machine.sendEvent({ event: 'approve', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'archived');
         });
       });
 
       it("set invoice to clarification for approval", () => {
-        const invoice = { statusId: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired' };
         return machine.sendEvent({ event: 'sendToClarification', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'appClrRequired');
         });
       });
 
       it("clarify invoice for approval", () => {
-        const invoice = { statusId: 'appClrRequired' };
+        const invoice = { status: 'appClrRequired' };
         return machine.sendEvent({ event: 'clarifyForApproval', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
         });
@@ -116,26 +122,26 @@ describe("invoice approval flow", () => {
     describe("available transitions", () => {
 
       it("inspectionRequired", () => {
-        const invoice = { statusId: 'inspectionRequired' };
-        const expected = ['inspect', 'sendToClarification'];
+        const invoice = { status: 'inspectionRequired' };
+        const expected = ['inspect', 'sendToClarification', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspClrRequired", () => {
-        const invoice = { statusId: 'inspClrRequired' };
-        const expected = ['clarifyForInspection'];
+        const invoice = { status: 'inspClrRequired' };
+        const expected = ['clarifyForInspection', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired", () => {
-        const invoice = { statusId: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired' };
         const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("appClrRequired", () => {
-        const invoice = { statusId: 'appClrRequired' };
-        const expected = ['clarifyForApproval'];
+        const invoice = { status: 'appClrRequired' };
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
     });
@@ -143,28 +149,28 @@ describe("invoice approval flow", () => {
     describe("send event", () => {
 
       it("inspect invoice", () => {
-        const invoice = { statusId: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired' };
         return machine.sendEvent({ event: 'inspect', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
         });
       });
 
       it("set invoice to clarification for inspection", () => {
-        const invoice = { statusId: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired' };
         return machine.sendEvent({ event: 'sendToClarification', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'inspClrRequired');
         });
       });
 
       it("clarify invoice for inspection", () => {
-        const invoice = { statusId: 'inspClrRequired' };
+        const invoice = { status: 'inspClrRequired' };
         return machine.sendEvent({ event: 'clarifyForInspection', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'inspectionRequired');
         });
       });
 
       it("approve invoice", (done) => {
-        const invoice = { statusId: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired' };
         machine.sendEvent({ event: 'approve', object: invoice, request: request }).catch((error) => {
           assert.ok(true);
           done();
@@ -172,17 +178,18 @@ describe("invoice approval flow", () => {
       });
 
       it("set invoice to clarification for approval", (done) => {
-        const invoice = { statusId: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired' };
         machine.sendEvent({ event: 'sendToClarification', object: invoice, request: request }).catch((error) => {
           assert.ok(true);
           done();
         });
       });
 
-      it("clarify invoice for approval", () => {
-        const invoice = { statusId: 'appClrRequired' };
-        return machine.sendEvent({ event: 'clarifyForApproval', object: invoice, request: request }).then(() => {
-          assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
+      it("clarify invoice for approval", (done) => {
+        const invoice = { status: 'appClrRequired' };
+        machine.sendEvent({ event: 'clarifyForApproval', object: invoice, request: request }).catch((error) => {
+          assert.ok(true);
+          done();
         });
       });
     });

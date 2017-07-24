@@ -6,8 +6,12 @@ module.exports.init = function(db, config) {
    * PurchaseInvoice
    * @class PurchaseInvoice
    */
-  return db.define('PurchaseInvoice', {
-      /** @lends PurchaseInvoice */
+  return db.define('PurchaseInvoice',
+    /** @lends PurchaseInvoice */
+    {
+      /**
+       * Primary key.
+       */
       id: {
         field: 'PurchaseInvoiceSN',
         type: Sequelize.BIGINT,
@@ -16,7 +20,7 @@ module.exports.init = function(db, config) {
         allowNull: false
       },
       /**
-       * invoice number defined by a supplier
+       * Invoice number defined by a supplier.
        */
       invoiceNo: {
         field: 'InvoiceNo',
@@ -32,9 +36,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * scan date should hold the date when the invoice was entered
-       * to business network, so not only scanned invoices, but also
-       * E-invoices and email invoices as well + other possible ways.
+       * Scan date should hold the date when the invoice was entered to business network, so not only scanned invoices, but also E-invoices and email invoices as well + other possible ways.
        */
       scannedOn: {
         field: 'ScannedOn',
@@ -42,11 +44,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Owner company (customer) of an invoice.
-       * Selected from the list in case of manually entered invoice and
-       * imported invoice will find a correct owner company according some
-       * public/legal company information wich need to be matched from the material to
-       * company registry's unique entity or otherwise an invoice will not be attached to any company.
+       * Owner company (customer) of an invoice. Selected from the list in case of manually entered invoice and imported invoice will find a correct owner company according some public/legal company information which need to be matched from the material to company registry's unique entity or otherwise an invoice will not be attached to any company.
        */
       customerId: {
         field: 'CustomerID',
@@ -56,6 +54,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * The supplier of an invoice.
+       */
       supplierId: {
         field: 'SupplierID',
         type: Sequelize.STRING(50),
@@ -65,11 +66,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * coming from the customer, Customer may have multiple bank accounts, here we decide which one we use for the payment
-       */
-      /**
-       * BankAccount is a class, external to this module which stores the complete bank information for the customer
-       * so we know what bankAccount we pay this invoice from
+       * Coming from the customer, Customer may have multiple bank accounts, here we decide which one we use for the payment. BankAccount is a class, external to this module which stores the complete bank information for the customer so we know what bankAccount we pay this invoice from.
        */
       paymentBankAccountId: {
         field: 'PaymentBankAccountID',
@@ -80,7 +77,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Net amount of an invoice
+       * Net amount of an invoice.
        */
       netAmount: {
         field: 'NetAmount',
@@ -88,7 +85,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Gross amount of an invoice
+       * Gross amount of an invoice.
        */
       grossAmount: {
         field: 'GrossAmount',
@@ -96,7 +93,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * VAT amount of an invoice
+       * VAT amount of an invoice.
        */
       vatAmount: {
         field: 'VatAmount',
@@ -104,8 +101,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Currency of an invoice. All invoice related amounts
-       * should be presented in this currency (header and line level).
+       * Currency of an invoice. All invoice related amounts should be presented in this currency (header and line level).
        */
       currencyId: {
         field: 'CurrencyID',
@@ -115,6 +111,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * Approval workflow status.
+       */
       status: {
         field: 'Status',
         type: Sequelize.STRING(30),
@@ -123,6 +122,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * Approval workflow assignee.
+       */
       assignee: {
         field: 'Assignee',
         type: Sequelize.STRING(255),
@@ -132,9 +134,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * this is the Invoice Number that the supplier is using from himself, which is often
-       * used to identify the invoice for the payment
-       * unique for a suppliers!
+       * This is the Invoice Number that the supplier is using from himself, which is often used to identify the invoice for the payment. Unique for a suppliers.
        */
       supplierInvoiceId: {
         field: 'SupplierInvoiceID',
@@ -145,9 +145,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Reference number for the payment defined by the supplier, ISO 11649 requires minimum 25
-       * characters.
-       * this is an alternative to the SupplierInvoiceId
+       * Reference number for the payment defined by the supplier, ISO 11649 requires minimum 25 characters. This is an alternative to the SupplierInvoiceId.
        */
       paymentReferenceNo: {
         field: 'PaymentReferenceNo',
@@ -158,8 +156,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * default terms of payment code copied from a supplier attached to
-       * an invoice. Should be possible to change manually as well)
+       * Default terms of payment code copied from a supplier attached to an invoice. Should be possible to change manually as well.
        */
       termsOfPaymentId: {
         field: 'TermsOfPaymentID',
@@ -170,8 +167,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * terms of payment description holds data from the invoice material
-       * which should be overwritten by supplier selection and default terms of payment selection
+       * Terms of payment description holds data from the invoice material which should be overwritten by supplier selection and default terms of payment selection.
        */
       termsOfPaymentDescription: {
         field: 'TermsOfPaymentDescription',
@@ -182,8 +178,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the payment.
-       * dueDate = invoiceDate + TermsOfPayment.netDays
+       * Due date for the payment. dueDate = invoiceDate + TermsOfPayment.netDays
        */
       dueDate: {
         field: 'DueDate',
@@ -191,8 +186,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the first discount.
-       * dueDate = invoiceDate + TermsOfPayment.discountDays1
+       * Due date for the first discount. dueDate = invoiceDate + TermsOfPayment.discountDays1
        */
       dueDateEarlyDiscount: {
         field: 'DueDateEarlyDiscount',
@@ -200,12 +194,19 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the first discount.
-       * dueDate = invoiceDate + TermsOfPayment.discountDays2
+       * Due date for the first discount. dueDate = invoiceDate + TermsOfPayment.discountDays2
        */
       dueDateLateDiscount: {
         field: 'DueDateLateDiscount',
         type: Sequelize.DATE,
+        allowNull: true
+      },
+      /**
+       * For early payment discount. default: total value of invoice
+       */
+      discountableValue: {
+        field: 'DiscountableValue',
+        type: Sequelize.DECIMAL(19, 2),
         allowNull: true
       },
       /**
@@ -225,10 +226,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       *  https://www.vero.fi/en-US/Companies_and_organisations/Prepayment_register
-       * If the supplier is not registered in tax prepayment register, then customer is responsible for withholding
-       * income tax from invoice.
-       * Invoices to supplier which do not have valid registration should be assigned to clarification automatically.
+       * https://www.vero.fi/en-US/Companies_and_organisations/Prepayment_register If the supplier is not registered in tax prepayment register, then customer is responsible for withholding income tax from invoice. Invoices to supplier which do not have valid registration should be assigned to clarification automatically.
        */
       isPreliminary: {
         field: 'IsPreliminary',
@@ -236,9 +234,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * E-invoice, email invoice, scanned invoice, manually entered...
-       * PDF, SCAN, SUPPL-MAN, POFLIP, EDI,
-       * show a list box with predefined values
+       * E-invoice, email invoice, scanned invoice, manually entered... PDF, SCAN, SUPPL-MAN, POFLIP, EDI, show a list box with predefined values.
        */
       invoiceChannel: {
         field: 'InvoiceChannel',
