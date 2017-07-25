@@ -11,8 +11,8 @@ module.exports = function(epilogue, db) {
   const invoiceItemResource = epilogue.resource({
     model: db.models.InvoiceReceiptItem,
     endpoints: [
-      '/invoices/:id/items',
-      '/invoices/:invoiceReceiptSn/items/:key',
+      '/invoiceReceipts/:id/items',
+      '/invoiceReceipts/:invoiceReceiptSn/items/:key',
     ]
   });
 

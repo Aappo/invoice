@@ -65,7 +65,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     componentDidMount() {
       this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
         this.props.fetcher().then((invoices) => {
-          return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].key).then((invoiceData) => {
+          return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
             return Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }));
           }));
         })
@@ -90,8 +90,8 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
           supplier: fetchSupplier(invoice.supplierId),
           supplierContacts: fetchSupplierContacts(invoice.supplierId),
           supplierAddresses: fetchSupplierAddresses(invoice.supplierId),
-          items: fetchInvoiceReceiptItems(invoice.key),
-          transitions: fetchTaskActions(invoice.key)
+          items: fetchInvoiceReceiptItems(invoice.id),
+          transitions: fetchTaskActions(invoice.id)
         })
       })
     }
@@ -111,7 +111,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     updateInvoice(id, updater) {
       return Promise.resolve(
         updater(
-          _.find(this.state.taskList, { key: id })
+          _.find(this.state.taskList, { id: id })
         )
       ).then(() => {
         return Promise.props({
@@ -122,9 +122,9 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
           let updatedTaskList;
           if (this.props.filter(invoiceData)) {
             updatedInvoice = invoiceData;
-            updatedTaskList = _.map(this.state.taskList, task => task.key === id ? invoice : task);
+            updatedTaskList = _.map(this.state.taskList, task => task.id === id ? invoice : task);
           } else {
-            updatedTaskList = _.filter(this.state.taskList, task => task.key !== invoiceData.key);
+            updatedTaskList = _.filter(this.state.taskList, task => task.id !== invoiceData.id);
           }
           return Promise.resolve(
             this.setState({

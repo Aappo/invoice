@@ -45,7 +45,7 @@ Labels.receivingPerson = 'Empfänger';
 Labels.intrastat = 'Intrastat';
 
 Labels.status = 'Status';
-Labels.invoiceDate = 'Rechnungsdatum';
+Labels.invoicedOn = 'Rechnungsdatum';
 Labels.bookingDate = 'Buchungsdatum';
 Labels.dueDate = 'Fälligkeitsdatum';
 Labels.scannedOn = 'Erfasst am';

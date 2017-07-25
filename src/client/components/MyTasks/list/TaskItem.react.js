@@ -36,7 +36,7 @@ const TaskItem = ({ invoice }, { i18n }) => (
       <div className="divider"/>
       <div className="list-item">
         <span className="value">
-          {i18n.getMessage(`TaskItem.status.${invoice.statusId}`)}
+          {i18n.getMessage(`TaskItem.status.${invoice.status}`)}
         </span>
         <span className="value">
           {UiHelpers.formatAmount(invoice.totalGrossPrice)} {invoice.currencyId}

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import MessageInfo from '../../../common/MessageInfo.react';
 import {
   Button,
@@ -23,9 +23,9 @@ const SearchResult = ({
   unMarkForExport,
   transitions,
   onEventSend
-},
+  },
   context) => {
-  if (_.size(invoices) === 0) {
+  if (lodash.size(invoices) === 0) {
     return (
       <MessageInfo message="No Items"/>
     );
@@ -36,17 +36,15 @@ const SearchResult = ({
         <tr>
           <th className="text-nowrap">
             <Checkbox
-              onChange={(e) => {
-                let invoiceKeys = (_.map(invoices, (inv) => (inv.key)));
+              onChange={e => {
+                let invoiceKeys = lodash.map(invoices, 'id');
                 return e.target.checked ? markForExport(invoiceKeys) : unMarkForExport(invoiceKeys)
               }}
-              checked={_.size(checkedInvoices) === _.size(invoices)}
+              checked={lodash.size(checkedInvoices) === lodash.size(invoices)}
             />
           </th>
-          <th className="text-nowrap">{context.i18n.getMessage('Labels.intInvoiceNo')}</th>
-          <th className="text-nowrap">{context.i18n.getMessage('Labels.extInvoiceNo')}</th>
           <th className="text-nowrap">{context.i18n.getMessage('Labels.customer')}</th>
-          <th className="text-nowrap">{context.i18n.getMessage('Labels.invoiceDate')}</th>
+          <th className="text-nowrap">{context.i18n.getMessage('Labels.invoicedOn')}</th>
           <th className="text-nowrap">{context.i18n.getMessage('Labels.dueDate')}</th>
           <th className="text-nowrap">{context.i18n.getMessage('Labels.totalGrossPrice')}</th>
           <th className="text-nowrap">{context.i18n.getMessage('Labels.status')}</th>
@@ -57,20 +55,12 @@ const SearchResult = ({
         {
           invoices.map((inv) => {
             return (
-              <tr key={inv.key} className={inv.key === selectedInvoiceId ? 'success' : ''}>
+              <tr key={inv.id} className={inv.id === selectedInvoiceId ? 'success' : ''}>
                 <td>
                   <Checkbox
-                    onChange={(e) => (e.target.checked ? markForExport([inv.key]) : unMarkForExport([inv.key]))}
-                    checked={_.includes(checkedInvoices, inv.key)}
+                    onChange={(e) => (e.target.checked ? markForExport([inv.id]) : unMarkForExport([inv.id]))}
+                    checked={lodash.includes(checkedInvoices, inv.id)}
                   />
-                </td>
-                <td>
-                  {inv.invoiceReceiptId}
-                </td>
-                <td>
-                  <Button bsStyle="link">
-                    {inv.extInvoiceReceiptId}
-                  </Button>
                 </td>
                 <td>
                   {inv.customerId}
@@ -78,39 +68,39 @@ const SearchResult = ({
                   <code>{inv.customerId}</code>
                 </td>
                 <td>
-                  {context.i18n.formatDate(inv.invoiceDate)}
+                  {context.i18n.formatDate(inv.invoicedOn)}
                 </td>
                 <td>
                   {context.i18n.formatDate(inv.dueDate)}
                 </td>
                 <td>
-                  {inv.totalGrossPrice}&nbsp;{inv.currency}
+                  {inv.totalGrossPrice}&nbsp;{inv.currencyId}
                 </td>
                 <td>
-                  <span className="label label-default">{statusLabel(inv.statusId)}</span>
+                  <span className="label label-default">{statusLabel(inv.status)}</span>
                 </td>
                 <td className="invoice-btn-group text-right">
-                  {transitions[inv.key].length > 0 &&  <ButtonGroup>
+                  {transitions[inv.id].length > 0 && <ButtonGroup>
                     <DropdownButton bsSize="small" title="Approval" id="bg-nested-dropdown" pullRight>
-                      {transitions[inv.key].map((transition) => {
+                      {transitions[inv.id].map((transition) => {
                         return (
-                        <MenuItem
-                          key={`${inv.key}_${transition.event}`}
-                          eventKey={inv.key}
-                          onClick={() => {
-                            onEventSend(inv.key, transition.event)
+                          <MenuItem
+                            key={`${inv.id}_${transition.event}`}
+                            eventKey={inv.id}
+                            onClick={() => {
+                            onEventSend(inv.id, transition.event)
                           }}
-                        >
-                          {transition.event}
-                        </MenuItem>
+                          >
+                            {transition.event}
+                          </MenuItem>
                         );
                       })}
                     </DropdownButton>
                   </ButtonGroup>}
-                  <Button bsSize="small" onClick={() => onEdit(inv.key)}>
-                    {isEditable(inv.statusId) ? <Glyphicon glyph="edit"/> : <Glyphicon glyph="eye-open"/>}
+                  <Button bsSize="small" onClick={() => onEdit(inv.id)}>
+                    {isEditable(inv.status) ? <Glyphicon glyph="edit"/> : <Glyphicon glyph="eye-open"/>}
                   </Button>
-                  {isEditable(inv.statusId) && <Button bsSize="small" onClick={() => onDelete(inv.key)}>
+                  {isEditable(inv.status) && <Button bsSize="small" onClick={() => onDelete(inv.id)}>
                     <Glyphicon glyph="trash"/>
                   </Button>}
                 </td>

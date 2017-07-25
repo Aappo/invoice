@@ -3,7 +3,7 @@ import Formsy from 'formsy-react';
 import FormsyTextInput from '../../../common/form-components/FormsyTextInput.react'
 import FormsySelect from '../../../common/form-components/FormsySelect.react';
 import { Button } from 'react-bootstrap';
-import _ from 'lodash';
+import lodash from 'lodash';
 import constraints from './InvoiceItemFormConstraints';
 import { validateForm } from '../../../common/form-components/validateForm';
 const validate = validateForm(constraints);
@@ -38,7 +38,7 @@ export default class InvoiceItemForm extends Component {
 
   _submitForm(model, resetForm, invalidateForm) {
     const errors = validate(model);
-    if (_.isEmpty(errors)) {
+    if (lodash.isEmpty(errors)) {
       this.props.onSave(model, resetForm);
     } else {
       invalidateForm(errors);
@@ -74,16 +74,16 @@ export default class InvoiceItemForm extends Component {
                 />
                 <FormsyTextInput
                   label="Labels.quantity"
-                  name='quantity'
+                  name='quantityCharged'
                   required={true}
-                  value={item.quantity}
+                  value={item.quantityCharged}
                   disabled={readOnly}
                 />
                 <FormsySelect
                   label="Labels.uom"
-                  name='uomId'
+                  name='unitOfMeasureId'
                   required={true}
-                  value={item.uomId}
+                  value={item.unitOfMeasureId}
                   values={this.props.unitsOfMeasure}
                   toOptionConverter={
                     (uom) => (
@@ -100,45 +100,6 @@ export default class InvoiceItemForm extends Component {
                   name='netPrice'
                   required={true}
                   value={item.netPrice}
-                  disabled={readOnly}
-                />
-                <FormsyTextInput
-                  label="Labels.priceUnit"
-                  name='priceUnit'
-                  required={true}
-                  value={this.props.item.priceUnit}
-                  disabled={readOnly}
-                />
-              </div>
-              <div className="col-md-6">
-                <FormsyTextInput
-                  label='Labels.ean'
-                  name='extProductId'
-                  value={item.extProductId}
-                  disabled={readOnly}
-                />
-                <FormsyTextInput
-                  label='Labels.taxRate'
-                  name='taxPercentage'
-                  value={item.taxPercentage}
-                  disabled={readOnly}
-                />
-                <FormsyTextInput
-                  label='Labels.totalNetPrice'
-                  name='totalNetPrice'
-                  value={item.totalNetPrice}
-                  disabled={readOnly}
-                />
-                <FormsyTextInput
-                  label='Labels.taxAmount'
-                  name='taxAmount'
-                  disabled={true}
-                  value={item.taxAmount}
-                />
-                <FormsyTextInput
-                  label='Labels.totalGrossPrice'
-                  name='totalGrossPrice'
-                  value={item.totalGrossPrice}
                   disabled={readOnly}
                 />
               </div>

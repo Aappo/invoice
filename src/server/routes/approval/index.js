@@ -4,17 +4,13 @@
 //b: get endpoints
 //c: post endpoints
 
-const {
-  MachineDefinition,
-  Machine
-} = require('@opuscapita/fsm-core');
-const { TaskManager }= require('@opuscapita/fsm-task-manager');
+const { MachineDefinition, Machine } = require('@opuscapita/fsm-core');
+const { TaskManager } = require('@opuscapita/fsm-task-manager');
 const _ = require('lodash');
 const Promise = require('bluebird');
 var NotFoundError = require('epilogue').Errors.NotFoundError;
 
 module.exports = (app, epilogue, db) => {
-
   const machine = new Machine({
     machineDefinition: new MachineDefinition({
       schema: require('../../workflow/InvoiceApproval.json'),
@@ -44,9 +40,9 @@ module.exports = (app, epilogue, db) => {
         }
       );
 
-      return db.models.InvoiceReceipt.findAll(query);
+      return db.models.PurchaseInvoice.findAll(query);
     },
-    update: (invoice) => {
+    update: invoice => {
       return invoice.save();
     }
   });
@@ -59,7 +55,7 @@ module.exports = (app, epilogue, db) => {
 
 
   epilogue.resource({
-    model: db.models.InvoiceReceipt,
+    model: db.models.PurchaseInvoice,
     endpoints: [
       '/approval/tasks',
       '/approval/tasks/:id'
@@ -112,16 +108,16 @@ module.exports = (app, epilogue, db) => {
   });
 
   app.get('/api/approval/events/:id', (req, res) => {
-    db.models.InvoiceReceipt.findById(req.params.id).then((invoice) => {
+    db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       if (invoice) {
         invoiceTaskManager.machine.availableTransitions({
           object: invoice.get({
             plain: true
           }),
           request: { roles: req.opuscapita.userData('roles') }
-        }).then((transitions) => {
+        }).then(transitions => {
           res.send(transitions.transitions);
-        }).catch((err) => console.log(err))
+        }).catch(err => console.log(err))
       } else {
         res.send({})
       }
@@ -140,24 +136,24 @@ module.exports = (app, epilogue, db) => {
           customerId: req.opuscapita.userData().customerid
         }
       )
-    }).then((tasks) => {
+    }).then(tasks => {
       return Promise.props(
         _.reduce(tasks, (accum, task) => {
-          accum[task.key] = invoiceTaskManager.machine.availableTransitions({
+          accum[task.id] = invoiceTaskManager.machine.availableTransitions({
             object: task.get({
               plain: true
             }),
             request: { roles: req.opuscapita.userData('roles') }
-          }).then((transitions) => Promise.resolve(transitions.transitions));
+          }).then(transitions => Promise.resolve(transitions.transitions));
 
           return accum;
         }, {})
-      ).then((groupedTransitions) => res.send(groupedTransitions));
+      ).then(groupedTransitions => res.send(groupedTransitions));
     });
   });
 
   app.post('/api/approval/events/:id/:event', (req, res) => {
-    db.models.InvoiceReceipt.findById(req.params.id).then((invoice) => {
+    db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       return invoiceTaskManager.sendEvent({
         object: invoice,
         event: req.params.event,
@@ -165,8 +161,8 @@ module.exports = (app, epilogue, db) => {
           roles: req.opuscapita.userData('roles'),
           comment: req.body.comment
         }
-      }).then((updatedInvoice) => {
-        res.send(JSON.stringify(updatedInvoice))
+      }).then(updatedInvoice => {
+        res.send(updatedInvoice);
       }).catch((errors) => {
         console.error(errors);
         res.status(500).send(errors);

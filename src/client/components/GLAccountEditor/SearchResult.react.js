@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import { Button, Table, Glyphicon } from 'react-bootstrap';
 import DeleteModal from './DeleteModal.react';
 import EditModal from './EditModal.react';
@@ -15,7 +15,7 @@ const SearchResult = ({
 }, {
   i18n
 }) => {
-  if (_.size(glAccounts) === 0) {
+  if (lodash.size(glAccounts) === 0) {
     return (
       <div className="bs-callout bs-callout-default">
         {i18n.getMessage('GlAccount.noItems')}

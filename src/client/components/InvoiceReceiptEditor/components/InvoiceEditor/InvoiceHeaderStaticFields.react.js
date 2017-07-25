@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
 import FormGroupMarkup from '../../../common/FormGroupMarkup/index';
-import _ from 'lodash';
+import lodash from 'lodash';
 
 const _extractInvoiceAddress = (addresses) => {
   if(!addresses) {
     return null;
   }
-  let extractedAddress = _.find(addresses, (address) => {
+  let extractedAddress = lodash.find(addresses, (address) => {
     return address.type === 'invoice'
   });
 
   if (!extractedAddress) {
-    extractedAddress = _.find(addresses, (address) => {
+    extractedAddress = lodash.find(addresses, (address) => {
       return address.type === "default"
     })
   }
@@ -37,13 +37,13 @@ const _addressToString = (address) => {
     }
   }
   if (addressFields.length) {
-    result = _.join(addressFields, ", ")
+    result = lodash.join(addressFields, ", ")
   }
   return result;
 };
 
 const _contactToString = (contact) => {
-  if (_.isEmpty(contact) || _.isNil(contact)) {
+  if (lodash.isEmpty(contact) || lodash.isNil(contact)) {
     return ''
   }
 
@@ -59,7 +59,7 @@ const _contactToString = (contact) => {
     contactFields.push(contact.phone)
   }
   if (contactFields.length) {
-    result = _.join(contactFields, ", ")
+    result = lodash.join(contactFields, ", ")
   }
   return result
 };
@@ -100,7 +100,7 @@ const InvoiceHeaderStaticFields = ({
   return (
     <div>
       {fields.map((field) => (
-        <FormGroupMarkup key={_.uniqueId()} label={field.label}>
+        <FormGroupMarkup key={lodash.uniqueId()} label={field.label}>
             <span>
               {field.value || '-'}
             </span>

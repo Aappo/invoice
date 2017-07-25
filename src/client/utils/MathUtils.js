@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import lodash from 'lodash';
 
 function roundDecimalNumber(number) {
   return parseFloat(number.toFixed(6))
@@ -12,19 +12,19 @@ function roundDecimalNumber(number) {
  * sum([undefined,undefined]) == NaN
  */
 function calculateTotalSum(i18n, list, field) {
-  let numericListValues = _.filter(list, (item) => {
+  let numericListValues = lodash.filter(list, (item) => {
     try {
       let itemFieldValue = typeof item[field] === 'number' ? item[field] : i18n.parseDecimalNumber(item[field]);
-      return !_.isNaN(itemFieldValue) && !_.isNil(itemFieldValue);
+      return !lodash.isNaN(itemFieldValue) && !lodash.isNil(itemFieldValue);
     } catch (e) {
       return false;
     }
   });
 
-  if (_.size(numericListValues) > 0) {
-    return roundDecimalNumber(_.sumBy(numericListValues, (item) =>
+  if (lodash.size(numericListValues) > 0) {
+    return roundDecimalNumber(lodash.sumBy(numericListValues, (item) =>
       typeof item[field] === 'number' ? item[field] : i18n.parseDecimalNumber(item[field])));
-  } else if (_.size(list) > 0) {
+  } else if (lodash.size(list) > 0) {
     return NaN;
   } else {
     return 0;

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import InvoiceImportDropzone from './InvoiceImportDropzone.react';
 import ImportResult from './ImportResult.react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import { ProgressBar } from 'react-bootstrap';
 
 const InvoiceImportMarkup = (
@@ -11,7 +11,7 @@ const InvoiceImportMarkup = (
     <InvoiceImportDropzone onImport={onImport}/>
     <br/>
     {importInProgress && <ProgressBar active={true} now={importPercentage} label={`${importPercentage}%`}/>}
-    {_.size(importResult) > 0 &&
+    {lodash.size(importResult) > 0 &&
     <ImportResult
       importStatistics={importResult}
       cleanImportResult={cleanImportResult}

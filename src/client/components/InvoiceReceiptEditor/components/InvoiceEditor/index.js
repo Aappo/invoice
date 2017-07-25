@@ -5,7 +5,7 @@ import SelectCustomerWizard from './SelectCustomerWizard';
 import SimpleEditor from './SimpleEditor.react';
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
-import _ from 'lodash';
+import lodash from 'lodash';
 import messages from '../../i18n/InvoiceEditor';
 import { formattedTotalSum } from '../../../../utils/MathUtils';
 import {
@@ -108,7 +108,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     }
 
     _unloadInvoiceData() {
-      const newState = _.omit(this.state, ['invoice', 'customer', 'supplier', 'items']);
+      const newState = lodash.omit(this.state, ['invoice', 'customer', 'supplier', 'items']);
       newState.isInvoiceDataReady = false;
       this.setState(newState);
     }
@@ -118,7 +118,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
         invoice: {
           supplierId: this.context.userData.supplierid,
           customerId: customerId,
-          statusId: _.find(this.state.statuses, { statusId: '100' }).statusId,
+          statusId: lodash.find(this.state.statuses, { statusId: '100' }).statusId,
           intrastatId: '000',
           bookingDate: new Date()
         },
@@ -131,7 +131,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     }
 
     updateInvoice(payload, reset) {
-      return request.put(`/invoice/api/invoices/${this.state.invoice.key}`).set(
+      return request.put(`/invoice/api/invoices/${this.state.invoice.id}`).set(
         'Accept', 'application/json'
       ).send(payload).then((response) => Promise.resolve(response.body)
       ).then((invoice) => Promise.resolve(this.setState({ invoice: invoice }))
@@ -145,7 +145,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     createInvoice(payload, reset) {
       return request.post(`/invoice/api/invoices`).set(
         'Accept', 'application/json'
-      ).send(_.assign({}, this.state.invoice, payload)
+      ).send(lodash.assign({}, this.state.invoice, payload)
       ).then((response) => Promise.resolve(reset())
       ).then(() => this.context.showNotification('Labels.saved', 'success')
       ).catch((error) => {
@@ -155,7 +155,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     }
 
     calculateItemsPrice() {
-      return fetchInvoiceReceiptItems(this.state.invoice.key).then((items) => {
+      return fetchInvoiceReceiptItems(this.state.invoice.id).then((items) => {
         let totalNetPrice, totalTaxAmount, totalGrossPrice;
         if (items.length !== 0) {
           totalNetPrice = formattedTotalSum(this.context.i18n, items, 'totalNetPrice');
@@ -174,7 +174,7 @@ const createInvoiceEditor = (WrappedEditorComponent) => {
     }
 
     statusLabel(statusId) {
-      let status = _.find(this.state.statuses, { statusId: statusId });
+      let status = lodash.find(this.state.statuses, { statusId: statusId });
       return status ? status.description : statusId;
     }
 

@@ -2,7 +2,7 @@
   "name": "InvoiceApproval",
   "initialState": "inspectionRequired",
   "finalStates": ["archived"],
-  "objectStateFieldName": "statusId",
+  "objectStateFieldName": "status",
   "transitions": [
     {
       "from": "inspectionRequired",

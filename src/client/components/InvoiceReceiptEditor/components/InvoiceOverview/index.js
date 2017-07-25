@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
 import InvoiceOverviewMarkup from './InvoiceOverviewMarkup.react';
-import _ from 'lodash';
+import lodash from 'lodash';
 import contentRange from 'content-range';
 import messages from '../../i18n/InvoiceOverview';
 import { COUNT } from '../../../../constants/pagination';
@@ -44,22 +44,22 @@ export default class InvoiceOverview extends Component {
 
   _calculateExportLink(invoices, checked) {
     let url = '/invoice/api/invoices/export?';
-    let idsToExport = _.size(checked) === 0 ?
-      _.map(invoices, (inv) => (inv.key)) : checked;
+    let idsToExport = lodash.size(checked) === 0 ?
+      lodash.map(invoices, 'id') : checked;
 
-    _.each(idsToExport, (id) => {
+    lodash.each(idsToExport, (id) => {
       url = url.concat(`exportIds=${id}&`)
     });
     return url;
   }
 
   statusLabel(statusId) {
-    let status = _.find(this.state.statuses, { statusId: statusId });
+    let status = lodash.find(this.state.statuses, { statusId: statusId });
     return status ? status.description : statusId;
   }
 
   isEditable(statusId) {
-    return !this.props.readOnly && !_.includes(['approved', 'transferred'],
+    return !this.props.readOnly && !lodash.includes(['approved', 'transferred'],
       (this.state.statuses.find((status) => status.statusId === statusId) || {}).description);
   }
 
@@ -150,7 +150,7 @@ export default class InvoiceOverview extends Component {
   }
 
   markForExport(invoiceIds) {
-    let checkedItemsIds = _.uniq(this.state.checkedInvoices.concat(invoiceIds));
+    let checkedItemsIds = lodash.uniq(this.state.checkedInvoices.concat(invoiceIds));
     this.setState({
       checkedInvoices: checkedItemsIds,
       exportLink: this._calculateExportLink(this.state.invoices, checkedItemsIds)
@@ -158,7 +158,7 @@ export default class InvoiceOverview extends Component {
   }
 
   unMarkForExport(invoiceIds) {
-    let checkedIds = _.reject(this.state.checkedInvoices, (id) => (_.includes(invoiceIds, id)));
+    let checkedIds = lodash.reject(this.state.checkedInvoices, (id) => (lodash.includes(invoiceIds, id)));
     this.setState({
       checkedInvoices: checkedIds,
       exportLink: this._calculateExportLink(this.state.invoices, checkedIds)

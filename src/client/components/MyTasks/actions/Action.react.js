@@ -22,7 +22,7 @@ export default class Action extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentary: props.invoice ? (props.invoice.commentary && '') : ''
+      commentary: props.invoice && props.invoice.commentary || ''
     }
   }
 
@@ -34,8 +34,8 @@ export default class Action extends Component {
   }
 
   handleSendEvent(id, event) {
-    return this.props.updateInvoice(id, (invoice) => {
-      return sendInvoiceEvent(invoice.key, event, this.state.commentary)
+    return this.props.updateInvoice(id, invoice => {
+      return sendInvoiceEvent(invoice.id, event, this.state.commentary)
     })
   }
 
@@ -67,8 +67,8 @@ export default class Action extends Component {
             <ButtonGroup>
               {transitions.length > 0 && transitions.map((transition) => (
                 <Button
-                  key={`${invoice.key}_${transition.event}`}
-                  onClick={() => this.handleSendEvent(invoice.key, transition.event)}
+                  key={`${invoice.id}_${transition.event}`}
+                  onClick={() => this.handleSendEvent(invoice.id, transition.event)}
                 >
                   {this.context.i18n.getMessage(`Action.event.${transition.event}`)}
                 </Button>

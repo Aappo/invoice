@@ -5,7 +5,7 @@ export default {
     }
   },
 
-  "invoiceDate": {
+  "invoicedOn": {
     presence: {
       message: "^Errors.notNull"
     }
