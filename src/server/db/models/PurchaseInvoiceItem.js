@@ -104,6 +104,9 @@ module.exports.init = function(db, config) {
         type: Sequelize.DATE,
         allowNull: true
       },
+      /**
+       * Delivery note.
+       */
       deliveryNoId: {
         field: 'DeliveryNoID',
         type: Sequelize.STRING(50),
@@ -112,6 +115,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: true
       },
+      /**
+       * Unit of measure.
+       */
       unitOfMeasureId: {
         field: 'UnitOfMeasureID',
         type: Sequelize.STRING(3),
@@ -144,11 +150,17 @@ module.exports.init = function(db, config) {
         type: Sequelize.DECIMAL(19, 2),
         allowNull: true
       },
+      /**
+       * Net price of an item.
+       */
       netPrice: {
         field: 'NetPrice',
         type: Sequelize.DECIMAL(19, 2),
         allowNull: true
       },
+      /**
+       * Gross price of an item.
+       */
       grossPrice: {
         field: 'GrossPrice',
         type: Sequelize.DECIMAL(19, 2),

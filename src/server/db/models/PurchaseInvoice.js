@@ -30,6 +30,9 @@ module.exports.init = function(db, config) {
         },
         allowNull: false
       },
+      /**
+       * Invoice date.
+       */
       invoicedOn: {
         field: 'InvoicedOn',
         type: Sequelize.DATE,
@@ -244,11 +247,17 @@ module.exports.init = function(db, config) {
         },
         allowNull: false
       },
+      /**
+       * Define if creditNote.
+       */
       isCreditNote: {
         field: 'IsCreditNote',
         type: Sequelize.BOOLEAN,
         allowNull: true
       },
+      /**
+       * Invoice type. PurchaseInvoice POINV, ConsolidatedInvoice CONSINV.
+       */
       invoiceType: {
         field: 'InvoiceType',
         type: Sequelize.STRING(8),
