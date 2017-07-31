@@ -1,0 +1,60 @@
+displayName: PurchaseInvoice
+get:
+  description: List of `PurchaseInvoice` objects.
+  is:
+    [paginable, sortable, queriable]
+  queryParameters:
+    statusId?:
+      type: string
+      description: "Search by statusId"
+    customerId?:
+      type: string
+      description: "Search by customerId"
+  responses:
+    200:
+      body:
+        applicaton/json:
+          type: PurchaseInvoice[]
+          example: !include ../examples/PurchaseInvoiceList.json
+/{id}:
+  uriParameters:
+    id:
+      type: integer
+      description: Identifier of an PurchaseInvoice.
+  get:
+    description: Get single `PurchaseInvoice` object with given id.
+    responses:
+      200:
+        body:
+          application/json:
+            type: PurchaseInvoice
+            example: !include ../examples/PurchaseInvoice.json
+  put:
+    description: Update `PurchaseInvoice` with given id.
+    body:
+      type: PurchaseInvoice
+      example:
+        value:
+          statusId: "390"
+          commentary: "Example Commentary"
+    responses:
+      200:
+        body:
+          application/json:
+            type: PurchaseInvoice
+            example: !include ../examples/PurchaseInvoice.json
+  delete:
+    description: Delete `PurchaseInvoice` with given id.
+  /items: !include ../resourceTypes/purchaseInvoiceItems.raml
+post:
+  description: Create `PurchaseInvoice` instance.
+  body:
+    application/json:
+      type: PurchaseInvoice
+      example: !include ../examples/PurchaseInvoice.json
+  responses:
+    200:
+      body:
+        application/json:
+          type: PurchaseInvoice
+          example: !include ../examples/PurchaseInvoice.json

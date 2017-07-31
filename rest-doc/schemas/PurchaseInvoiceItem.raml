@@ -1,0 +1,51 @@
+type: object
+displayName: PurchaseInvoiceItem
+description: Object representing a single PurchaseInvoiceItem.
+properties:
+  id: integer
+  purchaseInvoiceId: integer
+  orderItemNo: integer
+  productDescShort?:
+    type: string
+    maxLength: 500
+  productDescLong?:
+    type: string
+    maxLength: 1000
+  productId?:
+    type: string
+    maxLength: 100
+  orderReference?:
+    type: string
+    maxLength: 100
+  purchaseOrderId?:
+    type: string
+    maxLength: 500
+  orderDate?: datetime
+  deliveryNoId?:
+    type: string
+    maxLength: 50
+  unitOfMeasureId?:
+    type: string
+    maxLength: 3
+  quantityCharged?: integer
+  quantityOrdered?: integer
+  quantityDelivered?: integer
+  netPrice?:
+    type: number
+    format: double
+  grossPrice?:
+    type: number
+    format: double
+  totalNetPriceDiscounted?:
+    type: number
+    format: double
+  totalGrossPrice?:
+    type: number
+    format: double
+  totalNetPrice?:
+    type: number
+    format: double
+  vatPercentage?:
+    type: number
+    format: double
+

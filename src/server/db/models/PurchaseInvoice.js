@@ -181,7 +181,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the payment. dueDate = invoiceDate + TermsOfPayment.netDays
+       * Due date for the payment. dueDate = invoicedOn + TermsOfPayment.netDays
        */
       dueDate: {
         field: 'DueDate',
@@ -189,7 +189,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the first discount. dueDate = invoiceDate + TermsOfPayment.discountDays1
+       * Due date for the first discount. dueDate = invoicedOn + TermsOfPayment.discountDays1
        */
       dueDateEarlyDiscount: {
         field: 'DueDateEarlyDiscount',
@@ -197,7 +197,7 @@ module.exports.init = function(db, config) {
         allowNull: true
       },
       /**
-       * Due date for the first discount. dueDate = invoiceDate + TermsOfPayment.discountDays2
+       * Due date for the first discount. dueDate = invoicedOn + TermsOfPayment.discountDays2
        */
       dueDateLateDiscount: {
         field: 'DueDateLateDiscount',

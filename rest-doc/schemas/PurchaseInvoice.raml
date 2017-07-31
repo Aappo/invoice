@@ -1,0 +1,71 @@
+type: object
+displayName: PurchaseInvoice
+description: Object representing a single PurchaseInvoice.
+properties:
+  id: integer
+  invoiceNo: integer
+    type: string
+    maxLength: 30
+  invoicedOn: datetime
+  scannedOn: datetime
+  customerId:
+    type: string
+    maxLength: 30
+  supplierId:
+    type: string
+    maxLength: 50
+  paymentBankAccountId?:
+    type: string
+    maxLength: 30
+  netAmount?:
+    type: number
+    format: double
+  grossAmount?:
+    type: number
+    format: double
+  vatAmount?:
+    type: number
+    format: double
+  currencyId?:
+    type: string
+    maxLength: 3
+  assignee?:
+    type: string
+    maxLength: 255
+  supplierInvoiceId?:
+    type: string
+    maxLength: 255
+  paymentReferenceNo?:
+    type: string
+    maxLength: 25
+  termsOfPaymentId?:
+    type: string
+    maxLength: 20
+  termsOfPaymentDescription?:
+    type: string
+    maxLength: 100
+  dueDate?: datetime
+  dueDateEarlyDiscount?: datetime
+  dueDateLateDiscount?: datetime
+  discountableValue?:
+    type: number
+    format: double
+  earlyDiscount?:
+    type: number
+    format: double
+  lateDiscount?:
+    type: number
+    format: double
+  isPreliminary?: boolean
+  invoiceChannel:
+    type: string
+    maxLength: 6
+  isCreditNote?: boolean
+  invoiceType?:
+    type: string
+    maxLength: 8
+  commentary?:
+    type: string
+    maxLength: 200
+
+

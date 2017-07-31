@@ -6,7 +6,7 @@ const lodash = require('lodash');
  * Import purchase invoice items and returns promise that will be associated with
  * statistical object {created: n, failed: k}
  *
- * @param db - db model {models, sequelize and etc. object}
+ * @param db - db model (models, sequelize and etc. object)
  * @param purchaseInvoiceItems - purchase invoice items array JSON representation
  * @param invoice - PurchaseInvoice instatnce that will be associated with imported items
  * @return {Promise.<TResult>}
@@ -59,8 +59,8 @@ const invoiceImportFailedCallback = purchaseInvoiceId => {
  *
  * @param invoice PurchaseInvoice instance
  * @param invoiceData - invoice JSON representation
- * @param db - db model {models, sequelize and etc. object}
- * @param originalStatisticObject - object {purchaseInvoiceId: <id>, updated/crated: true}
+ * @param db - db model (models, sequelize and etc. object)
+ * @param originalStatisticObject - object (purchaseInvoiceId: <id>, updated/crated: true)
  * @return {Promise.<TResult>}
  */
 const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalStatisticObject) => {
@@ -86,7 +86,7 @@ const collectInvoiceItemsImportStatistic = (invoice, invoiceData, db, originalSt
  * Creates new invoice and items
  *
  * @param insertData - JSON purchase invoice representation
- * @param db - db model {models, sequelize and etc. object}
+ * @param db - db model (models, sequelize and etc. object)
  * @return {Promise.<TResult>}
  */
 const createInvoice = (insertData, db) => {
@@ -106,7 +106,7 @@ const createInvoice = (insertData, db) => {
  *
  * @param invoice2Update
  * @param updateData - PurchaseInvoice instance
- * @param db - db model {models, sequelize and etc. object}
+ * @param db - db model (models, sequelize and etc. object)
  * @return {Promise.<TResult>}
  */
 const updateInvoice = (invoice2Update, updateData, db) => {

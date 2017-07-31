@@ -1,0 +1,52 @@
+displayName: PurchaseInvoiceItem
+get:
+  description: List of `PurchaseInvoiceItem` objects.
+  is:
+    [paginable, sortable, queriable]
+  responses:
+    200:
+      body:
+        applicaton/json:
+          type: PurchaseInvoiceItem[]
+          example: !include ../examples/PurchaseInvoiceItemsList.json
+/{id}:
+  uriParameters:
+    id:
+      type: integer
+      description: Identifier of an PurchaseInvoiceItem.
+  get:
+    description: Get single `PurchaseInvoiceItem` object with given id.
+    responses:
+      200:
+        body:
+          application/json:
+            type: PurchaseInvoiceItem
+            example: !include ../examples/PurchaseInvoiceItem.json
+  put:
+    description: Update `PurchaseInvoiceItem` with given id.
+    body:
+      type: PurchaseInvoiceItem
+      example:
+        value:
+          netPrice: 100
+          quantity: 5
+    responses:
+      200:
+        body:
+          application/json:
+            type: PurchaseInvoiceItem
+            example: !include ../examples/PurchaseInvoiceItem.json
+  delete:
+    description: Delete `PurchaseInvoiceItem` with given id.
+post:
+  description: Create `PurchaseInvoiceItem` instance.
+  body:
+    application/json:
+      type: PurchaseInvoiceItem
+      example: !include ../examples/PurchaseInvoiceItem.json
+  responses:
+    200:
+      body:
+        application/json:
+          type: PurchaseInvoiceItem
+          example: !include ../examples/PurchaseInvoiceItem.json

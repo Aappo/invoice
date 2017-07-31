@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "invoiceNo": "INV_1",
+    "invoicedOn": "2017-07-24T13:17:43.000Z",
+    "scannedOn": "2017-07-24T13:17:48.000Z",
+    "customerId": "ncc",
+    "supplierId": "car001",
+    "paymentBankAccountId": "321",
+    "netAmount": 10,
+    "grossAmount": 20,
+    "vatAmount": 30,
+    "currencyId": "USD",
+    "status": "archived",
+    "assignee": "test",
+    "supplierInvoiceId": "test",
+    "paymentReferenceNo": "test",
+    "termsOfPaymentId": "T1",
+    "termsOfPaymentDescription": "T1",
+    "dueDate": "2017-07-24T13:22:37.000Z",
+    "dueDateEarlyDiscount": "2017-07-24T13:22:40.000Z",
+    "dueDateLateDiscount": "2017-07-24T13:22:41.000Z",
+    "discountableValue": null,
+    "earlyDiscount": null,
+    "lateDiscount": null,
+    "isPreliminary": null,
+    "invoiceChannel": "test",
+    "isCreditNote": null,
+    "invoiceType": "invoice",
+    "commentary": "yes"
+  }
+]
