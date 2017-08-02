@@ -3,22 +3,13 @@
 const Promise = require('bluebird');
 const assert = require('assert');
 const fs = require('fs');
-const schema = require("./InvoiceApproval.json");
+const schema = require("./ApprovalSchema.json");
 const { MachineDefinition, Machine } = require('@opuscapita/fsm-core');
 
 const machineDefinition = new MachineDefinition({
   schema: schema,
-  conditions: {
-    userHasRole: ({ role, request }) => {
-      const roles = request ? request.roles : [];
-      return roles.includes(role);
-    }
-  },
-  actions: {
-    updateComment: ({ object, commentFieldName, request }) => {
-      object[commentFieldName] = request.comment;
-    }
-  }
+  conditions: require('./conditions'),
+  actions: require('./actions')
 });
 
 const machine = new Machine({ machineDefinition });
@@ -33,13 +24,12 @@ const assertAvailableTransitions = (object, request, expected) => {
 /**
  * Unit tests for invoice approval
  */
-describe("invoice approval flow", () => {
-
-  describe("invoice-approver", () => {
+describe("Invoice approval flow", () => {
+  describe("Invoice approver:", () => {
 
     const request = { roles: ['invoice-approver'] };
 
-    describe("available transitions", () => {
+    describe("Available transitions:", () => {
 
       it("inspectionRequired", () => {
         const invoice = { status: 'inspectionRequired' };
@@ -55,7 +45,7 @@ describe("invoice approval flow", () => {
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired' };
-        const expected = ['approve', 'sendToClarification', 'postComment'];
+        const expected = ['approve', 'sendToClarification', 'postComment', 'rejectInspection'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -66,7 +56,7 @@ describe("invoice approval flow", () => {
       });
     });
 
-    describe("send event", () => {
+    describe("Send event:", () => {
 
       it("inspect invoice", (done) => {
         const invoice = { status: 'inspectionRequired' };
@@ -95,7 +85,7 @@ describe("invoice approval flow", () => {
       it("approve invoice", () => {
         const invoice = { status: 'approvalRequired' };
         return machine.sendEvent({ event: 'approve', object: invoice, request: request }).then(() => {
-          assert.equal(machine.currentState({ object: invoice }), 'archived');
+          assert.equal(machine.currentState({ object: invoice }), 'approved');
         });
       });
 
@@ -115,11 +105,11 @@ describe("invoice approval flow", () => {
     });
   });
 
-  describe("invoice-inspector", () => {
+  describe("Invoice inspector", () => {
 
     const request = { roles: ['invoice-inspector'] };
 
-    describe("available transitions", () => {
+    describe("Available transitions:", () => {
 
       it("inspectionRequired", () => {
         const invoice = { status: 'inspectionRequired' };
@@ -135,7 +125,7 @@ describe("invoice approval flow", () => {
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired' };
-        const expected = [];
+        const expected = ['rejectInspection'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -146,7 +136,7 @@ describe("invoice approval flow", () => {
       });
     });
 
-    describe("send event", () => {
+    describe("Send event:", () => {
 
       it("inspect invoice", () => {
         const invoice = { status: 'inspectionRequired' };

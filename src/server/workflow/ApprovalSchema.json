@@ -10,9 +10,9 @@
       "to": "approvalRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-inspector"
+            "restrictedRoles": ["invoice-inspector"]
           }
         }
       ],
@@ -31,9 +31,9 @@
       "to": "inspectionRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-inspector"
+            "restrictedRoles": ["invoice-inspector"]
           }
         }
       ],
@@ -52,9 +52,9 @@
       "to": "inspClrRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-inspector"
+            "restrictedRoles": ["invoice-inspector"]
           }
         }
       ],
@@ -73,9 +73,9 @@
       "to": "inspectionRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-inspector"
+            "restrictedRoles": ["invoice-inspector"]
           }
         }
       ],
@@ -94,9 +94,9 @@
       "to": "inspClrRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-inspector"
+            "restrictedRoles": ["invoice-inspector"]
           }
         }
       ],
@@ -112,12 +112,57 @@
     {
       "from": "approvalRequired",
       "event": "approve",
-      "to": "archived",
+      "to": "approved",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-approver"
+            "restrictedRoles": ["invoice-approver"]
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "approved",
+      "event": "rejectApproval",
+      "to": "approvalRequired",
+      "guards": [
+        {
+          "name": "userHasRoles",
+          "arguments": {
+            "restrictedRoles": ["invoice-approver"]
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
+      "from": "approvalRequired",
+      "event": "rejectInspection",
+      "to": "inspectionRequired",
+      "guards": [
+        {
+          "name": "userHasRoles",
+          "arguments": {
+            "restrictedRoles": [
+              "invoice-approver",
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -136,9 +181,9 @@
       "to": "approvalRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-approver"
+            "restrictedRoles": ["invoice-approver"]
           }
         }
       ],
@@ -157,9 +202,9 @@
       "to": "appClrRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-approver"
+            "restrictedRoles": ["invoice-approver"]
           }
         }
       ],
@@ -178,9 +223,9 @@
       "to": "approvalRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-approver"
+            "restrictedRoles": ["invoice-approver"]
           }
         }
       ],
@@ -199,9 +244,9 @@
       "to": "appClrRequired",
       "guards": [
         {
-          "name": "userHasRole",
+          "name": "userHasRoles",
           "arguments": {
-            "role": "invoice-approver"
+            "restrictedRoles": ["invoice-approver"]
           }
         }
       ],
