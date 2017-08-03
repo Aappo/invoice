@@ -26,8 +26,11 @@ let Action = {
 Action.header = 'Approval';
 Action.headerLabel = 'Leave a comment';
 
+let EmptyLayout = {};
+EmptyLayout.message = "At the moment you don't have any invoice to inspect, approve or in clarification state."
 
 export default {
   TaskItem: TaskItem,
-  Action: Action
+  Action: Action,
+  EmptyLayout: EmptyLayout
 };
