@@ -7,7 +7,8 @@ TaskItem.status = {
   approvalRequired: 'Approval Required',
   inspClrRequired: 'Inspector Clarification Required',
   appClrRequired: 'Approver Clarification Required',
-  archived: 'Archived'
+  archived: 'Archived',
+  approved: 'Approved'
 };
 
 let Action = {
@@ -17,7 +18,9 @@ let Action = {
     clarifyForInspection: 'Clarify for Inspector',
     clarifyForApproval: 'Clarify for Approver',
     approve: 'Approve',
-    postComment: 'Leave a Comment'
+    postComment: 'Leave a Comment',
+    rejectApproval: "Cancel Approval",
+    rejectInspection: "Cancel Inspection"
   }
 };
 Action.header = 'Approval';

@@ -13,18 +13,9 @@ var NotFoundError = require('epilogue').Errors.NotFoundError;
 module.exports = (app, epilogue, db) => {
   const machine = new Machine({
     machineDefinition: new MachineDefinition({
-      schema: require('../../workflow/InvoiceApproval.json'),
-      conditions: {
-        userHasRole: ({ role, request }) => {
-          const roles = request ? request.roles : [];
-          return roles.includes(role);
-        }
-      },
-      actions: {
-        updateComment: ({object, commentFieldName, request}) => {
-          object[commentFieldName] = request.comment;
-        }
-      }
+      schema: require('../../workflow/ApprovalSchema.json'),
+      conditions: require('../../workflow/conditions'),
+      actions: require('../../workflow/actions')
     })
   });
 
