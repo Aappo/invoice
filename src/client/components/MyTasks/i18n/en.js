@@ -8,7 +8,7 @@ TaskItem.status = {
   inspClrRequired: 'Inspector Clarification Required',
   appClrRequired: 'Approver Clarification Required',
   archived: 'Archived',
-  archived: 'Approved'
+  approved: 'Approved'
 };
 
 let Action = {

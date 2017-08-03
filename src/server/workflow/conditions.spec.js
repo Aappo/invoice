@@ -44,4 +44,35 @@ describe("Approval workflow conditions:", () => {
     }), false);
   });
 
+  it('returns false in case null or undefined requies', () => {
+    assert.equal(conditions.userHasRoles({
+      restrictedRoles: 'invoice-approver'
+    }), false);
+
+    assert.equal(conditions.userHasRoles({
+      restrictedRoles: ['invoice-approver'],
+      request: null
+    }), false);
+  });
+
+  it('returns true in case empty or null restricted roles', () => {
+    assert.equal(conditions.userHasRoles({
+      restrictedRoles: [],
+      request: {roles: ['user']}
+    }), true);
+
+    assert.equal(conditions.userHasRoles({
+      restrictedRoles: null,
+      request: {roles: ['user']}
+    }), true);
+
+    assert.equal(conditions.userHasRoles({
+      request: {roles: ['user']}
+    }), true);
+
+    assert.equal(conditions.userHasRoles({
+      restrictedRoles: [],
+      request: {roles: []}
+    }), true);
+  });
 });
