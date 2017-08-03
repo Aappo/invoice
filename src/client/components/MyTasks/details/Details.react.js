@@ -61,7 +61,9 @@ class Details extends React.Component {
         return this.getInvoiceImageControl('/invoice/static/test_workarea/invoiceReceipt_TEST.pdf');
       case 2:
         return (
-          <InvoiceDetails invoice={this.props.invoice} />
+          <div id="content">
+            <InvoiceDetails invoice={this.props.invoice} />
+          </div>
         );
       case 3:
         return (
@@ -125,9 +127,7 @@ class Details extends React.Component {
             </li>
           </ul>
         </div>
-        <div id="content">
           { this.props.invoice && this.getContent() }
-        </div>
       </div>
     );
   }

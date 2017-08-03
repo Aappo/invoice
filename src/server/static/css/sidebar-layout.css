@@ -148,8 +148,7 @@ html,body{
   display:table-cell;
   position:relative;
   z-index:1;
-  padding:30px;
-  padding-bottom:0;
+  padding:0 30px;
   vertical-align:top;
   word-break:break-word;
   width:100%;

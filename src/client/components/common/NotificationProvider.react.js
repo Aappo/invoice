@@ -33,7 +33,7 @@ export default class NotificationProvider extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{height: '100%'}}>
         <NotificationSystem ref="notificationSystem"/>
         {this.props.children}
       </div>

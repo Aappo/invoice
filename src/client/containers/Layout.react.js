@@ -7,8 +7,8 @@ import { HeaderMenu } from 'ocbesbn-react-components';
 const Layout = (props, { userData }) => (
   <div className="page-container">
     <SidebarMenu/>
+    <HeaderMenu currentUserData={userData}/>
     <div className="main-content">
-      <HeaderMenu currentUserData={userData}/>
       <div className="content-wrap">
         <div className="container-fluid">
           <NotificationProvider>
