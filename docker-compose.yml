@@ -45,6 +45,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_AUTH: ${REDIS_AUTH}
+      SERVICE_3009_CHECK_HTTP: /api/health/check
+      SERVICE_3009_CHECK_INTERVAL: 15s
+      SERVICE_3009_CHECK_TIMEOUT: 3s
     ports:
        - '${CUSTOMER_PORT}:${CUSTOMER_PORT}'
     command: 'npm run dev'
@@ -63,6 +66,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_AUTH: ${REDIS_AUTH}
+      SERVICE_3001_CHECK_HTTP: /api/health/check
+      SERVICE_3001_CHECK_INTERVAL: 15s
+      SERVICE_3001_CHECK_TIMEOUT: 3s
     ports:
        - '${SUPPLIER_PORT}:${SUPPLIER_PORT}'
     command: 'npm run local'
@@ -83,6 +89,9 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       PORT: ${ISOADATA_PORT}
+      SERVICE_3006_CHECK_HTTP: /api/health/check
+      SERVICE_3006_CHECK_INTERVAL: 15s
+      SERVICE_3006_CHECK_TIMEOUT: 3s
     command: 'npm run dev:production'
 
   mysql:
@@ -92,6 +101,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      SERVICE_3013_CHECK_HTTP: /api/health/check
+      SERVICE_3013_CHECK_INTERVAL: 15s
+      SERVICE_3013_CHECK_TIMEOUT: 3s
     depends_on:
       - registrator
 
@@ -120,6 +132,9 @@ services:
       REDIS_AUTH: $REDIS_AUTH
       USER_NAME: 'user'
       PASSWORD: 'svc_user'
+      SERVICE_3008_CHECK_HTTP: /api/health/check
+      SERVICE_3008_CHECK_INTERVAL: 15s
+      SERVICE_3008_CHECK_TIMEOUT: 3s
     ports:
      - '${USER_PORT}:${USER_PORT}'
     command: 'npm run dev'
@@ -132,6 +147,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+      SERVICE_3013_CHECK_HTTP: /api/health/check
+      SERVICE_3013_CHECK_INTERVAL: 15s
+      SERVICE_3013_CHECK_TIMEOUT: 3s
     ports:
      - '${ACL_PORT}:${ACL_PORT}'
     depends_on:
@@ -160,6 +178,9 @@ services:
       SMTP_PORT: ${SMTP_PORT}
       SMTP_USER: ${SMTP_USER}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SERVICE_3005_CHECK_HTTP: /auth/certs
+      SERVICE_3005_CHECK_INTERVAL: 15s
+      SERVICE_3005_CHECK_TIMEOUT: 3s
     depends_on:
       - kong
       - consul
@@ -211,6 +232,9 @@ services:
       AUTH_SERVER_PORT: $AUTH_SERVER_PORT
       API_REGISTRY_PORT: $API_REGISTRY_PORT
       GATEWAY_CALLBACK: $GATEWAY_CALLBACK
+      SERVICE_3002_CHECK_HTTP: /api/health/check
+      SERVICE_3002_CHECK_INTERVAL: 15s
+      SERVICE_3002_CHECK_TIMEOUT: 3s
     depends_on:
       - kong
 
