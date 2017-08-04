@@ -7,9 +7,8 @@ import EmptyLayout from './EmptyLayout.react';
 import './WideLayout.less';
 
 const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
-
   if(!list || list.length  === 0) {
-    return (<EmptyLayout/>);
+    return (<EmptyLayout isLoading={!list}/>);
   }
 
   return (

@@ -44,7 +44,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     };
 
     state = {
-      taskList: [],
+      taskList: undefined,
       // Common data loaded once and set to context
       isMasterDataReady: false,
       termsOfDelivery: [],
@@ -65,9 +65,13 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     componentDidMount() {
       this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
         this.props.fetcher().then((invoices) => {
-          return Promise.resolve(invoices.length > 0 && this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
-            return Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }));
-          }));
+          if(invoices.length > 0) {
+            return this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
+              this.setState({ taskList: invoices, invoice: invoiceData });
+            })
+          } else {
+            this.setState({ taskList: [] });
+          }
         })
       })));
     }
