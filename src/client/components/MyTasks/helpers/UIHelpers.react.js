@@ -1,11 +1,15 @@
 import React from 'react';
-// import { Icon } from '@opuscapita/oc-common-ui';
+import { Icon } from '../../common/Icon';
 
-import { APPROVALACTIONKIND,
-         INVOICESTATUSFLAG } from '../models/Invoices.constants';
+import {
+  APPROVALACTIONKIND,
+} from '../models/Invoices.constants';
 
 
-/** UiHelpers class. A collection of common UI methods in invoices. */
+/**
+ * UiHelpers class.
+ * A collection of common UI methods in invoices.
+ */
 class UiHelpers {
 
   /**
@@ -14,7 +18,6 @@ class UiHelpers {
    * @param {object} size - Icon size i.e. width and height.
    */
   getIconForApprovalStatus = (status, size) => {
-    return null;
     let indicator = '';
 
     switch (status) {
@@ -24,73 +27,77 @@ class UiHelpers {
       case APPROVALACTIONKIND.Inspected:
         indicator = 'inspected';
         break;
+      case APPROVALACTIONKIND.InspectionRequired:
+        indicator = 'flagged';
+        break;
       case APPROVALACTIONKIND.InspectedAndApproved:
         indicator = 'inspectedAndApproved';
         break;
-      case APPROVALACTIONKIND.Rejected:
-        indicator = 'rejected';
+      case APPROVALACTIONKIND.InspectorClarificationRequired:
+        indicator = 'inClarification';
         break;
-      case APPROVALACTIONKIND.SetToClarification:
+      case APPROVALACTIONKIND.ApproverClarificationRequired:
         indicator = 'inClarification';
         break;
       default:
         break;
     }
+
     if (indicator) {
       return <Icon type="indicator" name={indicator} {...size} />;
     }
     return null;
-  }
+  };
 
   /**
    * Get icon for invoice flag
    * @param {string} flag - Status flag (INVOICESTATUSFLAG).
    * @param {object} size - Icon size i.e. width and height.
    */
-  getIconForInvoiceFlag = (flag, size) => {
-    return null;
-    let indicator = '';
-
-    switch (flag) {
-      case INVOICESTATUSFLAG.COMMENTED:
-        indicator = 'commented';
-        break;
-      case INVOICESTATUSFLAG.FLAGGED_MANUALLY:
-        indicator = 'flagged';
-        break;
-      case INVOICESTATUSFLAG.FLAGGED_AUTOMATICALLY:
-        indicator = 'flagged';
-        break;
-      case INVOICESTATUSFLAG.RECLAMATIONS_SENT:
-        indicator = 'email';
-        break;
-      case INVOICESTATUSFLAG.ACCEPTED:
-        indicator = 'ok';
-        break;
-      case INVOICESTATUSFLAG.HOLD:
-        indicator = 'inClarification';
-        break;
-      case INVOICESTATUSFLAG.REJECTED:
-        indicator = 'rejected';
-        break;
-      case INVOICESTATUSFLAG.INVOICE_INSPECTED:
-        indicator = 'inspected';
-        break;
-      default:
-        break;
-    }
-    if (indicator) {
-      return (
-        <Icon
-          key={flag}
-          type="indicator"
-          name={indicator}
-          {...size}
-        />
-      );
-    }
-    return null;
-  }
+  // getIconForInvoiceFlag = (flag, size) => {
+  //   return null;
+  //   let indicator = '';
+  //
+  //   switch (flag) {
+  //     case INVOICESTATUSFLAG.COMMENTED:
+  //       indicator = 'commented';
+  //       break;
+  //     case INVOICESTATUSFLAG.FLAGGED_MANUALLY:
+  //       indicator = 'flagged';
+  //       break;
+  //     case INVOICESTATUSFLAG.FLAGGED_AUTOMATICALLY:
+  //       indicator = 'flagged';
+  //       break;
+  //     case INVOICESTATUSFLAG.RECLAMATIONS_SENT:
+  //       indicator = 'email';
+  //       break;
+  //     case INVOICESTATUSFLAG.ACCEPTED:
+  //       indicator = 'ok';
+  //       break;
+  //     case INVOICESTATUSFLAG.HOLD:
+  //       indicator = 'inClarification';
+  //       break;
+  //     case INVOICESTATUSFLAG.REJECTED:
+  //       indicator = 'rejected';
+  //       break;
+  //     case INVOICESTATUSFLAG.INVOICE_INSPECTED:
+  //       indicator = 'inspected';
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   if (indicator) {
+  //     return (
+  //       <Icon
+  //         key={flag}
+  //         type="indicator"
+  //         name={indicator}
+  //         {...size}
+  //       />
+  //     );
+  //   }
+  //   return null;
+  // }
 
   getFormatOptions = (amount, currency) => {
     let digits = 2;
@@ -102,7 +109,7 @@ class UiHelpers {
       minimumFractionDigits: digits,
       maximumFractionDigits: digits,
     };
-  }
+  };
 
   /**
    * Format amount

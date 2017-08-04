@@ -7,10 +7,6 @@ const iconSize = {
   height: 25,
 };
 
-// const flags = this.props.invoice.Flags.map((flag => (
-//   UiHelpers.getIconForInvoiceFlag(flag, iconSize)
-// )));
-
 const TaskItem = ({ invoice }, { i18n }) => (
   <div className="list-item-content">
     <div className="list-item-wide-column">
@@ -44,7 +40,7 @@ const TaskItem = ({ invoice }, { i18n }) => (
       </div>
     </div>
     <div className="list-item-narrow-column">
-      {/*{flags}*/}
+      {UiHelpers.getIconForApprovalStatus(invoice.status, iconSize)}
     </div>
   </div>
 );

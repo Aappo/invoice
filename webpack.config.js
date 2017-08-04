@@ -52,8 +52,22 @@ module.exports = {
         loader: 'style-loader!css-loader'
       },
       {
-        test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+        test: /\.(eot|woff|woff2|ttf|png|jpg)$/,
         loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
+      },
+      {
+        test: /\.svg$/,
+        use: [{
+          loader: 'react-svg-loader',
+          options: {
+            es5: true,
+            svgo: {
+              plugins: [{
+                removeAttrs: {attrs: 'xmlns.*'}
+              }]
+            }
+          }
+        }]
       },
       {
         test: /\.less$/,
