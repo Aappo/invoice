@@ -45,10 +45,11 @@ const importInvoiceItems = (db, purchaseInvoiceItems, invoice) => {
  * @return {function()}
  */
 const invoiceImportFailedCallback = purchaseInvoiceId => {
-  return () => {
+  return (error) => {
     return Promise.resolve({
       failed: true,
-      purchaseInvoiceId: purchaseInvoiceId
+      purchaseInvoiceId: purchaseInvoiceId,
+      error: error
     });
   }
 };
@@ -98,7 +99,7 @@ const createInvoice = (insertData, db) => {
       created: true,
       purchaseInvoiceId: newInvoice.id
     })
-  }).catch(invoiceImportFailedCallback(insertData.purchaseInvoiceId))
+  }).catch(invoiceImportFailedCallback(insertData.id))
 };
 
 /**
@@ -117,7 +118,7 @@ const updateInvoice = (invoice2Update, updateData, db) => {
       updated: true,
       purchaseInvoiceId: updatedInvoice.id
     })
-  }).catch(invoiceImportFailedCallback(updateData.purchaseInvoiceId))
+  }).catch(invoiceImportFailedCallback(updateData.id))
 };
 
 /**
