@@ -1,12 +1,12 @@
 
 export const APPROVALACTIONKIND = {
   None: 0,
-  Approved: 1,
-  Inspected: 2,
-  Notified: 3,
-  Rejected: 4,
-  SetToClarification: 5,
-  InspectedAndApproved: 6,
+  InspectionRequired: 'inspectionRequired',
+  Approved: 'approved',
+  Inspected: 'approvalRequired',
+  InspectorClarificationRequired: 'inspClrRequired',
+  ApproverClarificationRequired: 'appClrRequired',
+  InspectedAndApproved: 'archived',
 };
 
 export const INVOICECATEGORY = {

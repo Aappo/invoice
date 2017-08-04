@@ -24,6 +24,11 @@ docker-compose -f docker-compose.yml -f docker-compose.override.yml up;
 
 ```
 
+## Running tests
+```bash
+docker-compose -f docker-compose.override.yml run main npm run test
+```
+
 Cloning dependent images might take some time some time (for very first time about 5 minutes).
 Then go to _localhost:8080/invoice_
 
