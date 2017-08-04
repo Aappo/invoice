@@ -20,7 +20,7 @@ const storeDocumentIfNotExist = (invoice) => {
     // From head request expecting response with status code
     if (error.response && error.response.statusCode === 404) {
       return fs.readFileAsync(`src/server/db/migrations/data/documents/${invoice.invoiceNo}.pdf`).then((document) =>
-        blobClient.storeFile(invoice.customerId, path, document, true).catch((error) => { throw Error(error); })
+        blobClient.storeFile(`c_${invoice.customerId}`, path, document, true).catch((error) => { throw Error(error); })
       );
     } else {
       throw Error(error);
@@ -31,7 +31,8 @@ const storeDocumentIfNotExist = (invoice) => {
 module.exports.up = function(db, config) {
   // Handling invoices sequentially to prevent TenantContainerMapping collision
   return invoices.map(invoice =>
-    () => createInvoice(invoice, db.queryInterface).then(persistedInvoice => storeDocumentIfNotExist(persistedInvoice))
+    () => createInvoice(invoice, db.queryInterface).then(persistedInvoice =>
+      process.env.NODE_ENV === 'development' ? storeDocumentIfNotExist(persistedInvoice) : Promise.resolve())
   ).reduce((promise, func) => promise.then(func), Promise.resolve());
 };
 

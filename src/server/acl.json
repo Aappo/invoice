@@ -95,11 +95,6 @@
         "type": "rest",
         "resourceId": "/allTaskList",
         "actions": ["view"]
-      },
-      {
-        "type": "rest",
-        "resourceId": "/api/invoices/[^/]+/documents",
-        "actions": ["view"]
       }
     ]
   }

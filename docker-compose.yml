@@ -285,7 +285,7 @@ services:
       SERVICE_3012_CHECK_TIMEOUT: 3s
       SERVICE_3012_CHECK_INTERVAL: 15s
     ports:
-      - '3012:3012'
+       - '${BLOB_PORT}:${BLOB_PORT}'
     command: 'npm run dev'
 
 
