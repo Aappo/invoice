@@ -16,7 +16,7 @@ const createInvoice = (invoice, qi) => {
 
 const storeDocumentIfNotExist = (invoice) => {
   const path = `/private/purchaseInvoices/${invoice.id}/${invoice.invoiceNo}.pdf`;
-  return blobClient.getFileInfo(invoice.customerId, path).catch((error) => {
+  return blobClient.getFileInfo(`c_${invoice.customerId}`, path).catch((error) => {
     // From head request expecting response with status code
     if (error.response && error.response.statusCode === 404) {
       return fs.readFileAsync(`src/server/db/migrations/data/documents/${invoice.invoiceNo}.pdf`).then((document) =>

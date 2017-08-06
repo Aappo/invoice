@@ -12,7 +12,7 @@ module.exports = function(app, db) {
   app.get('/api/invoices/:invoiceId/attachment', (req, res, next) => {
     const tenantId = `c_${req.opuscapita.userData().customerid}`;
     const path = `/private/purchaseInvoices/${req.params.invoiceId}/`;
-    const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient, forceServiceToken: true });
+    const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient });
     blobClient.listFiles(tenantId, path).then((filesList) => {
       const attachmentInfo = filesList.find(file => file.extension === '.pdf');
       if (attachmentInfo) {
