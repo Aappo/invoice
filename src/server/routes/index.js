@@ -7,6 +7,7 @@ const invoiceItemsRoutes = require('./invoiceReceiptItems');
 const purchaseInvoiceRoutes = require('./purchaseInvoice');
 const purchaseInvoiceItemRoutes = require('./purchaseInvoiceItem');
 const invoiceStatuses = require('./invoiceStatuses');
+const invoiceAttachment = require('./invoiceAttachment');
 const staticResources = require('./staticResources');
 const termsOfPayment = require('./termsOfPayment');
 const termsOfDelivery = require('./termsOfDelivery');
@@ -48,6 +49,7 @@ module.exports.init = function(app, db, config) {
   purchaseInvoiceItemRoutes(epilogue, db);
   glAccount(epilogue, db);
   invoiceStatuses(app, db);
+  invoiceAttachment(app, db);
   staticResources(app, db);
   termsOfPayment(app, db);
   termsOfDelivery(app, db);

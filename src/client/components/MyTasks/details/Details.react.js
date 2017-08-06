@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import InvoiceDetails from './InvoiceDetails.react';
 import InvoiceItemsGrid from '../../InvoiceReceiptEditor/components/InvoiceEditor/InvoiceItemsGrid.react';
-
 import './Details.less';
 
 
@@ -32,7 +31,8 @@ class Details extends React.Component {
       mime = extensionMatch.exec(file)[1];
     }
 
-    if (mime === 'pdf') {
+    // Always display as pdf
+    if (true || mime === 'pdf') {
       return (
         <object
           type="application/pdf"
@@ -55,24 +55,24 @@ class Details extends React.Component {
     );
   }
 
-  getContent = () => {
+  getContent = (invoice) => {
     switch (this.state.selectedTab) {
       case 1:
-        return this.getInvoiceImageControl('/invoice/static/test_workarea/invoiceReceipt_TEST.pdf');
+        return this.getInvoiceImageControl(`/invoice/api/invoices/${invoice.id}/attachment`);
       case 2:
         return (
           <div id="content">
-            <InvoiceDetails invoice={this.props.invoice} />
+            <InvoiceDetails invoice={invoice} />
           </div>
         );
       case 3:
         return (
           <InvoiceItemsGrid
-            items={this.props.invoice.items}
+            items={invoice.items}
             readOnly={true}
             onDelete={() => {}}
           />
-        )
+        );
       default:
         return null;
     }
@@ -127,7 +127,7 @@ class Details extends React.Component {
             </li>
           </ul>
         </div>
-          { this.props.invoice && this.getContent() }
+          { this.props.invoice && this.getContent(this.props.invoice) }
       </div>
     );
   }

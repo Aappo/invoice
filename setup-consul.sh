@@ -1,7 +1,7 @@
 curl -X PUT -d ${MYSQL_DATABASE} http://consul:8500/v1/kv/invoice/db-init/database ;
 curl -X PUT -d 'root' http://consul:8500/v1/kv/invoice/db-init/user ;
 curl -X PUT -d ${MYSQL_ROOT_PASSWORD} http://consul:8500/v1/kv/invoice/db-init/password ;
-curl -X PUT -d 'false' http://consul:8500/v1/kv/invoice/db-init/populate-test-data ;
+curl -X PUT -d 'true' http://consul:8500/v1/kv/invoice/db-init/populate-test-data ;
 curl -X PUT -d ${REDIS_AUTH} http://consul:8500/v1/kv/invoice/redis-auth ;
 curl -X PUT -d ${REDIS_AUTH} http://consul:8500/v1/kv/invoice/redis/password ;
 curl -X PUT -d 'svc_invoice' http://consul:8500/v1/kv/invoice/service-client/username ;
