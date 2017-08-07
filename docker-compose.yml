@@ -15,7 +15,7 @@ services:
     labels:
       SERVICE_NAME: 'invoice'
     environment:
-      NODE_ENV: 'development'
+      NODE_ENV: ${NODE_ENV}
       PORT: ${INVOICE_PORT}
       HOST_IP: ${HOST_IP}
       APPLICATION_NAME: 'invoice'
