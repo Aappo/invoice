@@ -90,10 +90,7 @@ class Details extends React.Component {
         <div id="header">
           <ul>
             <li key={1} className={this.state.selectedTab === 1 ? 'doing' : ''}>
-              <a
-                id={1}
-                href=""
-                onClick={(e) => {
+              <a id={1} href="" onClick={(e) => {
                   e.preventDefault();
                   this.selectTab(1);
                 }}
@@ -102,10 +99,7 @@ class Details extends React.Component {
               </a>
             </li>
             <li key={2} className={this.state.selectedTab === 2 ? 'doing' : ''}>
-              <a
-                id={2}
-                href=""
-                onClick={(e) => {
+              <a id={2} href="" onClick={(e) => {
                   e.preventDefault();
                   this.selectTab(2);
                 }}
@@ -114,10 +108,7 @@ class Details extends React.Component {
               </a>
             </li>
             <li key={3} className={this.state.selectedTab === 3 ? 'doing' : ''}>
-              <a
-                id={3}
-                href=""
-                onClick={(e) => {
+              <a id={3} href="" onClick={(e) => {
                   e.preventDefault();
                   this.selectTab(3);
                 }}

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import MyTasksList from './list/MyTasksList.react';
-import Action from './actions/Action.react';
+import ActionTabs from './actions/ActionsTabs.react';
 import Details from './details/Details.react';
 import EmptyLayout from './EmptyLayout.react';
 
@@ -20,7 +20,7 @@ const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
         />
       </div>
       <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
-        <Action invoice={invoice} updateInvoice={updateInvoice}/>
+        <ActionTabs invoice={invoice} updateInvoice={updateInvoice}/>
         <Details invoice={invoice}/>
       </div>
     </div>
@@ -28,7 +28,7 @@ const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
 };
 
 WideLayout.propTypes = {
-  list: PropTypes.array.isRequired,
+  list: PropTypes.array,
   invoice: PropTypes.object,
   getInvoice: PropTypes.func.isRequired,
   updateInvoice: PropTypes.func.isRequired

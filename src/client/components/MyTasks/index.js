@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from 'react';
 import withDataHandler from './DataHandler.react';
 import WideLayout from './WideLayout.react';
 import NarrowLayout from './NarrowLayout.react';
-const NARROW_MODE_BREAK_POINT = 860;
 import './TaskLayout.less';
 import myTasksMessages from './i18n';
 import invoiceEditorMessages from '../InvoiceReceiptEditor/i18n/InvoiceEditor';
+const NARROW_MODE_BREAK_POINT = 860;
 
 
 export default class TaskLayoutHandler extends Component {
