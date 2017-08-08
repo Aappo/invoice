@@ -18,13 +18,22 @@ let Action = {
     clarifyForInspection: 'Clarify for Inspector',
     clarifyForApproval: 'Clarify for Approver',
     approve: 'Approve',
-    postComment: 'Leave a Comment',
+    postComment: 'Add',
     rejectApproval: "Cancel Approval",
     rejectInspection: "Cancel Inspection"
+  },
+  tab: {
+    inspect: 'Inspection',
+    sendToClarification: 'Clarification',
+    clarifyForInspection: 'Clarification',
+    clarifyForApproval: 'Clarification',
+    approve: 'Approval',
+    postComment: 'Comment Only',
+    rejectApproval: "Rejection",
+    rejectInspection: "Rejection"
   }
 };
-Action.header = 'Approval';
-Action.headerLabel = 'Leave a comment';
+Action.headerLabel = 'Commentary';
 
 let EmptyLayout = {};
 EmptyLayout.message = "At the moment you don't have any invoice to inspect, approve or in clarification state."
