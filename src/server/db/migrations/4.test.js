@@ -32,7 +32,7 @@ module.exports.up = function(db, config) {
   // Handling invoices sequentially to prevent TenantContainerMapping collision
   return invoices.map(invoice =>
     () => createInvoice(invoice, db.queryInterface).then(persistedInvoice =>
-      process.env.NODE_ENV === 'development' ? storeDocumentIfNotExist(persistedInvoice) : Promise.resolve())
+      /*process.env.NODE_ENV === 'development' ? storeDocumentIfNotExist(persistedInvoice) : */ Promise.resolve())
   ).reduce((promise, func) => promise.then(func), Promise.resolve());
 };
 
