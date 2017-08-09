@@ -273,6 +273,19 @@ module.exports.init = function(db, config) {
         field: 'Commentary',
         type: Sequelize.STRING(2000),
         allowNull: true
+      },
+      /**
+       * Fields to maintain approval workflow history.
+       */
+      inspectedBy: {
+        field: 'InspectedBy',
+        type: Sequelize.STRING(255),
+        allowNull: true
+      },
+      approvedBy: {
+        field: 'ApprovedBy',
+        type: Sequelize.STRING(255),
+        allowNull: true
       }
     },
     {

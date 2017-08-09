@@ -11,7 +11,10 @@ module.exports = function(app, db) {
     '/import'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
-      res.render('index', { userData: req.opuscapita.userData() || {} });
+      res.render('index', {
+        userData: req.opuscapita.userData() || {},
+        helpers: { json: JSON.stringify }
+      });
     } else {
       // res.sendFile(path.normalize(__dirname + '/../static/index.html'));
       res.send('This page is restricted to customer assigned users.')

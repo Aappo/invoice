@@ -149,6 +149,7 @@ module.exports = (app, epilogue, db) => {
         object: invoice,
         event: req.params.event,
         request: {
+          userId: req.opuscapita.userData('id'),
           roles: req.opuscapita.userData('roles'),
           comment: req.body.comment
         }

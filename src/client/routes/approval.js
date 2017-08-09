@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Route, Redirect, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
 import { fetchApprovalTasks } from '../components/MyTasks/data/fetchers';
@@ -20,11 +20,25 @@ const TaskList = () => (
   />
 );
 
-export default () => (
+const ProcessedList = (props, { userData }) => {
+  const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
+  return (
+    <TaskLayoutHandler
+      options={{ fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }).filter(filter), filter }}
+    />
+  )
+};
+
+ProcessedList.contextTypes = {
+  userData: PropTypes.object.isRequired
+};
+
+export default (props, context) => (
   <Route component={Layout} path="/invoice">
     <IndexRedirect to="/invoice/taskList"/>
     <Route path="/invoice/import" component={InvoiceImport}/>
     <Route path="/invoice/allTaskList" component={AllTaskList} />
     <Route path="/invoice/taskList" component={TaskList} />
+    <Route path="/invoice/processed" component={ProcessedList} />
   </Route>
 );

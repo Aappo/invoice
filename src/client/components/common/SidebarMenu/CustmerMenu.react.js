@@ -18,5 +18,10 @@ export default () => (
         My Tasks List
       </Link>
     </li>
+    <li key="Processed">
+      <Link to="/invoice/processed">
+        Processed
+      </Link>
+    </li>
   </ul>
 );

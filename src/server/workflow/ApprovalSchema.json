@@ -22,6 +22,12 @@
           "arguments": {
             "commentFieldName": "commentary"
           }
+        },
+        {
+          "name": "updateProcessedBy",
+          "arguments": {
+            "processedByFieldName": "inspectedBy"
+          }
         }
       ]
     },
@@ -127,6 +133,12 @@
           "arguments": {
             "commentFieldName": "commentary"
           }
+        },
+        {
+          "name": "updateProcessedBy",
+          "arguments": {
+            "processedByFieldName": "approvedBy"
+          }
         }
       ]
     },
@@ -147,6 +159,13 @@
           "name": "updateComment",
           "arguments": {
             "commentFieldName": "commentary"
+          }
+        },
+        {
+          "name": "updateProcessedBy",
+          "arguments": {
+            "processedByFieldName": "approvedBy",
+            "userId": null
           }
         }
       ]
@@ -171,6 +190,13 @@
           "name": "updateComment",
           "arguments": {
             "commentFieldName": "commentary"
+          }
+        },
+        {
+          "name": "updateProcessedBy",
+          "arguments": {
+            "processedByFieldName": "inspectedBy",
+            "userId": null
           }
         }
       ]
