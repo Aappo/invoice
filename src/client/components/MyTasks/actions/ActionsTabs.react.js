@@ -44,7 +44,7 @@ export default class ActionsTabs extends Component {
     const transitions = invoice ? invoice.transitions : [];
 
     return (
-      <div id="details">
+      <div id="actions">
         <div id="header">
           <ul>
             {transitions.length > 0 && transitions.map((transition, idx) => (
