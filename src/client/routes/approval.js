@@ -24,7 +24,7 @@ const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
     <TaskLayoutHandler
-      options={{ fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }).filter(filter), filter }}
+      options={{ fetcher: () => fetchApprovalTasks({}).filter(filter), filter }}
     />
   )
 };
