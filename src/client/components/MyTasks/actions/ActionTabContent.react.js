@@ -16,7 +16,6 @@ const ActionTabContent = ({ transition, onSendEvent, onTextAreaChange, commentar
               componentClass="textarea"
               placeholder="Comment"
               readOnly={!transition}
-              style={{ resize: 'none' }}
               rows="8"
               value={commentary}
               onChange={onTextAreaChange}
