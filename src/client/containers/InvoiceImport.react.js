@@ -27,6 +27,12 @@ export default class InvoiceImport extends Component {
     this.context.i18n.register('InvoiceImport', messages);
   }
 
+  componentWillReceiveProps(nextProps, nextContext){
+    if(nextContext.i18n.locale !== this.context.i18n.locale){
+      nextContext.i18n.register('InvoiceImport', messages);
+    }
+  }
+
   _calculateImportPercentage(currentPercentage = 0, importSize) {
     if (lodash.isNil(importSize) || importSize === 0) {
       return 100;
