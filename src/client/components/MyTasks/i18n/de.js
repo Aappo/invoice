@@ -1,12 +1,12 @@
 let TaskItem = {};
-TaskItem.customerId = 'Customer';
+TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
 TaskItem.status = {
   inspectionRequired: 'Inspection Required',
   approvalRequired: 'Approval Required',
-  inspClrRequired: 'Inspector Clarification Required',
-  appClrRequired: 'Approver Clarification Required',
+  inspClrRequired: 'Clarification Required',
+  appClrRequired: 'Clarification Required',
   archived: 'Archived',
   approved: 'Approved'
 };
@@ -14,9 +14,9 @@ TaskItem.status = {
 let Action = {
   event: {
     inspect: 'Inspect',
-    sendToClarification: 'Send To Clarification',
-    clarifyForInspection: 'Clarify for Inspector',
-    clarifyForApproval: 'Clarify for Approver',
+    sendToClarification: 'Set to Clarification',
+    clarifyForInspection: 'Cancel clarification',
+    clarifyForApproval: 'Cancel clarification',
     approve: 'Approve',
     postComment: 'Add',
     rejectApproval: "Cancel Approval",
@@ -29,11 +29,11 @@ let Action = {
     clarifyForApproval: 'Clarification',
     approve: 'Approval',
     postComment: 'Comment Only',
-    rejectApproval: "Rejection",
-    rejectInspection: "Rejection"
+    rejectApproval: "Cancel Status",
+    rejectInspection: "Cancel Status"
   }
 };
-Action.headerLabel = 'Commentary';
+Action.headerLabel = 'Optional comment';
 
 let EmptyLayout = {
   message: {
