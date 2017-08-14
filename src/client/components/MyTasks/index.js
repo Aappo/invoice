@@ -36,6 +36,16 @@ export default class TaskLayoutHandler extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //optimization for odd rerendering - as component is descendant to Layout component
+    //in layout there are possible set state calls
+    if(nextContext.i18n.locale !== this.context.i18n.locale) {
+      return true;
+    }
+
+    return false;
+  }
+
   componentDidMount() {
     window.addEventListener('resize', ::this.switchLayout);
     this.switchLayout();
