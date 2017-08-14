@@ -10,11 +10,6 @@ const Promise = require('bluebird');
  * @see [Creating database models]{@link https://github.com/OpusCapitaBusinessNetwork/db-init#creating-database-models}
  */
 module.exports.init = function(db, config) {
-  require('./CostDistribution.js').init(db, config);
-  require('./CostDistributionPos.js').init(db, config);
-  require('./InvoiceReceipt.js').init(db, config);
-  require('./InvoiceReceiptItem.js').init(db, config);
-  require('./GLAccount.js').init(db, config);
   require('./PurchaseInvoice.js').init(db, config);
   require('./PurchaseInvoiceItem.js').init(db, config);
 

@@ -242,6 +242,14 @@ module.exports = function(queryInterface) {
     Commentary: {
       type: Sequelize.STRING(2000),
       allowNull: true
+    },
+    InspectedBy: {
+      type: Sequelize.STRING(255),
+      allowNull: true
+    },
+    ApprovedBy: {
+      type: Sequelize.STRING(255),
+      allowNull: true
     }
   }).then(() => {
     return Promise.all([

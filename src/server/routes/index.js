@@ -2,22 +2,18 @@
 
 const Promise = require('bluebird');
 const path = require('path');
-const invoiceRoutes = require('./invoiceReceipt');
-const invoiceItemsRoutes = require('./invoiceReceiptItems');
+
 const purchaseInvoiceRoutes = require('./purchaseInvoice');
 const purchaseInvoiceItemRoutes = require('./purchaseInvoiceItem');
+const purchaseInvoiceImport = require('./purchaseInvoiceImport');
 const invoiceStatuses = require('./invoiceStatuses');
 const invoiceAttachment = require('./invoiceAttachment');
+const approval = require('./approval');
 const staticResources = require('./staticResources');
 const termsOfPayment = require('./termsOfPayment');
 const termsOfDelivery = require('./termsOfDelivery');
 const methodOfPayment = require('./methodOfPayment');
-const userData = require('./userData');
 const unitsOfMeasure = require('./unitsOfMeasure');
-const invoicereceiptImport = require('./invoicereceiptImport');
-const invoiceReceiptExport = require('./invoiceReceiptExport');
-const glAccount = require('./glAccount');
-const approval = require('./approval');
 const epilogue = require('epilogue');
 const exphbs = require('express-handlebars');
 
@@ -42,21 +38,16 @@ module.exports.init = function(app, db, config) {
     base: '/api'
   });
 
-  invoiceReceiptExport(app, db);
-  invoiceRoutes(epilogue, db);
-  invoiceItemsRoutes(epilogue, db);
   purchaseInvoiceRoutes(epilogue, db);
   purchaseInvoiceItemRoutes(epilogue, db);
-  glAccount(epilogue, db);
   invoiceStatuses(app, db);
   invoiceAttachment(app, db);
   staticResources(app, db);
   termsOfPayment(app, db);
   termsOfDelivery(app, db);
   methodOfPayment(app, db);
-  userData(app, db);
   unitsOfMeasure(app, db);
-  invoicereceiptImport(app, db);
+  purchaseInvoiceImport(app, db);
   approval(app, epilogue, db);
 
   // Always return a promise.

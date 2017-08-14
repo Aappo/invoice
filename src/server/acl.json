@@ -23,11 +23,6 @@
       },
       {
         "type": "rest",
-        "resourceId": "/api/currentUserData",
-        "actions": ["view"]
-      },
-      {
-        "type": "rest",
         "resourceId": "/api/termsOfPayment",
         "actions": ["view"]
       },
@@ -45,11 +40,6 @@
         "type": "rest",
         "resourceId": "/api/methodOfPayment",
         "actions": ["view"]
-      },
-      {
-        "type": "rest",
-        "resourceId": "/api/glAccounts[%w | %p]*",
-        "actions": ["edit", "delete", "view", "create"]
       },
       {
         "type": "rest",
