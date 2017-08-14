@@ -4,21 +4,22 @@ import {
   FormControl,
   Button
 } from 'react-bootstrap';
+const COMMENTARY_MAX_SIZE = 2000;
 
 const ActionTabContent = ({ transition, onSendEvent, onTextAreaChange, commentary }, { i18n }) => (
   <div id="action">
     <div id="oc-invoices-invoice-enquiry">
       <div className="oc-invoices-invoice-card">
         <div className="oc-invoices-invoice-card-content">
-          {i18n.getMessage('Action.headerLabel')}
+          {`${i18n.getMessage('Action.headerLabel')} (${commentary.length}/${COMMENTARY_MAX_SIZE})`}
           <FormGroup controlId="formControlsTextarea">
             <FormControl
               componentClass="textarea"
               placeholder="Comment"
               readOnly={!transition}
-              rows="8"
+              rows="1"
               value={commentary}
-              onChange={onTextAreaChange}
+              onChange={(e) => onTextAreaChange(e.target.value, COMMENTARY_MAX_SIZE)}
             />
           </FormGroup>
         </div>

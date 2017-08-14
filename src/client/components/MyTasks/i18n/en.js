@@ -1,12 +1,12 @@
 let TaskItem = {};
-TaskItem.customerId = 'Customer';
+TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
 TaskItem.status = {
   inspectionRequired: 'Inspection Required',
   approvalRequired: 'Approval Required',
-  inspClrRequired: 'Inspector Clarification Required',
-  appClrRequired: 'Approver Clarification Required',
+  inspClrRequired: 'Clarification Required',
+  appClrRequired: 'Clarification Required',
   archived: 'Archived',
   approved: 'Approved'
 };
@@ -14,13 +14,13 @@ TaskItem.status = {
 let Action = {
   event: {
     inspect: 'Inspect',
-    sendToClarification: 'Send To Clarification',
+    sendToClarification: 'Set to Clarification',
     clarifyForInspection: 'Cancel clarification',
     clarifyForApproval: 'Cancel clarification',
     approve: 'Approve',
     postComment: 'Add',
-    rejectApproval: "Cancel Approval",
-    rejectInspection: "Cancel Inspection"
+    rejectApproval: "Cancel approval",
+    rejectInspection: "Cancel inspection"
   },
   tab: {
     inspect: 'Inspection',
@@ -29,14 +29,18 @@ let Action = {
     clarifyForApproval: 'Clarification',
     approve: 'Approval',
     postComment: 'Comment Only',
-    rejectApproval: "Rejection",
-    rejectInspection: "Rejection"
+    rejectApproval: "Cancel Status",
+    rejectInspection: "Cancel Status"
   }
 };
-Action.headerLabel = 'Commentary';
+Action.headerLabel = 'Optional comment';
 
-let EmptyLayout = {};
-EmptyLayout.message = "At the moment you don't have any invoice to inspect, approve or in clarification state."
+let EmptyLayout = {
+  message: {
+    assignedTasks: "At the moment you don't have any invoice to inspect, approve or in clarification state.",
+    processedTasks: "At the moment you don't have any processed invoices."
+  }
+};
 
 export default {
   TaskItem: TaskItem,

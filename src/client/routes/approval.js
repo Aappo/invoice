@@ -4,32 +4,53 @@ import Layout from '../containers/Layout.react';
 import { fetchApprovalTasks } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
 import TaskLayoutHandler from '../components/MyTasks';
+import EmptyLayout from '../components/MyTasks/EmptyLayout.react';
 
-const AllTaskList = () => (
-  <TaskLayoutHandler
-    options={{ fetcher: () => fetchApprovalTasks({}) }}
-  />
-);
-
-const TaskList = (prop) => (
+const AllTaskList = (props, { i18n }) => (
   <TaskLayoutHandler
     options={{
-      fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }),
-      filter: (invoice) => invoice.transitions.length > 0
+      fetcher: () => fetchApprovalTasks({}),
+      renderFallback: (isLoading) =>
+        <EmptyLayout message={ i18n.getMessage('EmptyLayout.message.assignedTasks') } isLoading={ isLoading } />
     }}
   />
 );
 
-const ProcessedList = (props, { userData }) => {
+const TaskList = (props, { i18n }) => (
+  <TaskLayoutHandler
+    options={{
+      fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }),
+      filter: (invoice) => invoice.transitions.length > 0,
+      renderFallback: (isLoading) =>
+        <EmptyLayout message={ i18n.getMessage('EmptyLayout.message.assignedTasks') } isLoading={ isLoading } />
+    }}
+  />
+);
+
+const ProcessedList = (props, { i18n, userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
     <TaskLayoutHandler
-      options={{ fetcher: () => fetchApprovalTasks({}).filter(filter), filter }}
+      options={{
+        fetcher: () => fetchApprovalTasks({}).filter(filter),
+        filter,
+        renderFallback: (isLoading) =>
+          <EmptyLayout message={ i18n.getMessage('EmptyLayout.message.processedTasks') } isLoading={ isLoading } />
+      }}
     />
   )
 };
 
+AllTaskList.contextTypes = {
+  i18n: PropTypes.object.isRequired
+};
+
+TaskList.contextTypes = {
+  i18n: PropTypes.object.isRequired
+};
+
 ProcessedList.contextTypes = {
+  i18n: PropTypes.object.isRequired,
   userData: PropTypes.object.isRequired
 };
 

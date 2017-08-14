@@ -35,8 +35,12 @@ let Action = {
 };
 Action.headerLabel = 'Commentary';
 
-let EmptyLayout = {};
-EmptyLayout.message = "At the moment you don't have any invoice to inspect, approve or in clarification state."
+let EmptyLayout = {
+  message: {
+    assignedTasks: "At the moment you don't have any invoice to inspect, approve or in clarification state.",
+    processedTasks: "At the moment you don't have any processed invoices."
+  }
+};
 
 export default {
   TaskItem: TaskItem,
