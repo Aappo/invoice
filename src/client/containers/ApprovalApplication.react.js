@@ -1,23 +1,22 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import Router from 'react-router/lib/Router';
-import I18nContext from '../components/util/I18nContext.react';
-import UserDataContext from '../components/util/UserDataContext.react';
-import {ApprovalRoutes} from '../routes';
+import UserDataProvider from '../components/util/UserDataProvider.react';
+import I18nProvider from '../components/util/I18nProvider.react';
+import { ApprovalRoutes } from '../routes';
 
-const ApprovalApplication = ({ locale, formatPatterns, userData }) => (
-  <I18nContext locale={locale} formatPatterns={formatPatterns}>
-    <UserDataContext userData={userData}>
+const ApprovalApplication = (props) => (
+  <UserDataProvider userData={props.userData}>
+    <I18nProvider formatPatterns={props.formatPatterns}>
       <Router history={browserHistory}>
         {ApprovalRoutes()}
       </Router >
-    </UserDataContext>
-  </I18nContext>
+    </I18nProvider>
+  </UserDataProvider>
 );
 
 ApprovalApplication.propTypes = {
-  locale: PropTypes.string.isRequired,
-  formatPatterns: React.PropTypes.object
+  formatPatterns: React.PropTypes.object.isRequired
 };
 
 export default ApprovalApplication;

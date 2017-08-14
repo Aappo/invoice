@@ -11,7 +11,7 @@ const AllTaskList = () => (
   />
 );
 
-const TaskList = () => (
+const TaskList = (prop) => (
   <TaskLayoutHandler
     options={{
       fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }),
@@ -37,8 +37,8 @@ export default (props, context) => (
   <Route component={Layout} path="/invoice">
     <IndexRedirect to="/invoice/taskList"/>
     <Route path="/invoice/import" component={InvoiceImport}/>
-    <Route path="/invoice/allTaskList" component={AllTaskList} />
-    <Route path="/invoice/taskList" component={TaskList} />
-    <Route path="/invoice/processed" component={ProcessedList} />
+    <Route path="/invoice/allTaskList" component={AllTaskList}/>
+    <Route path="/invoice/taskList" component={TaskList}/>
+    <Route path="/invoice/processed" component={ProcessedList}/>
   </Route>
 );

@@ -27,8 +27,27 @@ export default class TaskLayoutHandler extends Component {
   };
 
   componentWillMount() {
-    this.context.i18n.register('MyTasks', myTasksMessages);
-    this.context.i18n.register('InvoiceEditor', invoiceEditorMessages);
+    this.context.i18n.register('MyTasks', myTasksMessages).register('InvoiceEditor', invoiceEditorMessages);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext){
+    if(nextContext.i18n.locale !== this.context.i18n.locale){
+      nextContext.i18n.register('MyTasks', myTasksMessages).register('InvoiceEditor', invoiceEditorMessages);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //optimization for odd rerendering - as component is descendant to Layout component
+    //in layout there are possible set state calls
+    if(nextContext.i18n.locale !== this.context.i18n.locale) {
+      return true;
+    }
+
+    if(nextState.useNarrow !== this.state.useNarrow) {
+      return true;
+    }
+
+    return false;
   }
 
   componentDidMount() {
@@ -36,17 +55,15 @@ export default class TaskLayoutHandler extends Component {
     this.switchLayout();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.useNarrow !== this.state.useNarrow;
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', ::this.switchLayout);
   }
 
   switchLayout() {
-    if (this.refs.taskLayout) {
-      this.setState({ useNarrow: window.innerWidth < NARROW_MODE_BREAK_POINT })
+    // Change useNarrow only if innerWidth crosses NARROW_MODE_BREAK_POINT
+    if ((this.state.useNarrow && window.innerWidth >= NARROW_MODE_BREAK_POINT)
+      || (!this.state.useNarrow && window.innerWidth < NARROW_MODE_BREAK_POINT)) {
+      this.setState({ useNarrow: !this.state.useNarrow });
     }
   }
 
