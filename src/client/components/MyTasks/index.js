@@ -43,6 +43,10 @@ export default class TaskLayoutHandler extends Component {
       return true;
     }
 
+    if(nextState.useNarrow !== this.state.useNarrow) {
+      return true;
+    }
+
     return false;
   }
 
