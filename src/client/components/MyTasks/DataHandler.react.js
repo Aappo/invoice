@@ -21,17 +21,14 @@ import _ from 'lodash';
  * @param WrappedComponent - wrapped component
  * @param fetcher - list of tasks fetcher
  * @param filter - predicate defining if invoice should be displayed
- * @param renderFallback - function returning component to render if no data is ready to be displayed
  * @returns {DataHandler}
  */
-export default function withDataHandler(WrappedComponent,
-                                        { fetcher, filter = invoice => !!invoice, renderFallback = () => null }) {
+export default function withDataHandler(WrappedComponent, { fetcher, filter = invoice => !!invoice }) {
   class DataHandler extends Component {
 
     static propTypes = {
       fetcher: PropTypes.func.isRequired,
-      filter: PropTypes.func.isRequired,
-      renderFallback: PropTypes.func.isRequired
+      filter: PropTypes.func.isRequired
     };
 
     static childContextTypes = {
@@ -43,8 +40,7 @@ export default function withDataHandler(WrappedComponent,
 
     static defaultProps = {
       fetcher: fetcher,
-      filter: filter,
-      renderFallback: renderFallback
+      filter: filter
     };
 
     state = {
@@ -148,22 +144,14 @@ export default function withDataHandler(WrappedComponent,
     }
 
     render() {
-      if (this.state.isMasterDataReady) {
-        if (!this.state.taskList || this.state.taskList.length === 0) {
-          return renderFallback(!this.state.taskList);
-        } else {
-          return (
-            <WrappedComponent
-              list={this.state.taskList}
-              invoice={this.state.invoice}
-              getInvoice={::this.getInvoice}
-              updateInvoice={::this.updateInvoice}
-            />
-          )
-        }
-      } else {
-        return null;
-      }
+      return this.state.isMasterDataReady && (
+        <WrappedComponent
+          list={this.state.taskList}
+          invoice={this.state.invoice}
+          getInvoice={::this.getInvoice}
+          updateInvoice={::this.updateInvoice}
+        />
+      );
     }
   }
 
