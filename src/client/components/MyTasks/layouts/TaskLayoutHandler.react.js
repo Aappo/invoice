@@ -12,15 +12,12 @@ const NARROW_MODE_BREAK_POINT = 860;
 export default class TaskLayoutHandler extends Component {
 
   static propTypes = {
-    options: PropTypes.object
+    fetcher: PropTypes.func.isRequired,
+    filter: PropTypes.func,
   };
 
   static contextTypes = {
     i18n: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    options: {},
   };
 
   state = {
@@ -70,7 +67,7 @@ export default class TaskLayoutHandler extends Component {
 
   render() {
     return React.createElement(
-      withRouter(withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, this.props.options)), {}, null
+      withRouter(withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, { ...this.props })), {}, null
     );
   }
 }

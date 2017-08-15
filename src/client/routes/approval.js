@@ -7,22 +7,20 @@ import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.r
 import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 
 const AllTaskList = (props) => (
-  <TaskLayoutHandler  options={{ fetcher: () => fetchApprovalTasks({}) }} />
+  <TaskLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
 );
 
 const TaskList = (props) => (
   <TaskLayoutHandler
-    options={{
-      fetcher: () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }),
-      filter: (invoice) => invoice.transitions.length > 0
-    }}
+    fetcher={ () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }) }
+    filter={ invoice => invoice.transitions.length > 0 }
   />
 );
 
 const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
-    <TaskLayoutHandler options={{ fetcher: () => fetchApprovalTasks({}).filter(filter), filter }} />
+    <TaskLayoutHandler fetcher={ () => fetchApprovalTasks({}).filter(filter) } filter={filter} />
   )
 };
 
