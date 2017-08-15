@@ -1,6 +1,20 @@
 
+#root {
+  height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
 .container-fluid {
   height: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.page-container .main-content {
+  padding: 0px;
 }
 
 @media (max-width: 1150px) {
@@ -15,49 +29,8 @@
   }
 }
 
-/*
-#notification-container {
-  height: 100%;
-}
-
-#root {
-  height: 100vh;
-
-  .page-container {
-    display: flex;
-  }
-
-  .page-container .main-content {
-    display: flex;
-    flex-direction: column;
-    /!*align-items: center;*!/
-    justify-content: center;
-    overflow: auto;
-  }
-}
-
-.content-wrap {
-  flex: 1;
-  display: flex;
-}
-
-.content-wrap .container {
-  flex: 1;
-}
-
-.oc-invoices-my-tasks-wide {
-  flex: 1;
-  min-height: ~"calc(100vh - 70px)";
-  height: auto;
-  overflow-y: inherit;
-}
-
-.oc-invoices-my-tasks-wide-invoice {
-  height: auto;
-}*/
-
 #root .page-container .main-content {
-  height: ~"calc(100vh - 100px)";
+  height: ~"calc(100vh - 55px)";
   overflow: auto;
   display: flex;
   justify-content: center;
@@ -67,12 +40,3 @@
     flex: 1;
   }
 }
-
-
-/*.oc-invoices-my-tasks-wide {
-  min-height: ~"calc(100vh - 50px)";
-}
-
-.oc-invoices-my-tasks-wide-invoice {
-  height: auto;
-}*/
