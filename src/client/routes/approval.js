@@ -3,7 +3,8 @@ import { Route, Redirect, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
 import { fetchApprovalTasks } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
-import TaskLayoutHandler from '../components/MyTasks';
+import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.react';
+import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 
 const AllTaskList = (props) => (
   <TaskLayoutHandler  options={{ fetcher: () => fetchApprovalTasks({}) }} />
@@ -36,5 +37,6 @@ export default (props, context) => (
     <Route path="/invoice/allTaskList" component={AllTaskList}/>
     <Route path="/invoice/taskList" component={TaskList}/>
     <Route path="/invoice/processed" component={ProcessedList}/>
+    <Route path="/invoice/notFound" component={EmptyLayout}/>
   </Route>
 );

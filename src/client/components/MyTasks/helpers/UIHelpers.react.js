@@ -3,7 +3,7 @@ import { Icon } from '../../common/Icon';
 
 import {
   APPROVALACTIONKIND,
-} from '../models/Invoices.constants';
+} from '../constants';
 
 
 /**

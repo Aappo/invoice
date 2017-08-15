@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react';
-import withDataHandler from './DataHandler.react';
+import withDataHandler from '../DataHandler.react';
 import WideLayout from './WideLayout.react';
 import NarrowLayout from './NarrowLayout.react';
 import './TaskLayout.less';
-import myTasksMessages from './i18n';
-import invoiceEditorMessages from '../InvoiceReceiptEditor/i18n/InvoiceEditor';
+import myTasksMessages from '../i18n';
+import invoiceEditorMessages from '../../InvoiceReceiptEditor/i18n/InvoiceEditor';
+import { withRouter } from 'react-router';
 const NARROW_MODE_BREAK_POINT = 860;
 
 
@@ -69,9 +70,7 @@ export default class TaskLayoutHandler extends Component {
 
   render() {
     return React.createElement(
-      withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, this.props.options),
-      { ref: 'taskLayout' },
-      null
+      withRouter(withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, this.props.options)), {}, null
     );
   }
 }

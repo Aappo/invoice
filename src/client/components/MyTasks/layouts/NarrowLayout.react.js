@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import EmptyLayout from './EmptyLayout.react';
-import MyTasksList from './list/MyTasksList.react';
+import LoadingLayout from './LoadingLayout.react';
+import MyTasksList from '../list/MyTasksList.react';
 
 import './NarrowLayout.less';
 
@@ -26,11 +26,7 @@ class NarrowLayout extends React.Component {
   }
 
   render() {
-    if (!this.props.list || this.props.list.length === 0) {
-      return <EmptyLayout message={ this.context.i18n.getMessage('EmptyLayout.message.assignedTasks') } isLoading={!this.props.list} />
-    }
-
-    return (
+    return this.props.list ? (
       <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">
         <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
           <MyTasksList
@@ -40,7 +36,7 @@ class NarrowLayout extends React.Component {
           />
         </div>
       </div>
-    );
+    ) : <LoadingLayout />
   }
 }
 
