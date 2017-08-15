@@ -20,8 +20,8 @@ const importInvoiceItems = (db, purchaseInvoiceItems, invoice) => {
         }
       )).then(createdItem => {
         return Promise.resolve({ created: true });
-      }).catch(failedItem => {
-        return Promise.resolve({ failed: true });
+      }).catch(error => {
+        return Promise.resolve({ failed: true, error: error });
       })
     })
   ).then((itemImportStatistic) => {
@@ -31,10 +31,11 @@ const importInvoiceItems = (db, purchaseInvoiceItems, invoice) => {
         statisticAccumulator.created++;
       } else if (itemImportResult.failed) {
         statisticAccumulator.failed++;
+        statisticAccumulator.errors.push(itemImportResult.error);
       }
       /* eslint-enable no-param-reassign */
       return statisticAccumulator;
-    }, { created: 0, failed: 0 }));
+    }, { created: 0, failed: 0, errors: [] }));
   });
 };
 

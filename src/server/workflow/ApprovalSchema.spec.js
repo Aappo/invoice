@@ -21,12 +21,18 @@ const assertAvailableTransitions = (object, request, expected) => {
   });
 };
 
+const assertAvailableAutoTransitions = (object, expected) => {
+  return machine.availableAutomaticTransitions({ object: object }).then(({ transitions }) => {
+    const availableAutoTransitions = transitions.map(transition => transition.event);
+    return Promise.resolve(assert.deepEqual(availableTransitions.sort(), expected.sort()));
+  });
+};
+
 /**
  * Unit tests for invoice approval
  */
 describe("Invoice approval flow", () => {
   describe("Invoice approver:", () => {
-
     const request = { roles: ['invoice-approver'] };
 
     describe("Available transitions:", () => {
@@ -57,7 +63,6 @@ describe("Invoice approval flow", () => {
     });
 
     describe("Send event:", () => {
-
       it("inspect invoice", (done) => {
         const invoice = { status: 'inspectionRequired' };
         machine.sendEvent({ event: 'inspect', object: invoice, request: request }).catch((error) => {
@@ -106,7 +111,6 @@ describe("Invoice approval flow", () => {
   });
 
   describe("Invoice inspector", () => {
-
     const request = { roles: ['invoice-inspector'] };
 
     describe("Available transitions:", () => {
@@ -137,7 +141,6 @@ describe("Invoice approval flow", () => {
     });
 
     describe("Send event:", () => {
-
       it("inspect invoice", () => {
         const invoice = { status: 'inspectionRequired' };
         return machine.sendEvent({ event: 'inspect', object: invoice, request: request }).then(() => {
@@ -184,4 +187,16 @@ describe("Invoice approval flow", () => {
       });
     });
   });
+
+  describe('check of aotomatic transitions', () => {
+    assertAvailableAutoTransitions(
+      { status: 'inspectionRequired', grossPrice: 100 },
+      ['automatic-inspect']
+    );
+
+    assertAvailableAutoTransitions(
+      { status: 'inspectionRequired', grossPrice: 300 },
+      []
+    );
+  })
 });

@@ -1,7 +1,9 @@
 {
   "name": "InvoiceApproval",
   "initialState": "inspectionRequired",
-  "finalStates": ["archived"],
+  "finalStates": [
+    "archived"
+  ],
   "objectStateFieldName": "status",
   "transitions": [
     {
@@ -12,7 +14,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-inspector"]
+            "restrictedRoles": [
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -33,13 +37,30 @@
     },
     {
       "from": "inspectionRequired",
+      "event": "automatic-inspect",
+      "to": "approvalRequired",
+      "automatic": true,
+      "guards": [
+        {
+          "name": "isLessThan",
+          "arguments": {
+            "amount": 200,
+            "field": "grossAmount"
+          }
+        }
+      ]
+    },
+    {
+      "from": "inspectionRequired",
       "event": "postComment",
       "to": "inspectionRequired",
       "guards": [
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-inspector"]
+            "restrictedRoles": [
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -60,7 +81,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-inspector"]
+            "restrictedRoles": [
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -81,7 +104,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-inspector"]
+            "restrictedRoles": [
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -102,7 +127,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-inspector"]
+            "restrictedRoles": [
+              "invoice-inspector"
+            ]
           }
         }
       ],
@@ -123,7 +150,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
@@ -150,7 +179,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
@@ -209,7 +240,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
@@ -230,7 +263,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
@@ -251,7 +286,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
@@ -272,7 +309,9 @@
         {
           "name": "userHasRoles",
           "arguments": {
-            "restrictedRoles": ["invoice-approver"]
+            "restrictedRoles": [
+              "invoice-approver"
+            ]
           }
         }
       ],
