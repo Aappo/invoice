@@ -4,7 +4,7 @@ const assert = require('assert');
 const isLessThan = require('./isLessThan');
 const expect = require('chai').expect;
 /**
- * Unit test for isLessThat conditions
+ * Unit test for isLessThan conditions
  *
  * @author Daniel Zhitomirsky
  */

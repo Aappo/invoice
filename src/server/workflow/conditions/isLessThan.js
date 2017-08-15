@@ -1,5 +1,5 @@
 /**
- * Checks that invoice.field < <amount>
+ * Checks that object.field < <amount>
  *
  * @param amount - passed as workflow guard arguments
  * @param field - passed as workflow guard arguments

@@ -188,7 +188,7 @@ describe("Invoice approval flow", () => {
     });
   });
 
-  describe('check of aotomatic transitions', () => {
+  describe('check of automatic transitions', () => {
     assertAvailableAutoTransitions(
       { status: 'inspectionRequired', grossPrice: 100 },
       ['automatic-inspect']
