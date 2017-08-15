@@ -11,8 +11,8 @@ const AllTaskList = (props) => (
 );
 
 const TaskList = (props, { userData }) => {
-  const filterForRole  = (invoice, userRoles) => {
-    return !userRoles.some(role => {
+  const filterForRole  = invoice => {
+    return !userData.roles.some(role => {
       switch (role) {
         case 'invoice-approver':
           return invoice.status === 'approved';
@@ -25,10 +25,8 @@ const TaskList = (props, { userData }) => {
   };
   return (
     <TaskLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(invoice =>
-        filterForRole(invoice, userData.roles))
-      }
-      filter={ invoice => invoice.transitions.length > 0 && filterForRole(invoice, userData.roles) }
+      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(filterForRole) }
+      filter={ invoice => invoice.transitions.length > 0 && filterForRole(invoice) }
     />
   );
 };
