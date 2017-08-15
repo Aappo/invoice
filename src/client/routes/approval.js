@@ -10,12 +10,32 @@ const AllTaskList = (props) => (
   <TaskLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
 );
 
-const TaskList = (props) => (
-  <TaskLayoutHandler
-    fetcher={ () => fetchApprovalTasks({ searchParams: { assignedToMe: true } }) }
-    filter={ invoice => invoice.transitions.length > 0 }
-  />
-);
+const TaskList = (props, { userData }) => {
+  const filterForRole  = (invoice, userRoles) => {
+    return !userRoles.some(role => {
+      switch (role) {
+        case 'invoice-approver':
+          return invoice.status === 'approved';
+        case 'invoice-inspector':
+          return invoice.status === 'approvalRequired';
+        default:
+          return false;
+      }
+    })
+  };
+  return (
+    <TaskLayoutHandler
+      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(invoice =>
+        filterForRole(invoice, userData.roles))
+      }
+      filter={ invoice => invoice.transitions.length > 0 && filterForRole(invoice, userData.roles) }
+    />
+  );
+};
+
+TaskList.contextTypes = {
+  userData: PropTypes.object.isRequired
+};
 
 const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
