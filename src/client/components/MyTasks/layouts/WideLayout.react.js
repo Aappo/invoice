@@ -1,17 +1,14 @@
 import React, { PropTypes } from 'react';
-import MyTasksList from './list/MyTasksList.react';
-import ActionTabs from './actions/ActionsTabs.react';
-import Details from './details/Details.react';
-import EmptyLayout from './EmptyLayout.react';
+import MyTasksList from '../list/MyTasksList.react';
+import ActionTabs from '../actions/ActionsTabs.react';
+import Details from '../details/Details.react';
+import LoadingLayout from './LoadingLayout.react';
 
 import './WideLayout.less';
 
 const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
-  if(!list || list.length  === 0) {
-    return (<EmptyLayout isLoading={!list}/>);
-  }
 
-  return (
+  return list ? (
     <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
       <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">
         <MyTasksList
@@ -24,7 +21,7 @@ const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
         <Details invoice={invoice}/>
       </div>
     </div>
-  );
+  ) : <LoadingLayout />
 };
 
 WideLayout.propTypes = {
