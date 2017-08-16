@@ -51,7 +51,7 @@ describe("Invoice approval flow", () => {
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired' };
-        const expected = ['approve', 'sendToClarification', 'postComment', 'rejectInspection'];
+        const expected = ['approve', 'sendToClarification', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -116,8 +116,14 @@ describe("Invoice approval flow", () => {
     describe("Available transitions:", () => {
 
       it("inspectionRequired", () => {
-        const invoice = { status: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired', grossAmount: 250 };
         const expected = ['inspect', 'sendToClarification', 'postComment'];
+        return assertAvailableTransitions(invoice, request, expected);
+      });
+
+      it("inspectionRequired is prohibited because low grossAmount", () => {
+        const invoice = { status: 'inspectionRequired', grossAmount: 100 };
+        const expected = ['automatic-inspect', 'postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -128,8 +134,14 @@ describe("Invoice approval flow", () => {
       });
 
       it("approvalRequired", () => {
-        const invoice = { status: 'approvalRequired' };
+        const invoice = { status: 'approvalRequired', grossAmount: 250 };
         const expected = ['rejectInspection'];
+        return assertAvailableTransitions(invoice, request, expected);
+      });
+
+      it("approvalRequired with prohibited cancel inspection because of low gross amount", () => {
+        const invoice = { status: 'approvalRequired', grossAmount: 150 };
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -142,14 +154,14 @@ describe("Invoice approval flow", () => {
 
     describe("Send event:", () => {
       it("inspect invoice", () => {
-        const invoice = { status: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired', grossAmount: 250 };
         return machine.sendEvent({ event: 'inspect', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'approvalRequired');
         });
       });
 
       it("set invoice to clarification for inspection", () => {
-        const invoice = { status: 'inspectionRequired' };
+        const invoice = { status: 'inspectionRequired', grossAmount: 300 };
         return machine.sendEvent({ event: 'sendToClarification', object: invoice, request: request }).then(() => {
           assert.equal(machine.currentState({ object: invoice }), 'inspClrRequired');
         });

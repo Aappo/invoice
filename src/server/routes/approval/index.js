@@ -44,6 +44,22 @@ module.exports = (app, epilogue, db) => {
     throw new NotFoundError();
   };
 
+  /**
+   * Finds difference between availableTransitions and automaticTransitions
+   * to find only manual events
+   *
+   * @param invoice PurchaseInvoice instance
+   * @param request some dynamic data
+   */
+  const getManualInvoiceTransitions = ({invoice, request}) => {
+    return Promise.props({
+      allAvailableTransitions: invoiceTaskManager.machine.availableTransitions({object: invoice, request}),
+      automaticTransitions: invoiceTaskManager.machine.availableAutomaticTransitions({object: invoice})
+    }).then(({allAvailableTransitions, automaticTransitions}) => {
+      return Promise.resolve(_.filter(allAvailableTransitions.transitions, (transition) => !_.find(automaticTransitions.transitions, transition)))
+    });
+  };
+
 
   epilogue.resource({
     model: db.models.PurchaseInvoice,
@@ -69,9 +85,10 @@ module.exports = (app, epilogue, db) => {
             }
           ).then((foundTasks) => {
             if (req.query.assignedToMe === 'true') {
-              return Promise.filter(foundTasks, (task) => invoiceTaskManager.machine.availableTransitions({
-                object: task.get({ plain: true }), request: { roles: req.opuscapita.userData('roles') }
-              }).then((transitions) => transitions.transitions.length > 0));
+              return Promise.filter(foundTasks, (task) => getManualInvoiceTransitions({
+                invoice: task.get({ plain: true }),
+                request: { roles: req.opuscapita.userData('roles') }
+              }).then((transitions) => transitions.length > 0));
             }
             return Promise.resolve(foundTasks);
           }).then((foundTasks) => {
@@ -101,13 +118,11 @@ module.exports = (app, epilogue, db) => {
   app.get('/api/approval/events/:id', (req, res) => {
     db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       if (invoice) {
-        invoiceTaskManager.machine.availableTransitions({
-          object: invoice.get({
-            plain: true
-          }),
+        getManualInvoiceTransitions({
+          invoice: invoice.get({ plain: true }),
           request: { roles: req.opuscapita.userData('roles') }
         }).then(transitions => {
-          res.send(transitions.transitions);
+          res.send(transitions);
         }).catch(err => console.log(err))
       } else {
         res.send({})

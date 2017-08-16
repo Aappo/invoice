@@ -18,6 +18,13 @@
               "invoice-inspector"
             ]
           }
+        },
+        {
+          "name": "isGreaterOrEqual",
+          "arguments": {
+            "amount": 200,
+            "field": "grossAmount"
+          }
         }
       ],
       "actions": [
@@ -84,6 +91,13 @@
             "restrictedRoles": [
               "invoice-inspector"
             ]
+          }
+        },
+        {
+          "name": "isGreaterOrEqual",
+          "arguments": {
+            "amount": 200,
+            "field": "grossAmount"
           }
         }
       ],
@@ -213,6 +227,13 @@
               "invoice-approver",
               "invoice-inspector"
             ]
+          }
+        },
+        {
+          "name": "isGreaterOrEqual",
+          "arguments": {
+            "amount": 200,
+            "field": "grossAmount"
           }
         }
       ],
