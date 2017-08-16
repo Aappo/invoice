@@ -110,7 +110,7 @@ export const fetchMethodsOfPayment = () => {
 export const fetchCurrencies = () => {
   return request.get('/isodata/currencies').set(
     'Accept', 'application/json'
-  ).then((response) => Promise.resolve(Array.from(Object.values(response.body)))
+  ).then((response) => Promise.resolve(Object.keys(response.body).map(key => response.body[key]))
   ).catch((error) => { throw Error(error); })
 };
 
