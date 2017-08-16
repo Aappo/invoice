@@ -39,6 +39,11 @@ export default class ActionsTabs extends Component {
     })
   }
 
+  handleTextAreaChange(commentary, maxSize = 2000) {
+    commentary.length <= maxSize && this.setState({ commentary: commentary });
+  }
+
+
   render() {
     const { invoice } = this.props;
     const transitions = invoice ? invoice.transitions : [];
@@ -59,7 +64,7 @@ export default class ActionsTabs extends Component {
         <ActionTabContent
           transition={!_.isEmpty(transitions) ? transitions[this.state.openTransition] : undefined}
           onSendEvent={::this.handleSendEvent}
-          onTextAreaChange={(e) => this.setState({ commentary: e.target.value })}
+          onTextAreaChange={::this.handleTextAreaChange}
           commentary={this.state.commentary}
         />
       </div>

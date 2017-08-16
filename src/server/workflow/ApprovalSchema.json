@@ -17,7 +17,6 @@
             "restrictedRoles": [
               "invoice-inspector"
             ]
-          }
         },
         {
           "name": "isGreaterOrEqual",

@@ -3,7 +3,7 @@ import { Icon } from '@opuscapita/react-icons';
 
 import {
   APPROVALACTIONKIND,
-} from '../models/Invoices.constants';
+} from '../constants';
 
 
 /**

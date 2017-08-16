@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react';
-
-import MyTasksList from './list/MyTasksList.react';
+import LoadingLayout from './LoadingLayout.react';
+import MyTasksList from '../list/MyTasksList.react';
 
 import './NarrowLayout.less';
 
 class NarrowLayout extends React.Component {
   static propTypes = {
-    list: PropTypes.array.isRequired,
+    list: PropTypes.array,
     getInvoice: PropTypes.func.isRequired,
+  };
+
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -22,7 +26,7 @@ class NarrowLayout extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.list ? (
       <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">
         <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
           <MyTasksList
@@ -32,7 +36,7 @@ class NarrowLayout extends React.Component {
           />
         </div>
       </div>
-    );
+    ) : <LoadingLayout />
   }
 }
 

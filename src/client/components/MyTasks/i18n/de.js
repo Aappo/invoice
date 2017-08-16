@@ -1,42 +1,46 @@
 let TaskItem = {};
-TaskItem.customerId = 'Customer';
-TaskItem.supplierId = 'Supplier';
-TaskItem.dueDate = 'Due Date';
+TaskItem.customerId = 'Gesellschaft-Zahler';
+TaskItem.supplierId = 'Lieferant';
+TaskItem.dueDate = 'Fälligkeitsdatum';
 TaskItem.status = {
-  inspectionRequired: 'Inspection Required',
-  approvalRequired: 'Approval Required',
-  inspClrRequired: 'Inspector Clarification Required',
-  appClrRequired: 'Approver Clarification Required',
-  archived: 'Archived',
-  approved: 'Approved'
+  inspectionRequired: 'Überprüfung erforderlich',
+  approvalRequired: 'Genehmigung erforderlich',
+  inspClrRequired: 'Klärung erforderlich',
+  appClrRequired: 'Klärung erforderlich',
+  archived: 'Archiviert',
+  approved: 'Genehmigt'
 };
 
 let Action = {
   event: {
-    inspect: 'Inspect',
-    sendToClarification: 'Send To Clarification',
-    clarifyForInspection: 'Clarify for Inspector',
-    clarifyForApproval: 'Clarify for Approver',
-    approve: 'Approve',
-    postComment: 'Add',
-    rejectApproval: "Cancel Approval",
-    rejectInspection: "Cancel Inspection"
+    inspect: 'Prüfen',
+    sendToClarification: 'Zur Klärung weiterleiten',
+    clarifyForInspection: 'Klärung abbrechen',
+    clarifyForApproval: 'Klärung abbrechen',
+    approve: 'Genehmigen',
+    postComment: 'Hinzufügen',
+    rejectApproval: "Genehmigung abbrechen",
+    rejectInspection: "Überprüfung abbrechen"
   },
   tab: {
-    inspect: 'Inspection',
-    sendToClarification: 'Clarification',
-    clarifyForInspection: 'Clarification',
-    clarifyForApproval: 'Clarification',
-    approve: 'Approval',
-    postComment: 'Comment Only',
-    rejectApproval: "Rejection",
-    rejectInspection: "Rejection"
+    inspect: 'Überprüfung',
+    sendToClarification: 'Klärung',
+    clarifyForInspection: 'Klärung',
+    clarifyForApproval: 'Klärung',
+    approve: 'Genehmigung',
+    postComment: 'Nur Kommentar',
+    rejectApproval: "Status abbrechen",
+    rejectInspection: "Status abbrechen"
   }
 };
-Action.headerLabel = 'Commentary';
+Action.headerLabel = 'Optionaler Kommentar';
 
-let EmptyLayout = {};
-EmptyLayout.message = "At the moment you don't have any invoice to inspect, approve or in clarification state."
+let EmptyLayout = {
+  message: {
+    assignedTasks: "Zur Zeit gibt es keine Rechnungen für Überprufung, Genehmigung oder im Status Klärung.",
+    processedTasks: "Zur Zeit gibt es keine Rechnungen in Bearbeitung."
+  }
+};
 
 export default {
   TaskItem: TaskItem,

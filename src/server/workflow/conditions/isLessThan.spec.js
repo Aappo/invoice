@@ -27,7 +27,6 @@ describe("conditions.isLessThan tests:", () => {
       field: 'grossAmount',
       object: { grossAmount: undefined}
     })).to.be.false;
-
     expect(isLessThan({
       amount: 200,
       field: 'grossAmount',
