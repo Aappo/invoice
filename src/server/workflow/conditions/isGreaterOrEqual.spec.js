@@ -1,60 +1,59 @@
 "use strict";
 
-const isLessThan = require('./isLessThan');
+const isGreaterOrEqual = require('./isGreaterOrEqual');
 const expect = require('chai').expect;
-
 /**
- * Unit test for isLessThan conditions
+ * Unit test for isGreaterOrEqualThan conditions
  *
  * @author Daniel Zhitomirsky
  */
-describe("conditions.isLessThan tests:", () => {
+describe("conditions.isGreaterOrEqualThan tests:", () => {
   it('correct comparison with expected parameters', () => {
-    expect(isLessThan({
+    expect(isGreaterOrEqual({
       amount: 200,
       field: 'grossAmount',
       object: { grossAmount: 100 }
-    })).to.be.true;
+    })).to.be.false;
 
-    expect(isLessThan({
+    expect(isGreaterOrEqual({
       amount: 200,
       field: 'grossAmount',
       object: { grossAmount: 300 }
-    })).to.be.false;
+    })).to.be.true;
 
-    expect(isLessThan({
+    expect(isGreaterOrEqual({
+      amount: 200,
+      field: 'grossAmount',
+      object: { grossAmount: 200 }
+    })).to.be.true;
+
+    expect(isGreaterOrEqual({
       amount: 200,
       field: 'grossAmount',
       object: { grossAmount: undefined}
     })).to.be.false;
-
-    expect(isLessThan({
-      amount: 200,
-      field: 'grossAmount',
-      object: { grossAmount: 200 }
-    })).to.be.false;
   });
 
   it('throws errors in case incorrect parameters', () => {
-    expect(() => isLessThan({
+    expect(() => isGreaterOrEqual({
       amount: undefined,
       field: 'grossAmount',
       object: { grossAmount: 100 }
     })).to.throw();
 
-    expect(() => isLessThan({
+    expect(() => isGreaterOrEqual({
       amount: 200,
       field: undefined,
       object: { grossAmount: 300 }
     })).to.throw();
 
-    expect(() => isLessThan({
+    expect(() => isGreaterOrEqual({
       amount: 200,
       field: 'invalid_field',
       object: undefined
     })).to.throw();
 
-    expect(() => isLessThan({
+    expect(() => isGreaterOrEqual({
       amount: undefined,
       field: undefined,
       object: undefined
