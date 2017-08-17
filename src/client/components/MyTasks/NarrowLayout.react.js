@@ -1,39 +1,34 @@
 import React, { PropTypes } from 'react';
 
 import MyTasksList from './list/MyTasksList.react';
+import EmptyLayout from './EmptyLayout.react';
 
 import './NarrowLayout.less';
 
-class NarrowLayout extends React.Component {
-  static propTypes = {
-    list: PropTypes.array.isRequired,
-    getInvoice: PropTypes.func.isRequired,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortBy: null,
-    };
+const NarrowLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
+  if (!list || list.length === 0) {
+    return (<EmptyLayout isLoading={!list}/>);
   }
 
-  onChangeSort = (item) => {
-    this.setState({ sortBy: item.value });
-  }
-
-  render() {
-    return (
-      <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">
-        <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
-          <MyTasksList
-            list={this.props.list}
-            sortBy={this.state.sortBy}
-            getInvoice={this.props.getInvoice}
-          />
-        </div>
+  return (
+    <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">
+      <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
+        <MyTasksList
+          list={list}
+          sortBy={null}
+          getInvoice={getInvoice}
+          narrowLayout={true}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+NarrowLayout.propTypes = {
+  list: PropTypes.array,
+  invoice: PropTypes.object,
+  getInvoice: PropTypes.func.isRequired,
+  updateInvoice: PropTypes.func.isRequired
+};
 
 export default NarrowLayout;

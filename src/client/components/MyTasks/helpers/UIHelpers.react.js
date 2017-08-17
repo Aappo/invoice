@@ -49,6 +49,44 @@ class UiHelpers {
     return null;
   };
 
+  getInvoiceImageControl = (invoiceId, file) => {
+    if (!file) {
+      return null;
+    }
+
+    const newFile = file.replace('invoice',
+      `invoice${invoiceId}`);
+
+    let mime = '';
+    const extensionMatch = /\.(.*)$/;
+    if (extensionMatch.test(file)) {
+      mime = extensionMatch.exec(file)[1];
+    }
+
+    // Always display as pdf
+    if (true || mime === 'pdf') {
+      return (
+        <object
+          type="application/pdf"
+          width="100%"
+          name="invoice_image"
+          height="100%"
+          data={file}
+          aria-label="Invoice image"
+        />
+      );
+    }
+    return (
+      <iframe
+        title="Invoice image"
+        width="100%"
+        name="invoice_image"
+        height="100%"
+        src={newFile}
+      />
+    );
+  }
+
   /**
    * Get icon for invoice flag
    * @param {string} flag - Status flag (INVOICESTATUSFLAG).

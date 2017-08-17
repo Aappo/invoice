@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
-import { Route, Redirect, IndexRedirect } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
 import { fetchApprovalTasks } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
 import TaskLayoutHandler from '../components/MyTasks';
+import InvoiceContainer from '../components/MyTasks/InvoiceContainer.react';
+
 
 const AllTaskList = () => (
   <TaskLayoutHandler
@@ -29,6 +31,17 @@ const ProcessedList = (props, { userData }) => {
   )
 };
 
+const SingleInvoice = (props) => {
+  return (
+    <InvoiceContainer
+      options={{
+        fetcher: () => fetchApprovalTasks({}),
+        invoiceId: props.params.invoiceId,
+      }}
+    />);
+};
+
+
 ProcessedList.contextTypes = {
   userData: PropTypes.object.isRequired
 };
@@ -39,6 +52,7 @@ export default (props, context) => (
     <Route path="/invoice/import" component={InvoiceImport}/>
     <Route path="/invoice/allTaskList" component={AllTaskList}/>
     <Route path="/invoice/taskList" component={TaskList}/>
+    <Route path="/invoice/single/:invoiceId" component={SingleInvoice}/>
     <Route path="/invoice/processed" component={ProcessedList}/>
   </Route>
 );
