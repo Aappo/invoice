@@ -25,7 +25,7 @@ export default class ActionsTabs extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { invoice } = nextProps;
-    if (invoice && this.state.commentary !== invoice.commentary) {
+    if (invoice) {
       this.setState({
         commentary: invoice.commentary ? invoice.commentary : '',
         openTransition: 0
@@ -47,7 +47,6 @@ export default class ActionsTabs extends Component {
   render() {
     const { invoice } = this.props;
     const transitions = invoice ? invoice.transitions : [];
-
     return (
       <div id="actions">
         <div id="header">
