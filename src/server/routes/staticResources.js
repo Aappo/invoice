@@ -8,7 +8,8 @@ module.exports = function(app, db) {
     '/',
     '/taskList',
     '/allTaskList',
-    '/import'
+    '/import',
+    '/single/*'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
       res.render('index', {

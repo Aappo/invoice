@@ -7,7 +7,9 @@ import './NarrowLayout.less';
 class NarrowLayout extends React.Component {
   static propTypes = {
     list: PropTypes.array,
+    invoice: PropTypes.object,
     getInvoice: PropTypes.func.isRequired,
+    updateInvoice: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -31,8 +33,9 @@ class NarrowLayout extends React.Component {
         <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
           <MyTasksList
             list={this.props.list}
-            sortBy={this.state.sortBy}
+            sortBy={null}
             getInvoice={this.props.getInvoice}
+            narrowLayout={true}
           />
         </div>
       </div>
