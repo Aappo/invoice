@@ -39,13 +39,13 @@ describe("Invoice approval flow", () => {
 
       it("inspectionRequired", () => {
         const invoice = { status: 'inspectionRequired' };
-        const expected = [];
+        const expected = ['postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspClrRequired", () => {
         const invoice = { status: 'inspClrRequired' };
-        const expected = [];
+        const expected = ['postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
@@ -135,19 +135,19 @@ describe("Invoice approval flow", () => {
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired', grossAmount: 250 };
-        const expected = ['rejectInspection'];
+        const expected = ['postComment', 'rejectInspection'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired with prohibited cancel inspection because of low gross amount", () => {
         const invoice = { status: 'approvalRequired', grossAmount: 150 };
-        const expected = [];
+        const expected = ['postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("appClrRequired", () => {
         const invoice = { status: 'appClrRequired' };
-        const expected = [];
+        const expected = ['postComment'];
         return assertAvailableTransitions(invoice, request, expected);
       });
     });

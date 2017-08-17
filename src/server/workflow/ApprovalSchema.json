@@ -61,16 +61,6 @@
       "from": "inspectionRequired",
       "event": "postComment",
       "to": "inspectionRequired",
-      "guards": [
-        {
-          "name": "userHasRoles",
-          "arguments": {
-            "restrictedRoles": [
-              "invoice-inspector"
-            ]
-          }
-        }
-      ],
       "actions": [
         {
           "name": "updateComment",
@@ -137,16 +127,6 @@
       "from": "inspClrRequired",
       "event": "postComment",
       "to": "inspClrRequired",
-      "guards": [
-        {
-          "name": "userHasRoles",
-          "arguments": {
-            "restrictedRoles": [
-              "invoice-inspector"
-            ]
-          }
-        }
-      ],
       "actions": [
         {
           "name": "updateComment",
@@ -216,6 +196,19 @@
       ]
     },
     {
+      "from": "approved",
+      "event": "postComment",
+      "to": "approved",
+      "actions": [
+        {
+          "name": "updateComment",
+          "arguments": {
+            "commentFieldName": "commentary"
+          }
+        }
+      ]
+    },
+    {
       "from": "approvalRequired",
       "event": "rejectInspection",
       "to": "inspectionRequired",
@@ -224,7 +217,6 @@
           "name": "userHasRoles",
           "arguments": {
             "restrictedRoles": [
-              "invoice-approver",
               "invoice-inspector"
             ]
           }
@@ -257,16 +249,6 @@
       "from": "approvalRequired",
       "event": "postComment",
       "to": "approvalRequired",
-      "guards": [
-        {
-          "name": "userHasRoles",
-          "arguments": {
-            "restrictedRoles": [
-              "invoice-approver"
-            ]
-          }
-        }
-      ],
       "actions": [
         {
           "name": "updateComment",
@@ -326,16 +308,6 @@
       "from": "appClrRequired",
       "event": "postComment",
       "to": "appClrRequired",
-      "guards": [
-        {
-          "name": "userHasRoles",
-          "arguments": {
-            "restrictedRoles": [
-              "invoice-approver"
-            ]
-          }
-        }
-      ],
       "actions": [
         {
           "name": "updateComment",
