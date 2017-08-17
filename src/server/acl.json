@@ -90,6 +90,11 @@
         "type": "rest",
         "resourceId": "/processed",
         "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/single/[%w | %p]*",
+        "actions": ["view"]
       }
     ]
   }

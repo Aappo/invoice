@@ -1,15 +1,19 @@
 import React, { PureComponent, PropTypes } from 'react';
+import { withRouter, routerShape } from 'react-router';
+
 import List from '../select-list/List';
 import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
 
 
-export default class MyTasksList extends PureComponent {
+class MyTasksList extends PureComponent {
 
   static propTypes = {
     list: PropTypes.array.isRequired,
     getInvoice: PropTypes.func.isRequired,
-    sortBy: PropTypes.string
+    sortBy: PropTypes.string,
+    narrowLayout: PropTypes.bool,
+    router: routerShape.isRequired,
   };
 
   static defaultProps = {
@@ -45,11 +49,16 @@ export default class MyTasksList extends PureComponent {
       <div id="list-content" className="oc-invoices-my-tasks-list">
         <List
           items={items}
-          selected={[this.state.selected]}
+          selected={this.props.narrowLayout ? [] : [this.state.selected]}
           multiple={false}
           onChange={(selected) => {
-            this.props.getInvoice(this.props.list[selected].id);
-            this.setState({selected});
+            if (!this.props.narrowLayout) {
+              this.props.getInvoice(this.props.list[selected].id);
+              this.setState({ selected });
+            } else {
+              this.props.router.push(
+                `/invoice/single/${this.props.list[selected].id}`);
+            }
           }}
         />
       </div>
@@ -57,3 +66,4 @@ export default class MyTasksList extends PureComponent {
   }
 }
 
+export default withRouter(MyTasksList);
