@@ -55,6 +55,7 @@
 
   },
   "devDependencies": {
+    "autoprefixer": "^6.6.1",
     "command-line-args": "^4.0.1",
     "mocha": "^3.2.0",
     "mocha-junit-reporter": "^1.12.1",
@@ -78,6 +79,9 @@
     "babel-register": "6.9.0",
     "webpack-polyfills-plugin": "0.0.9",
     "polyfill-promise": "4.0.1",
+    "postcss-flexbugs-fixes": "^2.1.0",
+    "postcss-loader": "^1.2.1",
+    "precss": "^1.4.0",
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "eslint": "^3.10.2",
