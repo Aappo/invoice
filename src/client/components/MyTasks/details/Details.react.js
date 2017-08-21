@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
+
 import InvoiceDetails from './InvoiceDetails.react';
 import InvoiceItemsGrid from '../../InvoiceReceiptEditor/components/InvoiceEditor/InvoiceItemsGrid.react';
+import UiHelpers from '../helpers/UIHelpers.react';
+
 import './Details.less';
 
 
@@ -17,48 +20,11 @@ class Details extends React.Component {
     };
   }
 
-  getInvoiceImageControl = (file) => {
-    if (!file) {
-      return null;
-    }
-
-    const newFile = file.replace('invoice',
-      `invoice${this.props.invoice.InvId}`);
-
-    let mime = '';
-    const extensionMatch = /\.(.*)$/;
-    if (extensionMatch.test(file)) {
-      mime = extensionMatch.exec(file)[1];
-    }
-
-    // Always display as pdf
-    if (true || mime === 'pdf') {
-      return (
-        <object
-          type="application/pdf"
-          width="100%"
-          name="invoice_image"
-          height="100%"
-          data={file}
-          aria-label="Invoice image"
-        />
-      );
-    }
-    return (
-      <iframe
-        title="Invoice image"
-        width="100%"
-        name="invoice_image"
-        height="100%"
-        src={newFile}
-      />
-    );
-  }
-
   getContent = (invoice) => {
     switch (this.state.selectedTab) {
       case 1:
-        return this.getInvoiceImageControl(`/invoice/api/invoices/${invoice.id}/attachment`);
+        return UiHelpers.getInvoiceImageControl(invoice.id,
+          `/invoice/api/invoices/${invoice.id}/attachment`);
       case 2:
         return (
           <div id="content">
