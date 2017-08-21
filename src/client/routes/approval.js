@@ -12,18 +12,13 @@ const AllTaskList = (props) => (
 );
 
 const TaskList = (props, { userData }) => {
-  const filterForRole  = invoice => {
-    return !userData.roles.some(role => {
-      switch (role) {
-        case 'invoice-approver':
-          return invoice.status === 'approved';
-        case 'invoice-inspector':
-          return invoice.status === 'approvalRequired';
-        default:
-          return false;
-      }
-    })
+  const excludedStatuses = {
+    'invoice-approver': ['approved'],
+    'invoice-inspector': ['approvalRequired', 'approved']
   };
+  const filterForRole = invoice => !userData.roles.some(role => {
+    return excludedStatuses[role] && excludedStatuses[role].indexOf(invoice.status) !== -1
+  });
   return (
     <TaskLayoutHandler
       fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(filterForRole) }
