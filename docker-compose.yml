@@ -16,7 +16,7 @@ services:
       SERVICE_NAME: 'invoice'
     environment:
       NODE_ENV: ${NODE_ENV}
-      PORT: ${PORT}
+      PORT: ${INVOICE_PORT}
       HOST_IP: ${HOST_IP}
       APPLICATION_NAME: 'invoice'
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -29,7 +29,7 @@ services:
       SERVICE_3003_CHECK_INTERVAL: 15s
       SERVICE_3003_CHECK_TIMEOUT: 3s
     ports:
-     - '${PORT}:${PORT}'
+     - '${INVOICE_PORT}:${INVOICE_PORT}'
 
   customer:
     image: opuscapita/customer:dev
