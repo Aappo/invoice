@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import InvoiceDetails from './InvoiceDetails.react';
-import InvoiceItemsGrid from '../../InvoiceReceiptEditor/components/InvoiceEditor/InvoiceItemsGrid.react';
+import InvoiceAttachment from './InvoiceAttachment';
+import InvoiceDataDashboard from './InvoiceDataDashboard';
 import './Details.less';
 
 
@@ -10,6 +10,10 @@ class Details extends React.Component {
     invoice: PropTypes.object,
   };
 
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,66 +21,20 @@ class Details extends React.Component {
     };
   }
 
-  getInvoiceImageControl = (file) => {
-    if (!file) {
-      return null;
-    }
-
-    const newFile = file.replace('invoice',
-      `invoice${this.props.invoice.InvId}`);
-
-    let mime = '';
-    const extensionMatch = /\.(.*)$/;
-    if (extensionMatch.test(file)) {
-      mime = extensionMatch.exec(file)[1];
-    }
-
-    // Always display as pdf
-    if (true || mime === 'pdf') {
-      return (
-        <object
-          type="application/pdf"
-          width="100%"
-          name="invoice_image"
-          height="100%"
-          data={file}
-          aria-label="Invoice image"
-        />
-      );
-    }
-    return (
-      <iframe
-        title="Invoice image"
-        width="100%"
-        name="invoice_image"
-        height="100%"
-        src={newFile}
-      />
-    );
-  }
-
   getContent = (invoice) => {
     switch (this.state.selectedTab) {
       case 1:
-        return this.getInvoiceImageControl(`/invoice/api/invoices/${invoice.id}/attachment`);
+        return <InvoiceAttachment invoice={invoice}/>
       case 2:
         return (
           <div id="content">
-            <InvoiceDetails invoice={invoice} />
+            <InvoiceDataDashboard invoice={invoice}/>
           </div>
-        );
-      case 3:
-        return (
-          <InvoiceItemsGrid
-            items={invoice.items}
-            readOnly={true}
-            onDelete={() => {}}
-          />
         );
       default:
         return null;
     }
-  }
+  };
 
   selectTab = (tabIndex) => {
     this.setState({
@@ -95,7 +53,7 @@ class Details extends React.Component {
                   this.selectTab(1);
                 }}
               >
-                Invoice image
+                {this.context.i18n.getMessage('Details.header.image')}
               </a>
             </li>
             <li key={2} className={this.state.selectedTab === 2 ? 'doing' : ''}>
@@ -104,16 +62,7 @@ class Details extends React.Component {
                   this.selectTab(2);
                 }}
               >
-                Invoice details
-              </a>
-            </li>
-            <li key={3} className={this.state.selectedTab === 3 ? 'doing' : ''}>
-              <a id={3} href="" onClick={(e) => {
-                  e.preventDefault();
-                  this.selectTab(3);
-                }}
-              >
-                Invoice positions
+                {this.context.i18n.getMessage('Details.header.details')}
               </a>
             </li>
           </ul>

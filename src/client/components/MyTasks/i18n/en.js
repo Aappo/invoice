@@ -42,7 +42,30 @@ let EmptyLayout = {
   }
 };
 
+let Details = {
+  header: {
+    image: 'Invoice image',
+    details: 'Invoice details'
+  },
+  supplier: {
+    title: 'Supplier',
+    supplierName: 'Supplier Name',
+    supplierId: 'Supplier Code'
+  },
+  totals: {
+    title: 'Totals',
+    currency: 'Currency',
+    vatAmount: 'VAT total',
+    netAmount: 'Invoice net',
+    grossAmount: 'Invoice total'
+  },
+  attachments: {
+    title: 'Attachments'
+  }
+};
+
 export default {
+  Details: Details,
   TaskItem: TaskItem,
   Action: Action,
   EmptyLayout: EmptyLayout

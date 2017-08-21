@@ -114,6 +114,14 @@ export const fetchCurrencies = () => {
   ).catch((error) => { throw Error(error); })
 };
 
+export const fetchCurrency = (currencyId) => {
+  return request.get(`/isodata/currencies/${currencyId}`).set(
+    'Accept', 'application/json'
+  ).then((response) =>
+    Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+
 export const fetchUnitsOfMeasure = () => {
   return request.get(`/invoice/api/unitsOfMeasure`).set(
     'Accept', 'application/json'
@@ -121,9 +129,10 @@ export const fetchUnitsOfMeasure = () => {
   ).catch((error) => { throw Error(error); })
 };
 
-export const fetchInvoiceStatuses = () => {
-  return request.get(`/invoice/api/statuses/invoice`).set(
+export const fetchInvoiceAttachmentsInfo = (invoiceId) => {
+  return request.get(`/invoice/api/invoices/${invoiceId}/attachments`).set(
     'Accept', 'application/json'
-  ).then((response) => Promise.resolve(response.body)
+  ).then((response) =>
+    Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
