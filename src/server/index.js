@@ -14,6 +14,7 @@ db.init(
     consul: {
       host: 'consul'
     },
+    retryCount: 50,
     data: {
       addTestData: false
     },
@@ -36,6 +37,7 @@ db.init(
 ).then((db) => {
   return Promise.resolve(server.init({
     server: {
+      port: process.env.PORT || 3003,
       staticFilePath: express.static(__dirname + '/static'),
       webpack: {
         useWebpack: true,

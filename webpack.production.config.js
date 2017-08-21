@@ -2,7 +2,6 @@ let path = require('path');
 let webpack = require('webpack');
 
 module.exports = {
-  devtool: 'inline-source-map',
   entry: [
     './src/client/index'
   ],
@@ -15,7 +14,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       'Promise': 'polyfill-promise'
