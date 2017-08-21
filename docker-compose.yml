@@ -286,4 +286,36 @@ services:
        - '${BLOB_PORT}:${BLOB_PORT}'
     command: 'npm run dev'
 
+  posting:
+    image: opuscapita/posting:dev
+#    build: ../posting
+#    volumes:
+#     - ../posting:/home/node/posting
+    depends_on:
+     - mysql
+     - consul
+     - registrator
+     - redis
+     - acl
+     - auth
+     - user
+    labels:
+      SERVICE_NAME: 'posting'
+    environment:
+      APPLICATION_NAME: 'posting'
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${POSTING_PORT}
+      HOST_IP: ${HOST_IP}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      REDIS_AUTH: ${REDIS_AUTH}
+      GATEWAY_SCHEME: ${GATEWAY_SCHEME}
+      GATEWAY_IP: ${GATEWAY_IP}
+      GATEWAY_PORT: ${GATEWAY_PORT}
+      SERVICE_3014_CHECK_HTTP: /api/health/check
+      SERVICE_3014_CHECK_INTERVAL: 15s
+      SERVICE_3014_CHECK_TIMEOUT: 3s
+    ports:
+     - '${POSTING_PORT}:${POSTING_PORT}'
+    command: "npm run dev"
 
