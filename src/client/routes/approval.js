@@ -13,7 +13,7 @@ const AllTaskList = (props) => (
 
 const TaskList = (props, { userData }) => {
   const excludedStatuses = {
-    'invoice-approver': ['approved'],
+    'invoice-approver': ['approved', 'inspectionRequired', 'inspClrRequired'],
     'invoice-inspector': ['approvalRequired', 'approved']
   };
   const filterForRole = invoice => !userData.roles.some(role => {
