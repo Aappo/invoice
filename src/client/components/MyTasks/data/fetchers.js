@@ -72,6 +72,13 @@ export const fetchSupplier = (id) => {
   ).catch((error) => { throw Error(error); })
 };
 
+export const fetchSupplierBankAccounts = (supplierId) => {
+  return request.get(`/supplier/api/suppliers/${supplierId}/bank_accounts`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+
 export const fetchSupplierAddresses = (id) => {
   return request.get(`/supplier/api/suppliers/${id}/addresses`).set(
     'Accept', 'application/json'

@@ -6,7 +6,7 @@ const supplierDetailsFields = [
   'supplierId'
 ];
 
-const SupplierDetailsView = ({ supplier }, { i18n }) => (
+const SupplierDetailsView = ({ supplier, bankAccounts }, { i18n }) => (
   <div className="oc-invoices-card">
     {supplierDetailsFields.map((fieldName) => (
       <div key={fieldName}>
@@ -18,11 +18,20 @@ const SupplierDetailsView = ({ supplier }, { i18n }) => (
         </span>
       </div>
     ))}
+    <div key='bankAccountNumber'>
+      <span className="oc-invoices-card-title">
+        {i18n.getMessage('Details.supplier.bankAccountNumber')}
+      </span>
+      <span className="oc-invoices-card-value">
+        {bankAccounts.length > 0? bankAccounts[0].accountNumber : i18n.getMessage('Details.supplier.noBankAccountData')}
+      </span>
+    </div>
   </div>
 );
 
 SupplierDetailsView.propTypes = {
-  supplier: PropTypes.object.isRequired
+  supplier: PropTypes.object.isRequired,
+  bankAccounts: PropTypes.array.isRequired
 };
 
 SupplierDetailsView.contextTypes = {

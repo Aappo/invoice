@@ -40,6 +40,9 @@ const TaskItem = ({ invoice }, { i18n }) => (
       </div>
     </div>
     <div className="list-item-narrow-column">
+      <span className="value">
+        {invoice.invoiceNo}
+      </span>
       {UiHelpers.getIconForApprovalStatus(invoice.status, iconSize)}
     </div>
   </div>

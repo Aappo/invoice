@@ -50,7 +50,9 @@ let Details = {
   supplier: {
     title: 'Supplier',
     supplierName: 'Supplier Name',
-    supplierId: 'Supplier Code'
+    supplierId: 'Supplier Code',
+    bankAccountNumber: 'Bank Account Number',
+    noBankAccountData: 'No Bank Account Information'
   },
   totals: {
     title: 'Totals',
@@ -60,7 +62,8 @@ let Details = {
     grossAmount: 'Invoice total'
   },
   attachments: {
-    title: 'Attachments'
+    title: 'Attachments',
+    noAttachments: 'There is no files, attached to this invoice'
   }
 };
 

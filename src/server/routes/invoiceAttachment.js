@@ -40,6 +40,4 @@ module.exports = function(app, db) {
       next(error)
     );
   });
-
-
 };
