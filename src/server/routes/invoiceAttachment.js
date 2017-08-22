@@ -16,13 +16,30 @@ module.exports = function(app, db) {
     blobClient.listFiles(tenantId, path).then((filesList) => {
       const attachmentInfo = filesList.find(file => file.extension === '.pdf');
       if (attachmentInfo) {
-        blobClient.readFile(tenantId, attachmentInfo.path).then(document => {
+        return blobClient.readFile(tenantId, attachmentInfo.path).then(document => {
           res.writeHead(200, { 'Content-Type': 'application/pdf',  'Content-Length': document.length });
           res.end(document);
         });
       } else {
-        res.status(404).json({ message: 'No attachment found for purchase invoice.' });
+        return res.status(404).json({ message: 'No attachment found for purchase invoice.' });
       }
     }).catch((error) => next(error)); // TODO: handle errors more accurately
   });
+
+  /**
+   * Return information about all attachment files
+   */
+  app.get('/api/invoices/:invoiceId/attachments', (req, res, next) => {
+    const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient });
+    return blobClient.listFiles(
+      `c_${req.opuscapita.userData().customerid}`,
+      `/private/purchaseInvoices/${req.params.invoiceId}/`
+    ).then((attachments) => {
+      return res.send(attachments);
+    }).catch((error) =>
+      next(error)
+    );
+  });
+
+
 };

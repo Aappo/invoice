@@ -2,16 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Promise from 'bluebird';
 import {
   fetchTaskActions,
-  fetchInvoiceReceipt,
-  fetchCustomer,
-  fetchSupplier,
-  fetchSupplierContacts,
-  fetchSupplierAddresses,
-  fetchTermsOfDelivery,
-  fetchTermsOfPayment,
-  fetchMethodsOfPayment,
-  fetchCurrencies,
-  fetchInvoiceReceiptItems
+  fetchInvoiceReceipt
 } from './data/fetchers';
 import _ from 'lodash';
 import { APP_VIEWS } from './constants';
@@ -43,13 +34,6 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter, inv
       router: PropTypes.object.isRequired
     };
 
-    static childContextTypes = {
-      termsOfDelivery: PropTypes.array.isRequired,
-      termsOfPayment: PropTypes.array.isRequired,
-      methodsOfPayment: PropTypes.array.isRequired,
-      currencies: PropTypes.array.isRequired,
-    };
-
     static defaultProps = {
       fetcher: fetcher,
       filter: filter
@@ -57,35 +41,18 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter, inv
 
     state = {
       taskList: undefined,
-      // Common data loaded once and set to context
-      isMasterDataReady: false,
-      termsOfDelivery: [],
-      termsOfPayment: [],
-      methodsOfPayment: [],
-      currencies: []
     };
 
-    getChildContext() {
-      return {
-        termsOfDelivery: this.state.termsOfDelivery,
-        termsOfPayment: this.state.termsOfDelivery,
-        methodsOfPayment: this.state.methodsOfPayment,
-        currencies: this.state.currencies
-      }
-    }
-
     componentDidMount() {
-      this.loadMasterData().then((masterData) => Promise.resolve(this.setState(masterData, () => {
-        this.props.fetcher().then((invoices) => {
-          if(invoices.length > 0) {
-            return this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
-              this.setState({ taskList: invoices, invoice: invoiceData });
-            })
-          } else {
-            this.setState({ taskList: invoices });
-          }
-        })
-      })));
+      this.props.fetcher().then((invoices) => {
+        if (invoices.length > 0) {
+          return this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
+            this.setState({ taskList: invoices, invoice: invoiceData });
+          })
+        } else {
+          this.setState({ taskList: invoices });
+        }
+      })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -99,33 +66,21 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter, inv
       return true;
     }
 
-    loadMasterData() {
-      return Promise.props({
-        termsOfDelivery: fetchTermsOfDelivery(),
-        termsOfPayment: fetchTermsOfPayment(),
-        methodsOfPayment: fetchMethodsOfPayment(),
-        currencies: fetchCurrencies(),
-        isMasterDataReady: true
-      });
-    }
-
     loadInvoiceData(id) {
       return fetchInvoiceReceipt(id).then((invoice) => {
         return Promise.props({
           ...invoice,
-          customer: fetchCustomer(invoice.customerId),
-          supplier: fetchSupplier(invoice.supplierId),
-          supplierContacts: fetchSupplierContacts(invoice.supplierId),
-          supplierAddresses: fetchSupplierAddresses(invoice.supplierId),
-          items: fetchInvoiceReceiptItems(invoice.id),
           transitions: fetchTaskActions(invoice.id)
         })
       })
     }
 
     getInvoice(id) {
-      return this.loadInvoiceData(id).then((invoice) =>
-        this.setState({ invoice })).catch((err) => { throw Error(err); });
+      return this.loadInvoiceData(id).then((invoice) => {
+        return Promise.resolve(this.setState({ invoice }))
+      }).catch((err) => {
+        throw Error(err);
+      });
     }
 
     /**
@@ -167,7 +122,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter, inv
     }
 
     render() {
-      return this.state.isMasterDataReady && (
+      return (
         <WrappedComponent
           list={this.state.taskList}
           invoice={this.state.invoice}

@@ -11,13 +11,10 @@ const userIdentityMiddleWare = require('useridentity-middleware');
 // See web server: https://github.com/OpusCapitaBusinessNetwork/web-init
 db.init(
   {
-    mode: db.Mode.Dev,
     consul: {
       host: 'consul'
     },
-    data: {
-      addTestData: false
-    },
+    retryCount: 50,
     events: {
       /**
        * Every model definition may contains 'associate' function that inits model relations
@@ -37,12 +34,11 @@ db.init(
 ).then((db) => {
   return Promise.resolve(server.init({
     server: {
-      mode : server.Server.Mode.Dev,
-      port: 3003,
+      port: process.env.PORT || 3003,
       staticFilePath: express.static(__dirname + '/static'),
       webpack: {
         useWebpack: true,
-        configFilePath: process.cwd() + '/webpack.config.js',
+        configFilePath: process.cwd() + '/webpack.development.config.js',
       },
       middlewares: [bouncer({
         host: 'consul',
