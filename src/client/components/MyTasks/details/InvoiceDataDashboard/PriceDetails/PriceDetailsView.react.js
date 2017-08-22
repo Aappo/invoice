@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react';
 
+import '../cards.less';
+
 const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
-  <div>
+  <div className="oc-invoices-card">
     <div>
       <span className="oc-invoices-card-title">
         {i18n.getMessage('Details.totals.currency')}
@@ -28,7 +30,9 @@ const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
     </div>
     <div>
       <span className="oc-invoices-card-title">
-        {i18n.getMessage('Details.totals.grossAmount')}
+        <span className="highlight">
+          {i18n.getMessage('Details.totals.grossAmount')}
+        </span>
       </span>
       <span className="oc-invoices-card-value">
           {i18n.formatDecimalNumber(invoice.grossAmount)}

@@ -1,13 +1,15 @@
 import React, { PropTypes } from 'react';
 import './supplierDetails.less';
 
+import '../cards.less';
+
 const supplierDetailsFields = [
   'supplierName',
   'supplierId'
 ];
 
 const SupplierDetailsView = ({ supplier }, { i18n }) => (
-  <div>
+  <div className="oc-invoices-card">
     {supplierDetailsFields.map((fieldName) => (
       <div key={fieldName}>
         <span className="oc-invoices-card-title">
@@ -30,5 +32,3 @@ SupplierDetailsView.contextTypes = {
 };
 
 export default SupplierDetailsView;
-
-
