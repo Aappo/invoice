@@ -6,7 +6,6 @@ const path = require('path');
 const purchaseInvoiceRoutes = require('./purchaseInvoice');
 const purchaseInvoiceItemRoutes = require('./purchaseInvoiceItem');
 const purchaseInvoiceImport = require('./purchaseInvoiceImport');
-const invoiceStatuses = require('./invoiceStatuses');
 const invoiceAttachment = require('./invoiceAttachment');
 const approval = require('./approval');
 const staticResources = require('./staticResources');
@@ -40,7 +39,6 @@ module.exports.init = function(app, db, config) {
 
   purchaseInvoiceRoutes(epilogue, db);
   purchaseInvoiceItemRoutes(epilogue, db);
-  invoiceStatuses(app, db);
   invoiceAttachment(app, db);
   staticResources(app, db);
   termsOfPayment(app, db);

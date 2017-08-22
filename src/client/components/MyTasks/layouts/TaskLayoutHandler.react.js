@@ -4,7 +4,6 @@ import WideLayout from './WideLayout.react';
 import NarrowLayout from './NarrowLayout.react';
 import './TaskLayout.less';
 import myTasksMessages from '../i18n';
-import invoiceEditorMessages from '../../InvoiceReceiptEditor/i18n/InvoiceEditor';
 import { withRouter } from 'react-router';
 const NARROW_MODE_BREAK_POINT = 860;
 
@@ -25,12 +24,12 @@ export default class TaskLayoutHandler extends Component {
   };
 
   componentWillMount() {
-    this.context.i18n.register('MyTasks', myTasksMessages).register('InvoiceEditor', invoiceEditorMessages);
+    this.context.i18n.register('MyTasks', myTasksMessages);
   }
 
   componentWillReceiveProps(nextProps, nextContext){
     if(nextContext.i18n.locale !== this.context.i18n.locale){
-      nextContext.i18n.register('MyTasks', myTasksMessages).register('InvoiceEditor', invoiceEditorMessages);
+      nextContext.i18n.register('MyTasks', myTasksMessages);
     }
   }
 
