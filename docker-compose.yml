@@ -30,7 +30,6 @@ services:
       SERVICE_3003_CHECK_TIMEOUT: 3s
     ports:
      - '${INVOICE_PORT}:${INVOICE_PORT}'
-    command: "npm run dev"
 
   customer:
     image: opuscapita/customer:dev
