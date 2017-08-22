@@ -283,6 +283,6 @@ services:
       SERVICE_3012_CHECK_INTERVAL: 15s
     ports:
        - '${BLOB_PORT}:${BLOB_PORT}'
-    command: 'npm run dev'
+    command: 'npm run dev:production'
 
 

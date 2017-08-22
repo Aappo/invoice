@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-import InvoiceDetails from '../details/InvoiceDetails.react';
-import InvoiceItemsGrid from
-  '../../InvoiceReceiptEditor/components/InvoiceEditor/InvoiceItemsGrid.react';
+import InvoiceDataDashboard from '../details/InvoiceDataDashboard';
 import UiHelpers from '../helpers/UIHelpers.react';
 import { Icon } from '@opuscapita/react-icons';
 
@@ -35,16 +33,8 @@ export default class InvoiceLayout extends React.Component {
 
   getDetails = () => (
     <div id="content">
-      <InvoiceDetails invoice={this.props.invoice} />
+      <InvoiceDataDashboard invoice={this.props.invoice} />
     </div>
-  )
-
-  getInvoicePosition = () => (
-    <InvoiceItemsGrid
-      items={this.props.invoice.items}
-      readOnly={true}
-      onDelete={() => {}}
-    />
   )
 
   render() {
@@ -56,7 +46,6 @@ export default class InvoiceLayout extends React.Component {
           </Link>
           {this.state.activePage === "image" && this.getImage() }
           {this.state.activePage === "details" && this.getDetails() }
-          {this.state.activePage === "position" && this.getInvoicePosition() }
         </div>
         <div id="navigation">
           <ul>
@@ -65,9 +54,6 @@ export default class InvoiceLayout extends React.Component {
             </li>
             <li className={`border ${this.state.activePage === 'details' ? 'doing' : ''}`}>
               <a href="" onClick={(e) => this.setPage(e, 'details')}>Details</a>
-            </li>
-            <li className={`border ${this.state.activePage === 'position' ? 'doing' : ''}`}>
-              <a href="" onClick={(e) => this.setPage(e, 'position')}>Invoice position</a>
             </li>
           </ul>
         </div>
