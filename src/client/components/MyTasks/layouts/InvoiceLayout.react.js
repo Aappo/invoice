@@ -15,10 +15,6 @@ export default class InvoiceLayout extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getInvoice(this.props.invoiceId);
-  }
-
   setPage = (event, page) => {
     event.preventDefault();
     this.setState({
@@ -26,26 +22,26 @@ export default class InvoiceLayout extends React.Component {
     });
   }
 
-  getImage = () => (
-    UiHelpers.getInvoiceImageControl(this.props.invoiceId,
-          `/invoice/api/invoices/${this.props.invoiceId}/attachment`)
+  getImage = (invoice) => (
+    UiHelpers.getInvoiceImageControl(invoice.id,
+          `/invoice/api/invoices/${invoice.id}/attachment`)
   )
 
-  getDetails = () => (
+  getDetails = (invoice) => (
     <div id="content">
-      <InvoiceDataDashboard invoice={this.props.invoice} />
+      <InvoiceDataDashboard invoice={invoice} />
     </div>
   )
 
   render() {
-    return (
+    return this.props.invoice ? (
       <div id="single-invoice">
         <div id="content">
           <Link to={'/invoice/taskList'}>
             <Icon type="indicator" name="arrowLeft" />
           </Link>
-          {this.state.activePage === "image" && this.getImage() }
-          {this.state.activePage === "details" && this.getDetails() }
+          {this.state.activePage === "image" && this.getImage(this.props.invoice ) }
+          {this.state.activePage === "details" && this.getDetails(this.props.invoice ) }
         </div>
         <div id="navigation">
           <ul>
@@ -58,12 +54,11 @@ export default class InvoiceLayout extends React.Component {
           </ul>
         </div>
       </div>
-    );
+    ) : null;
   }
 }
 
 InvoiceLayout.propTypes = {
-  invoiceId: PropTypes.string,
   getInvoice: PropTypes.func.isRequired,
-  invoice: PropTypes.object,
+  invoice: PropTypes.object
 };

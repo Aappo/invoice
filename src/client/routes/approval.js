@@ -1,16 +1,23 @@
 import React, { PropTypes } from 'react';
 import { Route, Redirect, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
-import { fetchApprovalTasks } from '../components/MyTasks/data/fetchers';
+import { fetchApprovalTasks, fetchInvoiceReceipt } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
+import TaskListLayoutHandler from '../components/MyTasks/layouts/TaskListLayoutHandler.react';
 import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.react';
 import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
-import InvoiceContainer from '../components/MyTasks/layouts/InvoiceContainer.react';
+import Promise from 'bluebird';
 
+/**
+ * View displaying all invoices assigned to the customer.
+ */
 const AllTaskList = (props) => (
-  <TaskLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
+  <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
 );
 
+/**
+ * View displaying invoices depending on users roles and invoice status.
+ */
 const TaskList = (props, { userData }) => {
   const excludedStatuses = {
     'invoice-approver': ['approved', 'inspectionRequired', 'inspClrRequired'],
@@ -20,7 +27,7 @@ const TaskList = (props, { userData }) => {
     return excludedStatuses[role] && excludedStatuses[role].indexOf(invoice.status) !== -1
   });
   return (
-    <TaskLayoutHandler
+    <TaskListLayoutHandler
       fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(filterForRole) }
       filter={ invoice => invoice.transitions.length > 0 && filterForRole(invoice) }
     />
@@ -31,10 +38,13 @@ TaskList.contextTypes = {
   userData: PropTypes.object.isRequired
 };
 
+/**
+ * View displaying all invoices processed by current user.
+ */
 const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
-    <TaskLayoutHandler fetcher={ () => fetchApprovalTasks({}).filter(filter) } filter={filter} />
+    <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}).filter(filter) } filter={filter} />
   )
 };
 
@@ -42,16 +52,20 @@ ProcessedList.contextTypes = {
   userData: PropTypes.object.isRequired
 };
 
-const SingleInvoice = (props) => {
+/**
+ * View displaying one single task.
+ *
+ * @param invoiceId
+ */
+const TaskView = ({ params: { invoiceId } }) => {
   return (
-    <InvoiceContainer
-      options={{
-        fetcher: () => fetchApprovalTasks({}),
-        invoiceId: props.params.invoiceId,
-      }}
-    />);
+    <TaskLayoutHandler fetcher={ () => fetchInvoiceReceipt(invoiceId).then(invoice => Promise.resolve([invoice])) } />
+  )
 };
 
+TaskView.propTypes = {
+  params: PropTypes.object.isRequired
+};
 
 export default (props, context) => (
   <Route component={Layout} path="/invoice">
@@ -59,7 +73,7 @@ export default (props, context) => (
     <Route path="/invoice/import" component={InvoiceImport}/>
     <Route path="/invoice/allTaskList" component={AllTaskList}/>
     <Route path="/invoice/taskList" component={TaskList}/>
-    <Route path="/invoice/single/:invoiceId" component={SingleInvoice}/>
+    <Route path="/invoice/task/:invoiceId" component={TaskView}/>
     <Route path="/invoice/processed" component={ProcessedList}/>
     <Route path="/invoice/notFound" component={EmptyLayout}/>
   </Route>
