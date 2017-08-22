@@ -1,18 +1,18 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Icon } from '@opuscapita/react-icons';
 
-import '../cards.less';
-
-const AttachmentDetailsView = ({attachments}) => (
+const AttachmentDetailsView = ({ attachments }) => (
   <div className="oc-invoices-card">
-    <ul id="attachmentList">
+    <div className="oc-invoices-attachment-container">
       {attachments.map((attachmentInfo) => (
-        <li key={attachmentInfo.name}>
+        <div key={attachmentInfo.name} className="oc-invoices-file-icon">
           <Icon type="invoices" name={attachmentInfo.extension.slice(1)}/>
+          <span>
           {attachmentInfo.name}
-        </li>
+        </span>
+        </div>
       ))}
-    </ul>
+    </div>
   </div>
 );
 

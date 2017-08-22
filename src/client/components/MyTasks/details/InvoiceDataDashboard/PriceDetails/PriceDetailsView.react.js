@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import '../cards.less';
-
 const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
   <div className="oc-invoices-card">
     <div>

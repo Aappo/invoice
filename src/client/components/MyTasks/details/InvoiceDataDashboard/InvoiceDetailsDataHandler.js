@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import './cards.less';
 
 /**
  * Generic data handler for InvoiceDetails data cards
@@ -9,11 +10,9 @@ import React, { PropTypes, Component } from 'react';
  *
  * @author Daniel Zhitomirsky
  */
-
-
 const Spinner = () => (
-  <div>
-    <i style={{ fontSize: '60px' }} className="center-block fa fa-spinner fa-spin fa-5x fa-fw"/>
+  <div className="center-block">
+    <i style={{ fontSize: '60px' }} className="fa fa-spinner fa-spin fa-5x fa-fw"/>
   </div>
 );
 

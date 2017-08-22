@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import './supplierDetails.less';
 
-import '../cards.less';
-
 const supplierDetailsFields = [
   'supplierName',
   'supplierId'
