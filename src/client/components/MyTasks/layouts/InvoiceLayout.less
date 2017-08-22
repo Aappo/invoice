@@ -1,0 +1,60 @@
+
+#single-invoice {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  #content {
+    display: flex;
+    flex: 1;
+    overflow: auto;
+  }
+
+  #navigation {
+    display: flex;
+    flex: 0 0 40px;
+
+    > ul {
+      display: flex;
+      flex-direction: row;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      width: 100%;
+      height: 100%;
+      background-color: #F1F1F1;
+
+      li {
+        flex: 1 1 auto;
+        height: 100%;
+        text-align: center;
+        cursor: pointer;
+
+        &.topborder {
+          border-top: solid 1px lightgray;
+        }
+
+        &.border {
+          border-top: solid 1px lightgray;
+          border-left: solid 1px lightgray;
+        }
+
+        &.doing {
+          background-color: #DEDEDE;
+        }
+      }
+
+      li a {
+          display: flex;
+          flex-direction: row;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          text-decoration: none;
+          color: #67707c;
+      }
+    }
+  }
+}

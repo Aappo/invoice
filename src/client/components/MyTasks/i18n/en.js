@@ -3,10 +3,10 @@ TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
 TaskItem.status = {
-  inspectionRequired: 'Inspection Required',
-  approvalRequired: 'Approval Required',
-  inspClrRequired: 'Clarification Required',
-  appClrRequired: 'Clarification Required',
+  inspectionRequired: 'Inspection required',
+  approvalRequired: 'Approval required',
+  inspClrRequired: 'Clarification required',
+  appClrRequired: 'Clarification required',
   archived: 'Archived',
   approved: 'Approved'
 };
@@ -14,7 +14,7 @@ TaskItem.status = {
 let Action = {
   event: {
     inspect: 'Inspect',
-    sendToClarification: 'Set to Clarification',
+    sendToClarification: 'Set to clarification',
     clarifyForInspection: 'Cancel clarification',
     clarifyForApproval: 'Cancel clarification',
     approve: 'Approve',

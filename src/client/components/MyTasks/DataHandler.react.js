@@ -21,12 +21,12 @@ const EMPTY_VIEW_MAPPING = {
  * @param filter - predicate defining if invoice should be displayed
  * @returns {DataHandler}
  */
-export default function withDataHandler(WrappedComponent, { fetcher, filter = invoice => !!invoice }) {
+export default function withDataHandler(WrappedComponent, { fetcher, filter, invoiceId = invoice => !!invoice }) {
   class DataHandler extends Component {
 
     static propTypes = {
       fetcher: PropTypes.func.isRequired,
-      filter: PropTypes.func.isRequired,
+      filter: PropTypes.func,
       location: PropTypes.object.isRequired // Injected by router
     };
 
@@ -128,6 +128,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
           invoice={this.state.invoice}
           getInvoice={::this.getInvoice}
           updateInvoice={::this.updateInvoice}
+          invoiceId={invoiceId}
         />
       );
     }
