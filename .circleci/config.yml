@@ -10,7 +10,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Image
-          command: docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME
+          command: docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME .
       - run:
           name: Execute unit tests
           command: docker-compose -f docker-compose.override.yml run main npm run test -- --reporter mocha-junit-reporter
