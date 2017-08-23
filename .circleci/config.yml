@@ -9,7 +9,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            mkdir test-results
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             echo -------------
             ls ./test-results
