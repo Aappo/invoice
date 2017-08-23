@@ -3,6 +3,3 @@ services:
   main:
     image: opuscapita/invoice:dev
     command: 'npm run dev'
-
- blob:
-    env_file:

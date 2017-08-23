@@ -279,8 +279,6 @@ services:
       SERVICE_3012_CHECK_HTTP: /api/health/check
       SERVICE_3012_CHECK_TIMEOUT: 3s
       SERVICE_3012_CHECK_INTERVAL: 15s
-    env_file:
-      blob.env
     ports:
        - '${BLOB_PORT}:${BLOB_PORT}'
     command: 'npm run dev:production'

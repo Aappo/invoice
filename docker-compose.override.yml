@@ -5,3 +5,8 @@ services:
     volumes:
      - .:/home/node/invoice
     command: 'npm run dev'
+
+  blob:
+    image: opuscapita/blob:dev
+    env_file:
+      blob.env
