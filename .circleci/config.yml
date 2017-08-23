@@ -9,26 +9,38 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Deployment script
-          command: |
-            export azureswarm_branch=develop
-            if [[ "$CIRCLE_BRANCH" == "master" ]]; then export azureswarm_branch=master; fi
-            curl https://raw.githubusercontent.com/gr4per/azureswarm/$azureswarm_branch/buildscript.sh > buildscript.sh
-            chmod +x buildscript.sh
-            ./buildscript.sh opuscapita/$CIRCLE_PROJECT_REPONAME
+          name: Build Image
+          command: docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME
+      - run:
+          name: Execute unit tests
+          command: docker-compose -f docker-compose.override.yml run main npm run test -- --reporter mocha-junit-reporter
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_test_results:
+          path: test-results.xml
 
-  build_base:
-    docker:
-      - image: circleci/node:8
-    working_directory: ~/build
-
-    steps:
-      - checkout
-      - setup_remote_docker
-      - deploy:
-          name: Build and push Docker base image
-          command: |
-            docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME:base -f Dockerfile.base .
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push opuscapita/$CIRCLE_PROJECT_REPONAME:base
-
+#      - run:
+#          name: Deployment script
+#          command: |
+#            export azureswarm_branch=develop
+#            if [[ "$CIRCLE_BRANCH" == "master" ]]; then export azureswarm_branch=master; fi
+#            curl https://raw.githubusercontent.com/gr4per/azureswarm/$azureswarm_branch/buildscript.sh > buildscript.sh
+#            chmod +x buildscript.sh
+#            ./buildscript.sh opuscapita/$CIRCLE_PROJECT_REPONAME
+#
+#  build_base:
+#    docker:
+#      - image: circleci/node:8
+#    working_directory: ~/build
+#
+#    steps:
+#      - checkout
+#      - setup_remote_docker
+#      - deploy:
+#          name: Build and push Docker base image
+#          command: |
+#            docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME:base -f Dockerfile.base .
+#            docker login -u $DOCKER_USER -p $DOCKER_PASS
+#            docker push opuscapita/$CIRCLE_PROJECT_REPONAME:base
+#
