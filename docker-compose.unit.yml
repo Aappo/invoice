@@ -1,0 +1,7 @@
+version: '3'
+services:
+  main:
+    build: .
+    volumes:
+     - .:/home/node/invoice
+    command: 'npm run dev'

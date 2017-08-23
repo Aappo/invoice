@@ -13,7 +13,7 @@ jobs:
           command: docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME .
       - run:
           name: Execute unit tests
-          command: docker-compose -f docker-compose.override.yml run main npm run test -- --reporter mocha-junit-reporter
+          command: docker-compose -f docker-compose.unit.yml run main npm run test -- --reporter mocha-junit-reporter
       - store_artifacts:
           path: test-results.xml
           prefix: tests
