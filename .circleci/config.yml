@@ -11,12 +11,11 @@ jobs:
           command: |
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             ls .
-            ls ~/build/test-results
       - store_artifacts:
-          path: test-results/unit-tests.xml
+          path: test-results.xml
           prefix: tests
       - store_test_results:
-          path: test-results/unit-tests.xml
+          path: test-results.xml
 
 #      - run:
 #          name: Deployment script
