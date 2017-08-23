@@ -93,7 +93,7 @@
       },
       {
         "type": "rest",
-        "resourceId": "/single/[%w | %p]*",
+        "resourceId": "/task/[%w | %p]*",
         "actions": ["view"]
       }
     ]

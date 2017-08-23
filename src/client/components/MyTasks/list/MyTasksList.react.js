@@ -57,7 +57,7 @@ class MyTasksList extends PureComponent {
               this.setState({ selected });
             } else {
               this.props.router.push(
-                `/invoice/single/${this.props.list[selected].id}`);
+                `/invoice/task/${this.props.list[selected].id}`);
             }
           }}
         />

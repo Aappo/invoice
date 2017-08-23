@@ -21,7 +21,7 @@ const EMPTY_VIEW_MAPPING = {
  * @param filter - predicate defining if invoice should be displayed
  * @returns {DataHandler}
  */
-export default function withDataHandler(WrappedComponent, { fetcher, filter, invoiceId = invoice => !!invoice }) {
+export default function withDataHandler(WrappedComponent, { fetcher, filter = invoice => !!invoice }) {
   class DataHandler extends Component {
 
     static propTypes = {
@@ -128,7 +128,6 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter, inv
           invoice={this.state.invoice}
           getInvoice={::this.getInvoice}
           updateInvoice={::this.updateInvoice}
-          invoiceId={invoiceId}
         />
       );
     }
