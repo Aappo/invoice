@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            mkdir .nyc_output
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             ls .
       - store_artifacts:
