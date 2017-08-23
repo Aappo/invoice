@@ -1,9 +1,9 @@
 version: '2'
 services:
   main:
-    image: opuscapita/invoice:dev
+    build: .
+    volumes:
+         - .:/home/node/invoice
     environment:
       MOCHA_FILE: test-results.xml
-    volumes:
-     - .:/home/node/invoice
     command: 'npm run dev'
