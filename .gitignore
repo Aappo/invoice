@@ -11,3 +11,4 @@ workarea/
 coverage/
 test-results.xml
 package-lock.json
+blob.env
