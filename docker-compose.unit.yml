@@ -1,7 +1,8 @@
 version: '2'
 services:
   main:
-    build: .
+#    build: .
+    image: opuscapita/invoice:dev
     volumes:
          - .:/home/node/invoice
     environment:

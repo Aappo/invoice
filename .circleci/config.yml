@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    docker:
+      - image: circleci/node:8
     machine: true
     working_directory: ~/build
 
@@ -9,7 +11,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            mkdir .nyc_output
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             ls .
       - store_artifacts:
