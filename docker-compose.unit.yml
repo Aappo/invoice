@@ -4,7 +4,7 @@ services:
 #    build: .
     image: opuscapita/invoice:dev
     volumes:
-         - .:/home/node/invoice
+         - ./test-results:/home/node/invoice/test-results
     environment:
-      MOCHA_FILE: test-results.xml
+      MOCHA_FILE: ./test-results/unit-tests.xml
     command: 'npm run dev'
