@@ -10,6 +10,22 @@ Buyside (customer) functionality (TBD/under development):
 
 For further information on how to create, configure, document and access this service, please have a close look at the [Service Template](https://github.com/OpusCapitaBusinessNetwork/service-template/blob/master/README.md) this service is made with.
 
+## Configuration
+For proper working _blob_ service requires two environment variables:
+
+* BLOB_ACCOUNT
+* BLOB_SECRET
+
+Both of them are secrets and should not be stored in repo.
+For correct work of _blob_ service create *blob.env* file at project root.
+It should look like:
+```
+BLOB_ACCOUNT=dev_account_name
+ BLOB_KEY=secret_token
+
+```
+This file is ignored by git (added to .gitignore), so there will be no risk to commit it to repo by mistake.
+
 ## Development
 Running service locally:
 
