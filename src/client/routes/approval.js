@@ -19,12 +19,12 @@ const AllTaskList = (props) => (
  * View displaying invoices depending on users roles and invoice status.
  */
 const TaskList = (props, { userData }) => {
-  const excludedStatuses = {
-    'invoice-approver': ['approved', 'inspectionRequired', 'inspClrRequired'],
-    'invoice-inspector': ['approvalRequired', 'approved']
+  const availableStatuses = {
+    'invoice-approver': ['approvalRequired', 'appClrRequired'],
+    'invoice-inspector': ['inspectionRequired', 'inspClrRequired']
   };
-  const filterForRole = invoice => !userData.roles.some(role => {
-    return excludedStatuses[role] && excludedStatuses[role].indexOf(invoice.status) !== -1
+  const filterForRole = invoice => userData.roles.some(role => {
+    return availableStatuses[role] && availableStatuses[role].indexOf(invoice.status) !== -1
   });
   return (
     <TaskListLayoutHandler
