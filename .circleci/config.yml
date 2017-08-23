@@ -11,6 +11,8 @@ jobs:
       - run:
           name: Run tests
           command: |
+            pwd
+            ls
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
       - store_artifacts:
           path: test-results.xml
