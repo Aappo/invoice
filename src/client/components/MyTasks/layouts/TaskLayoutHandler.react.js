@@ -4,7 +4,7 @@ import InvoiceLayout from './InvoiceLayout.react';
 import { withRouter } from 'react-router';
 import myTasksMessages from '../i18n';
 
-export default class InvoiceLayoutHandler extends React.Component {
+export default class TaskLayoutHandler extends React.Component {
 
   static propTypes = {
     fetcher: PropTypes.func.isRequired,

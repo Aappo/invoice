@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 const NARROW_MODE_BREAK_POINT = 860;
 
 
-export default class TaskLayoutHandler extends Component {
+export default class TaskListLayoutHandler extends Component {
 
   static propTypes = {
     fetcher: PropTypes.func.isRequired,
