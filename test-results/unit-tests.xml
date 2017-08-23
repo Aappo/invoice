@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.016" tests="34" failures="0">
+  <testsuite name="Root Suite" timestamp="2017-08-23T19:33:45" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Approval workflow actions:" timestamp="2017-08-23T19:33:45" tests="2" file="/home/node/invoice/src/server/workflow/actions.spec.js" failures="0" time="0">
+    <testcase name="Approval workflow actions: correctly updates comment" time="0" classname="correctly updates comment">
+    </testcase>
+    <testcase name="Approval workflow actions: does nothing in case empty or null request" time="0" classname="does nothing in case empty or null request">
+    </testcase>
+  </testsuite>
+  <testsuite name="Invoice approval flow" timestamp="2017-08-23T19:33:45" tests="0" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Invoice approver:" timestamp="2017-08-23T19:33:45" tests="0" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Available transitions:" timestamp="2017-08-23T19:33:45" tests="4" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0.006">
+    <testcase name="Invoice approval flow Invoice approver: Available transitions: inspectionRequired" time="0.004" classname="inspectionRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Available transitions: inspClrRequired" time="0.001" classname="inspClrRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Available transitions: approvalRequired" time="0" classname="approvalRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Available transitions: appClrRequired" time="0.001" classname="appClrRequired">
+    </testcase>
+  </testsuite>
+  <testsuite name="Send event:" timestamp="2017-08-23T19:33:45" tests="6" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0.004">
+    <testcase name="Invoice approval flow Invoice approver: Send event: inspect invoice" time="0.001" classname="inspect invoice">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Send event: set invoice to clarification for inspection" time="0.001" classname="set invoice to clarification for inspection">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Send event: clarify invoice for inspection" time="0" classname="clarify invoice for inspection">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Send event: approve invoice" time="0.001" classname="approve invoice">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Send event: set invoice to clarification for approval" time="0" classname="set invoice to clarification for approval">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice approver: Send event: clarify invoice for approval" time="0.001" classname="clarify invoice for approval">
+    </testcase>
+  </testsuite>
+  <testsuite name="Invoice inspector" timestamp="2017-08-23T19:33:45" tests="0" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Available transitions:" timestamp="2017-08-23T19:33:45" tests="6" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0.001">
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: inspectionRequired" time="0" classname="inspectionRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: inspectionRequired is prohibited because low grossAmount" time="0.001" classname="inspectionRequired is prohibited because low grossAmount">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: inspClrRequired" time="0" classname="inspClrRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: approvalRequired" time="0" classname="approvalRequired">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: approvalRequired with prohibited cancel inspection because of low gross amount" time="0" classname="approvalRequired with prohibited cancel inspection because of low gross amount">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Available transitions: appClrRequired" time="0" classname="appClrRequired">
+    </testcase>
+  </testsuite>
+  <testsuite name="Send event:" timestamp="2017-08-23T19:33:45" tests="6" file="/home/node/invoice/src/server/workflow/ApprovalSchema.spec.js" failures="0" time="0.001">
+    <testcase name="Invoice approval flow Invoice inspector Send event: inspect invoice" time="0" classname="inspect invoice">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Send event: set invoice to clarification for inspection" time="0" classname="set invoice to clarification for inspection">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Send event: clarify invoice for inspection" time="0" classname="clarify invoice for inspection">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Send event: approve invoice" time="0" classname="approve invoice">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Send event: set invoice to clarification for approval" time="0.001" classname="set invoice to clarification for approval">
+    </testcase>
+    <testcase name="Invoice approval flow Invoice inspector Send event: clarify invoice for approval" time="0" classname="clarify invoice for approval">
+    </testcase>
+  </testsuite>
+  <testsuite name="conditions.isGreaterOrEqualThan tests:" timestamp="2017-08-23T19:33:45" tests="2" file="/home/node/invoice/src/server/workflow/conditions/isGreaterOrEqual.spec.js" failures="0" time="0.002">
+    <testcase name="conditions.isGreaterOrEqualThan tests: correct comparison with expected parameters" time="0.001" classname="correct comparison with expected parameters">
+    </testcase>
+    <testcase name="conditions.isGreaterOrEqualThan tests: throws errors in case incorrect parameters" time="0.001" classname="throws errors in case incorrect parameters">
+    </testcase>
+  </testsuite>
+  <testsuite name="conditions.isLessThan tests:" timestamp="2017-08-23T19:33:45" tests="2" file="/home/node/invoice/src/server/workflow/conditions/isLessThan.spec.js" failures="0" time="0.001">
+    <testcase name="conditions.isLessThan tests: correct comparison with expected parameters" time="0.001" classname="correct comparison with expected parameters">
+    </testcase>
+    <testcase name="conditions.isLessThan tests: throws errors in case incorrect parameters" time="0" classname="throws errors in case incorrect parameters">
+    </testcase>
+  </testsuite>
+  <testsuite name="conditions.userHasRoles tests:" timestamp="2017-08-23T19:33:45" tests="6" file="/home/node/invoice/src/server/workflow/conditions/userHasRoles.spec.js" failures="0" time="0.001">
+    <testcase name="conditions.userHasRoles tests: correct role inclusion" time="0" classname="correct role inclusion">
+    </testcase>
+    <testcase name="conditions.userHasRoles tests: incorrect role inclusion" time="0.001" classname="incorrect role inclusion">
+    </testcase>
+    <testcase name="conditions.userHasRoles tests: correct work in case of a single, non-array parameter" time="0" classname="correct work in case of a single, non-array parameter">
+    </testcase>
+    <testcase name="conditions.userHasRoles tests: fails in case of empty request provided roles" time="0" classname="fails in case of empty request provided roles">
+    </testcase>
+    <testcase name="conditions.userHasRoles tests: returns false in case null or undefined requies" time="0" classname="returns false in case null or undefined requies">
+    </testcase>
+    <testcase name="conditions.userHasRoles tests: returns true in case empty or null restricted roles" time="0" classname="returns true in case empty or null restricted roles">
+    </testcase>
+  </testsuite>
+</testsuites>

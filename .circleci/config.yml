@@ -12,12 +12,12 @@ jobs:
             mkdir test-results
             docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             echo -------------
-            ls test-results
+            ls ./test-results
       - store_artifacts:
-          path: test-results/unit-tests.xml
+          path: ./test-results/unit-tests.xml
           prefix: tests
       - store_test_results:
-          path: test-results/unit-tests.xml
+          path: ./test-results/unit-tests.xml
 
 #      - run:
 #          name: Deployment script
