@@ -9,14 +9,15 @@ jobs:
       - run:
           name: Run tests
           command: |
-            mkdir test-results
-            touch test-results/unit-tests.xml
-            ls ./test-results
+            ls
+            mkdir test-results1
+            touch test-results1/unit-tests.xml
+            ls test-results1
       - store_artifacts:
-          path: ./test-results/unit-tests.xml
+          path: ./test-results1/unit-tests.xml
           prefix: tests
       - store_test_results:
-          path: ./test-results/unit-tests.xml
+          path: ./test-results1/unit-tests.xml
 
 #      - run:
 #          name: Deployment script
