@@ -6,5 +6,5 @@ services:
     volumes:
          - ./test-results:/home/node/invoice/test-results
     environment:
-      MOCHA_FILE: ./test-results/unit-tests.xml
+      MOCHA_FILE: test-results/unit-tests.xml
     command: 'npm run dev'

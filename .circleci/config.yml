@@ -9,9 +9,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-            ls
             mkdir test-results
-            touch test-results/unit-tests.xml
+            docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
             echo -------------
             ls test-results
       - store_artifacts:
@@ -44,4 +43,3 @@ jobs:
 #            docker login -u $DOCKER_USER -p $DOCKER_PASS
 #            docker push opuscapita/$CIRCLE_PROJECT_REPONAME:base
 #
-#            docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
