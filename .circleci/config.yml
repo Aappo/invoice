@@ -10,7 +10,8 @@ jobs:
       - setup_remote_docker
       - run:
           name: Run tests
-          command: docker-compose -f docker-compose.unit.yml run main npm run test -- --reporter mocha-junit-reporter
+          command: |
+            docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
       - store_artifacts:
           path: test-results.xml
           prefix: tests
