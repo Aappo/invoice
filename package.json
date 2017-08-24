@@ -21,6 +21,7 @@
     "@opuscapita/react-dates": "0.2.6",
     "@opuscapita/react-icons": "^1.1.0",
     "@opuscapita/react-dashboard": "^0.0.4",
+    "@opuscapita/react-select": "^1.0.0-rc.5-oc.5",
     "@opuscapita/i18n": "1.1.0",
     "ocbesbn-bouncer": "^0.2.11",
     "ocbesbn-db-init": "^1.1.9",
@@ -35,8 +36,7 @@
     "react-notification-system": "^0.2.10",
     "content-range": "1.1.0",
     "react-dropzone": "^3.7.3",
-    "express-handlebars": "3.0.0",
-    "react-select": "1.0.0-rc.5"
+    "express-handlebars": "3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.6.1",
