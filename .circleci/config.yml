@@ -11,13 +11,10 @@ jobs:
       - run:
           name: Run tests with coverage and post it to coverrals.io
           command: |
-#           renaming .gitignore to .git folder in temporary container
-#           to have acces to git metainfo to publish coverrals data
             mv .gitignore .gitignore_tem_disabled
             docker-compose -f docker-compose.unit.yml up
             mkdir junit
             docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./junit/test-results.xml
-#           renaming .gitignore back to build normal image to be published
             mv .gitignore_tem_disabled .gitignore
       - store_artifacts:
           path: ./junit/test-results.xml
