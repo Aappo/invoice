@@ -4,7 +4,6 @@ import './SortInvoice.less';
 
 
 function SortInvoice({ label, value, items, onChange, ...props }) {
-  console.log(Select)
   return (
     <div className="oc-invoices-sort-invoice" {...props}>
       <span className="oc-invoices-sort-invoice-label">Sort by</span>
