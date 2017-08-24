@@ -1,9 +1,7 @@
-version: '2'
+version: '3'
 services:
   main:
     build: .
-    volumes:
-         - ./test-results:/home/node/invoice/test-results
     environment:
-      MOCHA_FILE: test-results/unit-tests.xml
-    command: 'npm run dev'
+      MOCHA_FILE: test-results.xml
+    command: 'npm test -- --reporter mocha-junit-reporter'

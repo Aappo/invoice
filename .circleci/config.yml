@@ -1,22 +1,25 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/node:8
     working_directory: ~/build
 
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Run tests
           command: |
-            docker-compose -f docker-compose.unit.yml run main npm test -- --reporter mocha-junit-reporter
+            docker-compose -f docker-compose.unit.yml up
+            docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./test-results.xml
             echo -------------
-            ls ./test-results
+            ls .
       - store_artifacts:
-          path: ./test-results/unit-tests.xml
+          path: unit-tests.xml
           prefix: tests
       - store_test_results:
-          path: ./test-results/unit-tests.xml
+          path: unit-tests.xml
 
 #      - run:
 #          name: Deployment script
