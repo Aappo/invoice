@@ -2,6 +2,4 @@ version: '3'
 services:
   main:
     image: opuscapita/invoice:dev
-    volumes:
-        - .:/home/node/invoice
     command: 'npm run dev'
