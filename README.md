@@ -1,5 +1,5 @@
 [![CircleCI Status](https://circleci.com/gh/OpusCapita/invoice/tree/develop.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/OpusCapita/i18n)
-[![Coverage Status](https://coveralls.io/repos/github/OpusCapita/invoice/badge.svg?branch=develop)](https://coveralls.io/github/OpusCapita/invoice?branch=feature%2Fci-adjustment)
+[![Coverage Status](https://coveralls.io/repos/github/OpusCapita/invoice/badge.svg?branch=develop)](https://coveralls.io/github/OpusCapita/invoice?branch=develop)
 
 # Invoice service
 
