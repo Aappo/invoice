@@ -16,10 +16,10 @@ jobs:
             echo -------------
             ls .
       - store_artifacts:
-          path: unit-tests.xml
+          path: test-results.xml
           prefix: tests
       - store_test_results:
-          path: unit-tests.xml
+          path: test-results.xml
 
 #      - run:
 #          name: Deployment script
