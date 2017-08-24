@@ -12,14 +12,15 @@ jobs:
           name: Run tests
           command: |
             docker-compose -f docker-compose.unit.yml up
-            docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./test-results.xml
+            mkdir junit
+            docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./junit/test-results.xml
             echo -------------
             ls .
       - store_artifacts:
-          path: test-results.xml
+          path: ./junit/test-results.xml
           prefix: tests
       - store_test_results:
-          path: test-results.xml
+          path: ./junit
 
 #      - run:
 #          name: Deployment script
