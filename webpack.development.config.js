@@ -36,6 +36,10 @@ module.exports = {
     moduleExtensions: ['-loader', '*'],
     extensions: ['.js']
   },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  },
 
   module: {
     rules: [
