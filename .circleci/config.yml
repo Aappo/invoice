@@ -11,11 +11,11 @@ jobs:
       - run:
           name: Run tests with coverage and post it to coverrals.io
           command: |
-            mv .gitignore .gitignore_tem_disabled
+            mv .dockerignore .dockerignore_tmp_disabled
             docker-compose -f docker-compose.unit.yml up
             mkdir junit
             docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./junit/test-results.xml
-            mv .gitignore_tem_disabled .gitignore
+            mv .dockerignore_tmp_disabled .dockerignore
       - store_artifacts:
           path: ./junit/test-results.xml
           prefix: tests
