@@ -4,4 +4,6 @@ services:
     build: .
     environment:
       MOCHA_FILE: test-results.xml
-    command: 'npm test -- --reporter mocha-junit-reporter'
+      COVERALLS_SERVICE_NAME: CircleCI
+      COVERALLS_REPO_TOKEN: ${COVERALLS_REPO_TOKEN}
+    command: "npm run test-and-upload-coverage"

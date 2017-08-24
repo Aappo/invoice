@@ -14,8 +14,6 @@ jobs:
             docker-compose -f docker-compose.unit.yml up
             mkdir junit
             docker cp $(docker ps -l -q):/home/node/invoice/test-results.xml ./junit/test-results.xml
-            echo -------------
-            ls .
       - store_artifacts:
           path: ./junit/test-results.xml
           prefix: tests
