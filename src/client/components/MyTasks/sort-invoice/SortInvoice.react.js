@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
-
+import Select from 'react-select';
 import './SortInvoice.less';
+import 'react-select/dist/react-select.css';
 
-const Select = require('react-select');
 
 function SortInvoice({ label, value, items, onChange, ...props }) {
   return (

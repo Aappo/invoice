@@ -1,5 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { withRouter, routerShape } from 'react-router';
+import UiHelpers from '../helpers/UIHelpers.react';
 
 import List from '../select-list/List';
 import TaskItem from './TaskItem.react';
@@ -34,11 +35,7 @@ class MyTasksList extends PureComponent {
     let items = this.props.list;
 
     if (this.props.sortBy) {
-      items = items.sort(
-        (first, second) =>
-          first.get(this.props.sortBy).localeCompare(
-            second.get(this.props.sortBy)),
-      );
+      items = items.slice(0).sort(UiHelpers.getInvoiceComparator(this.props.sortBy));
     }
 
     items = items.map(invoice => (
