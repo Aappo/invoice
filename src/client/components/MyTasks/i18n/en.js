@@ -45,7 +45,8 @@ let EmptyLayout = {
 let Details = {
   header: {
     image: 'Invoice image',
-    details: 'Invoice details'
+    details: 'Invoice details',
+    posting: 'Invoice posting'
   },
   supplier: {
     title: 'Supplier',

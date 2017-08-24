@@ -19,6 +19,7 @@
     "@opuscapita/fsm-core": "0.0.1-beta.5",
     "@opuscapita/fsm-task-manager": "0.0.1-beta.4",
     "@opuscapita/react-dates": "0.2.6",
+    "@opuscapita/react-loaders": "^0.1.8",
     "async": "^2.3.0",
     "bluebird": "3.0.5",
     "content-range": "1.1.0",

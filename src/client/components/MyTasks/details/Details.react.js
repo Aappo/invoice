@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import InvoiceAttachment from './InvoiceAttachment';
 import InvoiceDataDashboard from './InvoiceDataDashboard';
+import InvoicePosting from './InvoicePosting/InvoicePosting.react';
 import './Details.less';
 
 
@@ -31,6 +32,8 @@ class Details extends React.Component {
             <InvoiceDataDashboard invoice={invoice}/>
           </div>
         );
+      case 3:
+        return <InvoicePosting />
       default:
         return null;
     }
@@ -63,6 +66,15 @@ class Details extends React.Component {
                 }}
               >
                 {this.context.i18n.getMessage('Details.header.details')}
+              </a>
+            </li>
+            <li key={3} className={this.state.selectedTab === 3 ? 'doing' : ''}>
+              <a id={3} href="" onClick={(e) => {
+                  e.preventDefault();
+                  this.selectTab(3);
+                }}
+              >
+                {this.context.i18n.getMessage('Details.header.posting')}
               </a>
             </li>
           </ul>
