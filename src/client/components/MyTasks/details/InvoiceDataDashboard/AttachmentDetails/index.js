@@ -7,7 +7,7 @@ const AttachmentDetails = ({invoice}) => (
   <InvoiceDetailsDataHandler
     invoice={invoice}
     fetchData={(invoice) => fetchInvoiceAttachmentsInfo(invoice.id)}
-    renderView={({invoice, fetchResult}) => <AttachmentDetailsView attachments={fetchResult}/>}
+    renderView={({invoice, fetchResult}) => <AttachmentDetailsView attachments={fetchResult} invoice={invoice}/>}
   />
 );
 
