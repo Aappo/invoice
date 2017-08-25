@@ -1,0 +1,9 @@
+version: '3'
+services:
+  main:
+    build: .
+    environment:
+      MOCHA_FILE: test-results.xml
+      COVERALLS_SERVICE_NAME: CircleCI
+      COVERALLS_REPO_TOKEN: ${COVERALLS_REPO_TOKEN}
+    command: "npm run test-and-upload-coverage"

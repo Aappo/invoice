@@ -12,9 +12,6 @@
     "url": "https://github.com/OpusCapita/invoice/issues"
   },
   "homepage": "https://github.com/OpusCapita/invoice",
-  "nyc": {
-    "exclude": []
-  },
   "dependencies": {
     "@opuscapita/fsm-core": "0.0.1-beta.5",
     "@opuscapita/fsm-task-manager": "0.0.1-beta.4",
@@ -43,6 +40,8 @@
     "command-line-args": "^4.0.1",
     "mocha": "^3.2.0",
     "mocha-junit-reporter": "^1.12.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "coveralls": "^2.13.1",
     "nodemon": "^1.11.0",
     "nyc": "^10.1.2",
     "rimraf": "^2.6.0",
@@ -67,11 +66,33 @@
     "build-client": "${NODE_PATH}/.bin/webpack --config ./webpack.production.config.js --profile --colors --bail",
     "dev": "npm run setup-consul ; ${NODE_PATH}/.bin/nodemon --watch src/server src/server/index.js",
     "test": "npm run clean ; ${NODE_PATH}/.bin/nyc ${NODE_PATH}/.bin/mocha --require config/mocha-setup.js --recursive '**/*.spec.js'",
+    "upload-coverage": "cat ./coverage/lcov.info | ${NODE_PATH}/coveralls/bin/coveralls.js",
+    "test-and-upload-coverage": "npm test -- --reporter mocha-junit-reporter && npm run upload-coverage",
     "clean": "${NODE_PATH}/.bin/rimraf .nyc_output coverage test-results.xml",
     "setup-consul": "sh setup-consul.sh",
     "rest-doc": "mkdir -p wiki/rest-doc ; ${NODE_PATH}/.bin/raml2md -o file-per-resource -p wiki/rest-doc --output-ext=.endpoint.md rest-doc/main.raml",
     "domain-doc": "mkdir -p wiki/domain-doc ; ${NODE_PATH}/.bin/sq2md -o file-per-src -p wiki/domain-doc --init=init --field-bl=createdAt,updatedAt --output-ext=.model.md src/server/db/models",
     "api-doc": "mkdir -p wiki/api-doc ; ${NODE_PATH}/.bin/jsdoc2md -f $(find src/server) > wiki/api-doc/Home.md",
     "lint": "eslint src"
-  }
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false,
+    "exclude": [
+      "**/*.spec.js"
+    ],
+    "check-coverage": true,
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "require": [
+      "./config/mocha-setup.js"
+    ],
+    "lines": 80,
+    "statements": 80,
+    "functions": 80,
+    "branches": 80
+   }
 }
