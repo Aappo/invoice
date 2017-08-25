@@ -11,6 +11,14 @@ TaskItem.status = {
   approved: 'Approved'
 };
 
+let MyTaskList = {};
+MyTaskList.label = {
+  sortBy: 'Sort by',
+  dueDate: 'Due date',
+  supplier: 'Supplier',
+  grossAmount: 'Gross amount'
+};
+
 let Action = {
   event: {
     inspect: 'Inspect',
@@ -70,6 +78,7 @@ let Details = {
 export default {
   Details: Details,
   TaskItem: TaskItem,
+  MyTaskList: MyTaskList,
   Action: Action,
   EmptyLayout: EmptyLayout
 };

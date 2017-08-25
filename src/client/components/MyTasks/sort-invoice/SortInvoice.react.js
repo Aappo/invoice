@@ -6,7 +6,7 @@ import './SortInvoice.less';
 function SortInvoice({ label, value, items, onChange, ...props }) {
   return (
     <div className="oc-invoices-sort-invoice" {...props}>
-      <span className="oc-invoices-sort-invoice-label">Sort by</span>
+      <span className="oc-invoices-sort-invoice-label">{label}</span>
       <div className="oc-invoices-sort-invoice-select">
         <Select
           value={value}
