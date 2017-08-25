@@ -29,12 +29,6 @@
       ],
       "actions": [
         {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        },
-        {
           "name": "updateProcessedBy",
           "arguments": {
             "processedByFieldName": "inspectedBy"
@@ -59,19 +53,6 @@
     },
     {
       "from": "inspectionRequired",
-      "event": "postComment",
-      "to": "inspectionRequired",
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        }
-      ]
-    },
-    {
-      "from": "inspectionRequired",
       "event": "sendToClarification",
       "to": "inspClrRequired",
       "guards": [
@@ -90,14 +71,6 @@
             "field": "grossAmount"
           }
         }
-      ],
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        }
       ]
     },
     {
@@ -111,27 +84,6 @@
             "restrictedRoles": [
               "invoice-inspector"
             ]
-          }
-        }
-      ],
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        }
-      ]
-    },
-    {
-      "from": "inspClrRequired",
-      "event": "postComment",
-      "to": "inspClrRequired",
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
           }
         }
       ]
@@ -151,12 +103,6 @@
         }
       ],
       "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        },
         {
           "name": "updateProcessedBy",
           "arguments": {
@@ -181,29 +127,10 @@
       ],
       "actions": [
         {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        },
-        {
           "name": "updateProcessedBy",
           "arguments": {
             "processedByFieldName": "approvedBy",
             "userId": null
-          }
-        }
-      ]
-    },
-    {
-      "from": "approved",
-      "event": "postComment",
-      "to": "approved",
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
           }
         }
       ]
@@ -231,29 +158,10 @@
       ],
       "actions": [
         {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        },
-        {
           "name": "updateProcessedBy",
           "arguments": {
             "processedByFieldName": "inspectedBy",
             "userId": null
-          }
-        }
-      ]
-    },
-    {
-      "from": "approvalRequired",
-      "event": "postComment",
-      "to": "approvalRequired",
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
           }
         }
       ]
@@ -271,14 +179,6 @@
             ]
           }
         }
-      ],
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        }
       ]
     },
     {
@@ -292,27 +192,6 @@
             "restrictedRoles": [
               "invoice-approver"
             ]
-          }
-        }
-      ],
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
-          }
-        }
-      ]
-    },
-    {
-      "from": "appClrRequired",
-      "event": "postComment",
-      "to": "appClrRequired",
-      "actions": [
-        {
-          "name": "updateComment",
-          "arguments": {
-            "commentFieldName": "commentary"
           }
         }
       ]

@@ -27,10 +27,10 @@ export const fetchTaskActions = (id) => {
   })
 };
 
-export const sendInvoiceEvent = (id, event, comment) => {
+export const sendInvoiceEvent = (id, event) => {
   return request.post(`/invoice/api/approval/events/${id}/${event}`).set(
     'Accept', 'application/json'
-  ).send({comment}).then((response) => {
+  ).then((response) => {
     return Promise.resolve(response.body)
   }).catch((error) => {
     throw Error(error);

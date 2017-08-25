@@ -165,8 +165,7 @@ module.exports = (app, epilogue, db) => {
         event: req.params.event,
         request: {
           userId: req.opuscapita.userData('id'),
-          roles: req.opuscapita.userData('roles'),
-          comment: req.body.comment
+          roles: req.opuscapita.userData('roles')
         }
       }).then(updatedInvoice => {
         res.send(updatedInvoice);

@@ -1,14 +1,15 @@
 import React, { PropTypes, Component } from 'react';
 import ActionTabContent from './ActionTabContent.react';
-import { sendInvoiceEvent } from '../data/fetchers';
 import './Action.less';
-import _ from 'lodash';
 
 export default class ActionsTabs extends Component {
 
   static propTypes = {
     invoice: PropTypes.object,
-    updateInvoice: PropTypes.func.isRequired
+    actions: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      handler: PropTypes.func.isRequired
+    })).isRequired
   };
 
   static contextTypes = {
@@ -19,7 +20,7 @@ export default class ActionsTabs extends Component {
     super(props);
     this.state = {
       commentary: props.invoice && props.invoice.commentary || '',
-      openTransition: 0
+      activeTab: 0
     }
   }
 
@@ -28,42 +29,32 @@ export default class ActionsTabs extends Component {
     if (invoice) {
       this.setState({
         commentary: invoice.commentary ? invoice.commentary : '',
-        openTransition: 0
+        activeTab: 0
       })
     }
   }
 
-  handleSendEvent(event) {
-    return this.props.updateInvoice(this.props.invoice.id, invoice => {
-      return sendInvoiceEvent(invoice.id, event, this.state.commentary)
-    })
-  }
-
-  handleTextAreaChange(commentary, maxSize = 2000) {
-    commentary.length <= maxSize && this.setState({ commentary: commentary });
-  }
-
-
   render() {
-    const { invoice } = this.props;
-    const transitions = invoice ? invoice.transitions : [];
+    const { actions } = this.props;
+    const currentAction = actions.length > 0 ? actions[this.state.activeTab] : undefined;
     return (
       <div id="actions">
         <div id="header">
           <ul>
-            {transitions.length > 0 && transitions.map((transition, idx) => (
-              <li key={idx} className={this.state.openTransition === idx ? 'doing' : ''}>
-                <a onClick={(e) => this.setState({ openTransition: idx })}>
-                  {this.context.i18n.getMessage(`Action.tab.${transition.event}`)}
+            {actions.length > 0 && actions.map((action, idx) => (
+              <li key={idx} className={this.state.activeTab === idx ? 'doing' : ''}>
+                <a onClick={(e) => this.setState({ activeTab: idx })}>
+                  {this.context.i18n.getMessage(`Action.tab.${action.name}`)}
                 </a>
               </li>
             ))}
           </ul>
         </div>
         <ActionTabContent
-          transition={!_.isEmpty(transitions) ? transitions[this.state.openTransition] : undefined}
-          onSendEvent={::this.handleSendEvent}
-          onTextAreaChange={::this.handleTextAreaChange}
+          readOnly={!currentAction}
+          actionName={currentAction && currentAction.name}
+          onAction={() => currentAction && currentAction.handler({ commentary: this.state.commentary })}
+          onTextAreaChange={commentary => this.setState({ commentary: commentary })}
           commentary={this.state.commentary}
         />
       </div>
