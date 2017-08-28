@@ -31,10 +31,6 @@ class MyTasksList extends PureComponent {
     }
   }
 
-  onChangeSort = (item) => {
-    this.setState({ sortBy: item.value });
-  };
-
   render() {
     let items = this.props.list;
 
@@ -50,14 +46,8 @@ class MyTasksList extends PureComponent {
       <div id="list-container" className="oc-invoices-my-tasks-list">
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
           <SortInvoice
-            label={this.context.i18n.getMessage('MyTaskList.label.sortBy')}
-            items={[
-              { value: 'dueDate', label: this.context.i18n.getMessage('MyTaskList.label.dueDate') },
-              { value: 'supplierId', label: this.context.i18n.getMessage('MyTaskList.label.supplier') },
-              { value: 'grossAmount', label: this.context.i18n.getMessage('MyTaskList.label.grossAmount') }
-            ]}
             value={this.state.sortBy}
-            onChange={::this.onChangeSort}
+            onChange={(sortBy) => this.setState({ sortBy: sortBy.value })}
           />
         </div>
         <div id="list-content" className="oc-invoices-my-tasks-list-content">

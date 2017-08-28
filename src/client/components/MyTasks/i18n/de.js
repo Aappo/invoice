@@ -72,7 +72,7 @@ let Details = {
   },
   attachments: {
     title: 'Attachments',
-    noAttachments: 'There is no files, attached to this invoice'
+    noAttachments: 'There are no files attached to the invoice'
   }
 };
 
