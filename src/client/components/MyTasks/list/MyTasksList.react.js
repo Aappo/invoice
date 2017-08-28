@@ -1,6 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { withRouter, routerShape } from 'react-router';
-
+import UiHelpers from '../helpers/UIHelpers.react';
+import SortInvoice from '../sort-invoice/SortInvoice.react';
 import List from '../select-list/List';
 import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
@@ -11,17 +12,17 @@ class MyTasksList extends PureComponent {
   static propTypes = {
     list: PropTypes.array.isRequired,
     getInvoice: PropTypes.func.isRequired,
-    sortBy: PropTypes.string,
     narrowLayout: PropTypes.bool,
     router: routerShape.isRequired,
   };
 
-  static defaultProps = {
-    sortBy: null
+  static contextTypes = {
+    i18n: PropTypes.object.isRequired
   };
 
   state = {
-    selected: 0
+    selected: 0,
+    sortBy: 'dueDate'
   };
 
   componentWillReceiveProps(nextProps) {
@@ -33,12 +34,8 @@ class MyTasksList extends PureComponent {
   render() {
     let items = this.props.list;
 
-    if (this.props.sortBy) {
-      items = items.sort(
-        (first, second) =>
-          first.get(this.props.sortBy).localeCompare(
-            second.get(this.props.sortBy)),
-      );
+    if (this.state.sortBy) {
+      items = items.slice(0).sort(UiHelpers.getInvoiceComparator(this.state.sortBy));
     }
 
     items = items.map(invoice => (
@@ -46,23 +43,31 @@ class MyTasksList extends PureComponent {
     ));
 
     return (
-      <div id="list-content" className="oc-invoices-my-tasks-list">
-        <List
-          items={items}
-          selected={this.props.narrowLayout ? [] : [this.state.selected]}
-          multiple={false}
-          onChange={(selected) => {
-            if (!this.props.narrowLayout) {
-              this.props.getInvoice(this.props.list[selected].id);
-              this.setState({ selected });
-            } else {
-              this.props.router.push(
-                `/invoice/task/${this.props.list[selected].id}`);
-            }
-          }}
-        />
+      <div id="list-container" className="oc-invoices-my-tasks-list">
+        <div id="list-header" className="oc-invoices-my-tasks-list-header">
+          <SortInvoice
+            value={this.state.sortBy}
+            onChange={(sortBy) => this.setState({ sortBy: sortBy.value })}
+          />
+        </div>
+        <div id="list-content" className="oc-invoices-my-tasks-list-content">
+          <List
+            items={items}
+            selected={this.props.narrowLayout ? [] : [this.state.selected]}
+            multiple={false}
+            onChange={(selected) => {
+              if (!this.props.narrowLayout) {
+                this.props.getInvoice(this.props.list[selected].id);
+                this.setState({ selected });
+              } else {
+                this.props.router.push(
+                  `/invoice/task/${this.props.list[selected].id}`);
+              }
+            }}
+          />
+        </div>
       </div>
-    );
+    )
   }
 }
 
