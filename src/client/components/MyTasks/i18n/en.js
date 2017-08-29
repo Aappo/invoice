@@ -36,9 +36,9 @@ let Action = {
     clarifyForInspection: 'Clarification',
     clarifyForApproval: 'Clarification',
     approve: 'Approval',
-    postComment: 'Comment Only',
-    rejectApproval: "Cancel Status",
-    rejectInspection: "Cancel Status"
+    postComment: 'Comment only',
+    rejectApproval: "Cancel status",
+    rejectInspection: "Cancel status"
   }
 };
 Action.headerLabel = 'Optional comment';

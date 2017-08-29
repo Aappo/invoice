@@ -9,8 +9,12 @@ const BlobClient = require('ocbesbn-blob-client');
  * @param db
  */
 module.exports = function(app, db) {
-  app.get('/api/invoices/:invoiceId/attachment', (req, res, next) => {
-    const tenantId = `c_${req.opuscapita.userData().customerid}`;
+
+  /**
+   * Return attachment that should be used for invoice image
+   */
+  app.get('/api/invoices/:invoiceId/attachments/image', (req, res, next) => {
+    const tenantId = `c_${req.opuscapita.userData('customerId')}`;
     const path = `/private/purchaseInvoices/${req.params.invoiceId}/`;
     const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient });
     blobClient.listFiles(tenantId, path).then((filesList) => {
@@ -32,12 +36,30 @@ module.exports = function(app, db) {
   app.get('/api/invoices/:invoiceId/attachments', (req, res, next) => {
     const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient });
     return blobClient.listFiles(
-      `c_${req.opuscapita.userData().customerid}`,
+      `c_${req.opuscapita.userData('customerId')}`,
       `/private/purchaseInvoices/${req.params.invoiceId}/`
     ).then((attachments) => {
       return res.send(attachments);
     }).catch((error) =>
       next(error)
     );
+  });
+
+  /**
+   * Return attachment with specified name
+   */
+  app.get('/api/invoices/:invoiceId/attachments/:attachmentName', (req, res, next) => {
+    const tenantId = `c_${req.opuscapita.userData('customerId')}`;
+    const blobClient = new BlobClient({ serviceClient: req.opuscapita.serviceClient });
+    const path = `/private/purchaseInvoices/${req.params.invoiceId}/${req.params.attachmentName}`;
+
+    return blobClient.readFile(tenantId, path).then(document => {
+      res.writeHead(200, {
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${req.params.attachmentName}"`,
+        'Content-Length': document.length
+      });
+      res.end(document);
+    }).catch(error => next(error));
   });
 };
