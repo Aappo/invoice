@@ -28,7 +28,7 @@ const SortInvoice = ({ value, onChange}, {i18n}) => {
 };
 
 SortInvoice.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 

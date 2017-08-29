@@ -46,11 +46,11 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     componentDidMount() {
       this.props.fetcher().then((invoices) => {
         if (invoices.length > 0) {
-          return this.loadInvoiceData(invoices[0].id).then((invoiceData) => {
-            this.setState({ taskList: invoices, invoice: invoiceData });
-          })
+          return this.loadInvoiceData(invoices[0].id).then((invoiceData) =>
+            Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }))
+          )
         } else {
-          this.setState({ taskList: invoices });
+          return Promise.resolve(this.setState({ taskList: invoices }));
         }
       })
     }
@@ -121,10 +121,22 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
       })
     }
 
+    /**
+     * Sorts task list with comparator function. Returns promise notifying if the list has been sorted.
+     *
+     * @param comparator
+     */
+    sortTaskList(comparator) {
+      return this.state.taskList ? new Promise(resolve => {
+        this.setState({ taskList: this.state.taskList.slice(0).sort(comparator) }, () => resolve(true))
+      }) : Promise.resolve(false)
+    }
+
     render() {
       return (
         <WrappedComponent
           list={this.state.taskList}
+          sortList={::this.sortTaskList}
           invoice={this.state.invoice}
           getInvoice={::this.getInvoice}
           updateInvoice={::this.updateInvoice}
