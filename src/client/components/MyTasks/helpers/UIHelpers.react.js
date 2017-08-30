@@ -39,6 +39,9 @@ class UiHelpers {
       case APPROVALACTIONKIND.ApproverClarificationRequired:
         indicator = 'inClarification';
         break;
+      case APPROVALACTIONKIND.Commented:
+        indicator = 'commented';
+        break;
       default:
         break;
     }

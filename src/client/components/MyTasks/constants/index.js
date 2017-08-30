@@ -7,6 +7,7 @@ export const APPROVALACTIONKIND = {
   InspectorClarificationRequired: 'inspClrRequired',
   ApproverClarificationRequired: 'appClrRequired',
   InspectedAndApproved: 'archived',
+  Commented: 'commented'
 };
 
 export const INVOICECATEGORY = {
