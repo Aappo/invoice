@@ -5,13 +5,8 @@ import {
   fetchInvoiceReceipt
 } from './data/fetchers';
 import _ from 'lodash';
-import { APP_VIEWS } from './constants';
+import { INVOICE_VIEWS } from '../../../common/constants';
 
-const EMPTY_VIEW_MAPPING = {
-  '/invoice/allTaskList': APP_VIEWS.EMPTY_ASSIGNED_TASKS,
-  '/invoice/taskList': APP_VIEWS.EMPTY_ASSIGNED_TASKS,
-  '/invoice/processed': APP_VIEWS.EMPTY_PROCESSED_TASKS
-};
 
 /**
  * Injects common invoice operations to wrapped component
@@ -58,8 +53,8 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     shouldComponentUpdate(nextProps, nextState) {
       if (nextState.taskList && nextState.taskList.length === 0) {
         this.context.router.push({
-          pathname: '/invoice/notFound',
-          query: { view: EMPTY_VIEW_MAPPING[this.props.location.pathname] }
+          pathname: INVOICE_VIEWS.EMPTY_VIEW,
+          query: { prevPath: this.props.location.pathname }
         });
         return false;
       }

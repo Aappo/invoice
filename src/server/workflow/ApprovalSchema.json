@@ -123,6 +123,12 @@
               "invoice-approver"
             ]
           }
+        },
+        {
+          "name": "restrictForViews",
+          "arguments": {
+            "views": ["MY_TASKS"]
+          }
         }
       ],
       "actions": [
@@ -153,6 +159,12 @@
           "arguments": {
             "amount": 200,
             "field": "grossAmount"
+          }
+        },
+        {
+          "name": "restrictForViews",
+          "arguments": {
+            "views": ["MY_TASKS"]
           }
         }
       ],

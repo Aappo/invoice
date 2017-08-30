@@ -1,70 +1,36 @@
-import React, { PropTypes, Component } from 'react';
-import { sendInvoiceEvent } from '../data/fetchers';
+import React, { PropTypes } from 'react';
+import { updateInvoiceHandler, sendInvoiceEventHandler } from '../data/updateHandlers';
 import ActionsTabs from './ActionsTabs.react';
-import request from 'superagent-bluebird-promise';
-import Promise from 'bluebird';
 
-export default class Actions extends Component {
 
-  static propTypes = {
-    invoice: PropTypes.object,
-    updateInvoice: PropTypes.func.isRequired
-  };
+/**
+ * Creates a set of actions available for specified invoice.
+ * Single action is an object of format { name: {String}, handler: {Function(payload)} }.
+ */
+const Actions = ({ invoice, updateInvoice }) => {
 
-  /**
-   * Generic invoice update with payload.
-   *
-   * @param invoiceId
-   * @param payload
-   * @returns {Promise.<TResult>}
-   */
-  handleUpdateInvoice(invoiceId, payload) {
-    return request.put(`/invoice/api/invoices/${invoiceId}`).set(
-      'Accept', 'application/json'
-    ).send(payload).then((response) => Promise.resolve(response.body)
-    ).catch((error) => {
-      throw Error(error);
-    });
-  }
+  const actions = invoice.transitions.map(transition => {
+    return {
+      name: transition.event,
+      handler: payload => updateInvoice(invoice.id, invoice => {
+        return sendInvoiceEventHandler(invoice.id, transition.event).then(invoice => updateInvoiceHandler(invoice.id, payload))
+      })
+    }
+  });
 
-  handleSendEvent(invoiceId, payload, event) {
-    return this.props.updateInvoice(invoiceId, invoice => {
-      return sendInvoiceEvent(invoice.id, event).then(invoice =>
-        invoice.commentary !== payload.commentary ? this.handleUpdateInvoice(invoice.id, payload) : Promise.resolve(invoice)
-      )
-    })
-  }
+  actions.push({
+    name: 'postComment',
+    handler: payload => updateInvoice(invoice.id, invoice => updateInvoiceHandler(invoice.id, payload))
+  });
 
-  handlePostComment(invoiceId, payload) {
-    return this.props.updateInvoice(invoiceId, invoice => {
-      return invoice.commentary !== payload.commentary ? this.handleUpdateInvoice(invoice.id, payload) : Promise.resolve(invoice)
-    })
-  }
+  return (
+    <ActionsTabs invoice={invoice} actions={actions}/>
+  );
+};
 
-  /**
-   * Creates a set of actions available for specified invoice.
-   * Single action is an object of format { name: {String}, handler: {Function(payload)} }.
-   *
-   * @param invoice
-   * @returns {Array|*}
-   */
-  getActionsForInvoice(invoice) {
-    const actions = invoice.transitions.map(transition => {
-      return {
-        name: transition.event,
-        handler: payload => this.handleSendEvent(invoice.id, payload, transition.event)
-      }
-    });
-    actions.push({ name: 'postComment', handler: payload => this.handlePostComment(invoice.id, payload) });
-    return actions;
-  }
+Actions.propTypes = {
+  invoice: PropTypes.object.isRequired,
+  updateInvoice: PropTypes.func.isRequired
+};
 
-  render() {
-    return (
-      <ActionsTabs
-        invoice={this.props.invoice}
-        actions={this.props.invoice ? this.getActionsForInvoice(this.props.invoice) : []}
-      />
-    );
-  }
-}
+export default Actions;

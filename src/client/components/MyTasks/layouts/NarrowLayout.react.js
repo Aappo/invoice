@@ -7,7 +7,6 @@ import './NarrowLayout.less';
 class NarrowLayout extends React.Component {
   static propTypes = {
     list: PropTypes.array,
-    invoice: PropTypes.object,
     getInvoice: PropTypes.func.isRequired,
     updateInvoice: PropTypes.func.isRequired
   };

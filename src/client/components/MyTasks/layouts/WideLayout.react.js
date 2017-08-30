@@ -16,10 +16,10 @@ const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
           getInvoice={getInvoice}
         />
       </div>
-      <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
+      {invoice ? <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
         <Actions invoice={invoice} updateInvoice={updateInvoice}/>
         <Details invoice={invoice}/>
-      </div>
+      </div> : null}
     </div>
   ) : <LoadingLayout />
 };

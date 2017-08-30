@@ -1,11 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import ActionTabContent from './ActionTabContent.react';
 import './Action.less';
+import { COMMENTARY_MAX_SIZE } from '../constants';
 
 export default class ActionsTabs extends Component {
 
   static propTypes = {
-    invoice: PropTypes.object,
+    invoice: PropTypes.object.isRequired,
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string.isRequired,
       handler: PropTypes.func.isRequired
@@ -19,24 +20,29 @@ export default class ActionsTabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentary: props.invoice && props.invoice.commentary || '',
+      commentary: props.invoice.commentary || '',
       activeTab: 0
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { invoice } = nextProps;
-    if (invoice) {
+    if (nextProps.invoice.id !== this.props.invoice.id) {
       this.setState({
-        commentary: invoice.commentary ? invoice.commentary : '',
+        commentary: nextProps.invoice.commentary || '',
         activeTab: 0
       })
     }
   }
 
+  handleTextAreaChange(commentary) {
+    if (commentary.length <= COMMENTARY_MAX_SIZE) {
+      this.setState({ commentary });
+    }
+  }
+
   render() {
     const { actions } = this.props;
-    const currentAction = actions.length > 0 ? actions[this.state.activeTab] : undefined;
+    const currentAction = actions[this.state.activeTab];
     return (
       <div id="actions">
         <div id="header">
@@ -51,10 +57,9 @@ export default class ActionsTabs extends Component {
           </ul>
         </div>
         <ActionTabContent
-          readOnly={!currentAction}
-          actionName={currentAction && currentAction.name}
-          onAction={() => currentAction && currentAction.handler({ commentary: this.state.commentary })}
-          onTextAreaChange={commentary => this.setState({ commentary: commentary })}
+          actionName={currentAction.name}
+          onAction={() => currentAction.handler({ commentary: this.state.commentary })}
+          onTextAreaChange={::this.handleTextAreaChange}
           commentary={this.state.commentary}
         />
       </div>
