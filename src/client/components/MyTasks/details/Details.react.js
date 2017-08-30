@@ -7,7 +7,7 @@ import './Details.less';
 class Details extends React.Component {
 
   static propTypes = {
-    invoice: PropTypes.object,
+    invoice: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -67,7 +67,7 @@ class Details extends React.Component {
             </li>
           </ul>
         </div>
-          { this.props.invoice && this.getContent(this.props.invoice) }
+          {this.getContent(this.props.invoice)}
       </div>
     );
   }

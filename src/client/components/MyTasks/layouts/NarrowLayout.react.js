@@ -4,6 +4,7 @@ import MyTasksList from '../list/MyTasksList.react';
 
 import './NarrowLayout.less';
 
+
 const NarrowLayout = ({ list, getInvoice }) => {
   return list ? (
     <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">

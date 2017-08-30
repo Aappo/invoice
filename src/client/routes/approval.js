@@ -16,20 +16,13 @@ const AllTaskList = (props) => (
 );
 
 /**
- * View displaying invoices depending on users roles and invoice status.
+ * View displaying invoices which have available transitions for current user.
  */
-const TaskList = (props, { userData }) => {
-  const availableStatuses = {
-    'invoice-approver': ['approvalRequired', 'appClrRequired'],
-    'invoice-inspector': ['inspectionRequired', 'inspClrRequired']
-  };
-  const filterForRole = invoice => userData.roles.some(role => {
-    return availableStatuses[role] && availableStatuses[role].indexOf(invoice.status) !== -1
-  });
+const TaskList = (props) => {
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).filter(filterForRole) }
-      filter={ invoice => invoice.transitions.length > 0 && filterForRole(invoice) }
+      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}) }
+      filter={ invoice => invoice.transitions.length > 0 }
     />
   );
 };
@@ -44,7 +37,10 @@ TaskList.contextTypes = {
 const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
-    <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}).filter(filter) } filter={filter} />
+    <TaskListLayoutHandler
+      fetcher={ () => fetchApprovalTasks({searchParams: {processedByMe: true}}) }
+      filter={filter}
+    />
   )
 };
 
