@@ -6,6 +6,6 @@ const INVOICE_VIEWS = {
 };
 
 module.exports = {
-  INVOICE_VIEWS
+  INVOICE_VIEWS: INVOICE_VIEWS
 };
 
