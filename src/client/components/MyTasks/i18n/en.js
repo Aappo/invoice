@@ -3,7 +3,7 @@ TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
 TaskItem.status = {
-  inspectionRequired: 'Inspection required',
+  inspectionRequired: 'Review required',
   approvalRequired: 'Approval required',
   inspClrRequired: 'Clarification required',
   appClrRequired: 'Clarification required',
@@ -21,17 +21,17 @@ MyTaskList.label = {
 
 let Action = {
   event: {
-    inspect: 'Inspect',
+    inspect: 'Review',
     sendToClarification: 'Set to clarification',
     clarifyForInspection: 'Cancel clarification',
     clarifyForApproval: 'Cancel clarification',
     approve: 'Approve',
     postComment: 'Add',
     rejectApproval: "Cancel approval",
-    rejectInspection: "Cancel inspection"
+    rejectInspection: "Cancel review"
   },
   tab: {
-    inspect: 'Inspection',
+    inspect: 'Review',
     sendToClarification: 'Clarification',
     clarifyForInspection: 'Clarification',
     clarifyForApproval: 'Clarification',
@@ -45,7 +45,7 @@ Action.headerLabel = 'Optional comment';
 
 let EmptyLayout = {
   message: {
-    assignedTasks: "At the moment you don't have any invoice to inspect, approve or in clarification state.",
+    assignedTasks: "At the moment you don't have any invoice to review, approve or in clarification state.",
     processedTasks: "At the moment you don't have any processed invoices."
   }
 };
