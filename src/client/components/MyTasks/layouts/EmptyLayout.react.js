@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { APP_VIEWS } from '../constants';
+import { INVOICE_VIEWS } from '../../../../common/constants';
 import messages from '../i18n';
 
 // TODO: It better be pure functional component. Find another way to reload message bundles.
@@ -23,14 +23,16 @@ export default class EmptyLayout extends Component {
     }
   }
 
-  getMessageForView(view) {
-    switch(view) {
-      case APP_VIEWS.EMPTY_ASSIGNED_TASKS:
+  getMessageForView(path) {
+    switch(path) {
+      case INVOICE_VIEWS.ALL_TASKS:
         return this.context.i18n.getMessage('EmptyLayout.message.assignedTasks');
-      case APP_VIEWS.EMPTY_PROCESSED_TASKS:
+      case INVOICE_VIEWS.MY_TASKS:
+        return this.context.i18n.getMessage('EmptyLayout.message.assignedTasks');
+      case INVOICE_VIEWS.PROCESSED_TASKS:
         return this.context.i18n.getMessage('EmptyLayout.message.processedTasks');
       default:
-        throw new Error('Requested view is not found.');
+        throw new Error('Could not find a view the request originated from');
     }
   };
 
@@ -39,7 +41,7 @@ export default class EmptyLayout extends Component {
       <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
         <div id="oc-invoices-my-tasks-empty" className="oc-invoices-my-tasks-wide-empty">
           <h4 className="center-block">
-            {this.getMessageForView(this.props.location.query.view)}
+            {this.getMessageForView(this.props.location.query.prevPath)}
           </h4>
         </div>
       </div>

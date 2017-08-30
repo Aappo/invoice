@@ -39,25 +39,25 @@ describe("Invoice approval flow", () => {
 
       it("inspectionRequired", () => {
         const invoice = { status: 'inspectionRequired' };
-        const expected = ['postComment'];
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspClrRequired", () => {
         const invoice = { status: 'inspClrRequired' };
-        const expected = ['postComment'];
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired' };
-        const expected = ['approve', 'sendToClarification', 'postComment'];
+        const expected = ['approve', 'sendToClarification'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("appClrRequired", () => {
         const invoice = { status: 'appClrRequired' };
-        const expected = ['clarifyForApproval', 'postComment'];
+        const expected = ['clarifyForApproval'];
         return assertAvailableTransitions(invoice, request, expected);
       });
     });
@@ -117,37 +117,37 @@ describe("Invoice approval flow", () => {
 
       it("inspectionRequired", () => {
         const invoice = { status: 'inspectionRequired', grossAmount: 250 };
-        const expected = ['inspect', 'sendToClarification', 'postComment'];
+        const expected = ['inspect', 'sendToClarification'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspectionRequired is prohibited because low grossAmount", () => {
         const invoice = { status: 'inspectionRequired', grossAmount: 100 };
-        const expected = ['automatic-inspect', 'postComment'];
+        const expected = ['automatic-inspect'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("inspClrRequired", () => {
         const invoice = { status: 'inspClrRequired' };
-        const expected = ['clarifyForInspection', 'postComment'];
+        const expected = ['clarifyForInspection'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired", () => {
         const invoice = { status: 'approvalRequired', grossAmount: 250 };
-        const expected = ['postComment', 'rejectInspection'];
+        const expected = ['rejectInspection'];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("approvalRequired with prohibited cancel inspection because of low gross amount", () => {
         const invoice = { status: 'approvalRequired', grossAmount: 150 };
-        const expected = ['postComment'];
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
 
       it("appClrRequired", () => {
         const invoice = { status: 'appClrRequired' };
-        const expected = ['postComment'];
+        const expected = [];
         return assertAvailableTransitions(invoice, request, expected);
       });
     });

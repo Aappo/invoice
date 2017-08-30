@@ -87,8 +87,19 @@ module.exports = (app, epilogue, db) => {
             if (req.query.assignedToMe === 'true') {
               return Promise.filter(foundTasks, (task) => getManualInvoiceTransitions({
                 invoice: task.get({ plain: true }),
-                request: { roles: req.opuscapita.userData('roles') }
+                request: {
+                  roles: req.opuscapita.userData('roles'),
+                  referer: req.headers.referer
+                }
               }).then((transitions) => transitions.length > 0));
+            }
+            return Promise.resolve(foundTasks);
+          }).then((foundTasks) => {
+            if (req.query.processedByMe === 'true') {
+              return Promise.filter(foundTasks, (task) =>
+                task.inspectedBy === req.opuscapita.userData('id') ||
+                task.approvedBy === req.opuscapita.userData('id')
+              )
             }
             return Promise.resolve(foundTasks);
           }).then((foundTasks) => {
@@ -120,7 +131,10 @@ module.exports = (app, epilogue, db) => {
       if (invoice) {
         getManualInvoiceTransitions({
           invoice: invoice.get({ plain: true }),
-          request: { roles: req.opuscapita.userData('roles') }
+          request: {
+            roles: req.opuscapita.userData('roles'),
+            referer: req.headers.referer
+          }
         }).then(transitions => {
           res.send(transitions);
         }).catch(err => console.log(err))
@@ -149,7 +163,10 @@ module.exports = (app, epilogue, db) => {
             object: task.get({
               plain: true
             }),
-            request: { roles: req.opuscapita.userData('roles') }
+            request: {
+              roles: req.opuscapita.userData('roles'),
+              referer: req.headers.referer
+            }
           }).then(transitions => Promise.resolve(transitions.transitions));
 
           return accum;
@@ -166,7 +183,7 @@ module.exports = (app, epilogue, db) => {
         request: {
           userId: req.opuscapita.userData('id'),
           roles: req.opuscapita.userData('roles'),
-          comment: req.body.comment
+          referer: req.headers.referer
         }
       }).then(updatedInvoice => {
         res.send(updatedInvoice);

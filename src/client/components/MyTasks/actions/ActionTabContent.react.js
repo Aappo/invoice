@@ -4,9 +4,9 @@ import {
   FormControl,
   Button
 } from 'react-bootstrap';
-const COMMENTARY_MAX_SIZE = 2000;
+import { COMMENTARY_MAX_SIZE } from '../constants';
 
-const ActionTabContent = ({ transition, onSendEvent, onTextAreaChange, commentary }, { i18n }) => (
+const ActionTabContent = ({ actionName, onAction, onTextAreaChange, commentary }, { i18n }) => (
   <div id="action">
     <div id="oc-invoices-invoice-enquiry">
       <div className="oc-invoices-invoice-card">
@@ -16,30 +16,29 @@ const ActionTabContent = ({ transition, onSendEvent, onTextAreaChange, commentar
             <FormControl
               componentClass="textarea"
               placeholder="Comment"
-              readOnly={!transition}
               rows="1"
               value={commentary}
-              onChange={(e) => onTextAreaChange(e.target.value, COMMENTARY_MAX_SIZE)}
+              onChange={(e) => onTextAreaChange(e.target.value)}
             />
           </FormGroup>
         </div>
-        {transition && <div className="center-block">
+        <div className="center-block">
           <Button
             bsStyle="primary"
-            key={`${transition.event}`}
-            onClick={() => onSendEvent(transition.event)}
+            key={`${actionName}`}
+            onClick={onAction}
           >
-            {i18n.getMessage(`Action.event.${transition.event}`)}
+            {i18n.getMessage(`Action.event.${actionName}`)}
           </Button>
-        </div>}
+        </div>
       </div>
     </div>
   </div>
 );
 
 ActionTabContent.propTypes = {
-  transition: PropTypes.object,
-  onSendEvent: PropTypes.func.isRequired,
+  actionName: PropTypes.string.isRequired,
+  onAction: PropTypes.func.isRequired,
   onTextAreaChange: PropTypes.func.isRequired,
   commentary: PropTypes.string.isRequired
 };

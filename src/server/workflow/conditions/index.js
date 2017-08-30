@@ -1,5 +1,6 @@
 module.exports = {
   isLessThan: require('./isLessThan'),
   userHasRoles: require('./userHasRoles'),
-  isGreaterOrEqual: require('./isGreaterOrEqual')
+  isGreaterOrEqual: require('./isGreaterOrEqual'),
+  restrictForViews: require('./restrictForViews')
 };
