@@ -5,12 +5,14 @@ import SortInvoice from '../sort-invoice/SortInvoice.react';
 import List from '../select-list/List';
 import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
+import Promise from 'bluebird'
 
 
 class MyTasksList extends PureComponent {
 
   static propTypes = {
     list: PropTypes.array.isRequired,
+    onSort: PropTypes.func.isRequired,
     getInvoice: PropTypes.func.isRequired,
     narrowLayout: PropTypes.bool,
     router: routerShape.isRequired,
@@ -22,37 +24,43 @@ class MyTasksList extends PureComponent {
 
   state = {
     selected: 0,
-    sortBy: 'dueDate'
+    sortedBy: null
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.list.length !== nextProps.list.length && nextProps.list.length !== 0) {
-      this.setState({ selected: 0 }, () => this.props.getInvoice(nextProps.list[0].id));
+  componentDidMount() {
+    this.handleSortList('dueDate');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.list.length !== 0 &&
+      (prevProps.list.length !== this.props.list.length || prevState.sortedBy !== this.state.sortedBy)
+    ) {
+      this.setState({ selected: 0 }, () => this.props.getInvoice(this.props.list[0].id));
+    }
+  }
+
+  handleSortList(field) {
+    if (this.state.sortedBy !== field) {
+      return this.props.onSort(UiHelpers.getInvoiceComparator(field)).then(sorted =>
+        Promise.resolve(this.setState({ sortedBy: field }))
+      )
+    } else {
+      return Promise.resolve();
     }
   }
 
   render() {
-    let items = this.props.list;
-
-    if (this.state.sortBy) {
-      items = items.slice(0).sort(UiHelpers.getInvoiceComparator(this.state.sortBy));
-    }
-
-    items = items.map(invoice => (
-      <TaskItem invoice={invoice} />
-    ));
-
     return (
       <div id="list-container" className="oc-invoices-my-tasks-list">
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
           <SortInvoice
-            value={this.state.sortBy}
-            onChange={(sortBy) => this.setState({ sortBy: sortBy.value })}
+            value={this.state.sortedBy}
+            onChange={({ value }) => this.handleSortList(value)}
           />
         </div>
         <div id="list-content" className="oc-invoices-my-tasks-list-content">
           <List
-            items={items}
+            items={this.props.list.map(invoice => <TaskItem invoice={invoice} />)}
             selected={this.props.narrowLayout ? [] : [this.state.selected]}
             multiple={false}
             onChange={(selected) => {

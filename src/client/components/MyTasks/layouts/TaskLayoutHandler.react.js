@@ -27,7 +27,9 @@ export default class TaskLayoutHandler extends React.Component {
 
   render() {
     return React.createElement(
-      withRouter(withDataHandler(InvoiceLayout, { ...this.props })), {}, null
+      withRouter(withDataHandler(InvoiceLayout, { fetcher: this.props.fetcher, filter: this.props.filter })),
+      { ...this.props },
+      null
     );
   }
 }

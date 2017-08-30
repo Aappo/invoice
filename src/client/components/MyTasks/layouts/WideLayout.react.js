@@ -6,12 +6,13 @@ import LoadingLayout from './LoadingLayout.react';
 
 import './WideLayout.less';
 
-const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
+const WideLayout = ({ list, onSort, invoice, getInvoice, updateInvoice }) => {
   return list ? (
     <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
       <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">
         <MyTasksList
           list={list}
+          onSort={onSort}
           getInvoice={getInvoice}
         />
       </div>
@@ -25,6 +26,7 @@ const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
 
 WideLayout.propTypes = {
   list: PropTypes.array,
+  onSort: PropTypes.func.isRequired,
   invoice: PropTypes.object,
   getInvoice: PropTypes.func.isRequired,
   updateInvoice: PropTypes.func.isRequired

@@ -4,13 +4,13 @@ import MyTasksList from '../list/MyTasksList.react';
 
 import './NarrowLayout.less';
 
-
-const NarrowLayout = ({ list, getInvoice }) => {
+const NarrowLayout = ({ list, onSort, getInvoice }) => {
   return list ? (
     <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-narrow">
       <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-narrow-list">
         <MyTasksList
           list={list}
+          onSort={onSort}
           getInvoice={getInvoice}
           narrowLayout={true}
         />
@@ -21,6 +21,7 @@ const NarrowLayout = ({ list, getInvoice }) => {
 
 NarrowLayout.propTypes = {
   list: PropTypes.array,
+  onSort: PropTypes.func.isRequired,
   getInvoice: PropTypes.func.isRequired
 };
 
