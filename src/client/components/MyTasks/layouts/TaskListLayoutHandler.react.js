@@ -66,7 +66,9 @@ export default class TaskListLayoutHandler extends Component {
 
   render() {
     return React.createElement(
-      withRouter(withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, { ...this.props })), { ...this.props }, null
+      withRouter(withDataHandler(this.state.useNarrow ? NarrowLayout : WideLayout, { fetcher: this.props.fetcher, filter: this.props.filter })),
+      { ...this.props },
+      null
     );
   }
 }

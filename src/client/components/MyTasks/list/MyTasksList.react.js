@@ -12,7 +12,7 @@ class MyTasksList extends PureComponent {
 
   static propTypes = {
     list: PropTypes.array.isRequired,
-    sortList: PropTypes.func.isRequired,
+    onSort: PropTypes.func.isRequired,
     getInvoice: PropTypes.func.isRequired,
     narrowLayout: PropTypes.bool,
     router: routerShape.isRequired,
@@ -41,7 +41,7 @@ class MyTasksList extends PureComponent {
 
   handleSortList(field) {
     if (this.state.sortedBy !== field) {
-      return this.props.sortList(UiHelpers.getInvoiceComparator(field)).then(sorted =>
+      return this.props.onSort(UiHelpers.getInvoiceComparator(field)).then(sorted =>
         Promise.resolve(this.setState({ sortedBy: field }))
       )
     } else {

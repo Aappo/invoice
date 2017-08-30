@@ -136,7 +136,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
       return (
         <WrappedComponent
           list={this.state.taskList}
-          sortList={::this.sortTaskList}
+          onSort={::this.sortTaskList}
           invoice={this.state.invoice}
           getInvoice={::this.getInvoice}
           updateInvoice={::this.updateInvoice}
