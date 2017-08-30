@@ -58,17 +58,17 @@ let Details = {
   },
   supplier: {
     title: 'Supplier',
-    supplierName: 'Supplier Name',
-    supplierId: 'Supplier Code',
-    bankAccountNumber: 'Bank Account Number',
-    noBankAccountData: 'No Bank Account Information'
+    supplierName: 'Supplier name',
+    supplierId: 'Supplier code',
+    bankAccountNumber: 'Bank account number',
+    noBankAccountData: 'No bank account information'
   },
   totals: {
     title: 'Totals',
-    currency: 'Currency',
-    vatAmount: 'VAT total',
-    netAmount: 'Invoice net',
-    grossAmount: 'Invoice total'
+    currency: 'Currency code',
+    vatAmount: 'VAT amount',
+    netAmount: 'Net amount',
+    grossAmount: 'Gross amount'
   },
   attachments: {
     title: 'Attachments',
