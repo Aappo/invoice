@@ -11,6 +11,14 @@ TaskItem.status = {
   approved: 'Genehmigt'
 };
 
+let MyTaskList = {};
+MyTaskList.label = {
+  sortBy: 'Sort by',
+  dueDate: 'Due date',
+  supplier: 'Supplier',
+  grossAmount: 'Gross amount'
+};
+
 let Action = {
   event: {
     inspect: 'Prüfen',
@@ -64,13 +72,14 @@ let Details = {
   },
   attachments: {
     title: 'Attachments',
-    noAttachments: 'There is no files, attached to this invoice'
+    noAttachments: 'There are no files attached to the invoice'
   }
 };
 
 export default {
   Details: Details,
   TaskItem: TaskItem,
+  MyTaskList: MyTaskList,
   Action: Action,
   EmptyLayout: EmptyLayout
 };

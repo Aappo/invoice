@@ -6,7 +6,7 @@ import { Collapsible, Dashboard, DashboardWidget } from '@opuscapita/react-dashb
 
 const InvoiceDataDashboard = ({invoice}, context) => (
   <Dashboard>
-    <DashboardWidget id="supplierDetails" w={12} h={3}>
+    <DashboardWidget id="supplierDetails" w={12} h={4}>
       <Collapsible title="Supplier">
         <SupplierDetails invoice={invoice}/>
       </Collapsible>

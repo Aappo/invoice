@@ -7,7 +7,6 @@ import LoadingLayout from './LoadingLayout.react';
 import './WideLayout.less';
 
 const WideLayout = ({ list, invoice, getInvoice, updateInvoice }) => {
-
   return list ? (
     <div id="oc-invoices-my-tasks" className="oc-invoices-my-tasks-wide">
       <div id="oc-invoices-my-tasks-list" className="oc-invoices-my-tasks-wide-list">

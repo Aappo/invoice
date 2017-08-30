@@ -11,6 +11,14 @@ TaskItem.status = {
   approved: 'Approved'
 };
 
+let MyTaskList = {};
+MyTaskList.label = {
+  sortBy: 'Sort by',
+  dueDate: 'Due date',
+  supplier: 'Supplier',
+  grossAmount: 'Gross amount'
+};
+
 let Action = {
   event: {
     inspect: 'Inspect',
@@ -28,9 +36,9 @@ let Action = {
     clarifyForInspection: 'Clarification',
     clarifyForApproval: 'Clarification',
     approve: 'Approval',
-    postComment: 'Comment Only',
-    rejectApproval: "Cancel Status",
-    rejectInspection: "Cancel Status"
+    postComment: 'Comment only',
+    rejectApproval: "Cancel status",
+    rejectInspection: "Cancel status"
   }
 };
 Action.headerLabel = 'Optional comment';
@@ -63,13 +71,14 @@ let Details = {
   },
   attachments: {
     title: 'Attachments',
-    noAttachments: 'There is no files, attached to this invoice'
+    noAttachments: 'There are no files attached to the invoice'
   }
 };
 
 export default {
   Details: Details,
   TaskItem: TaskItem,
+  MyTaskList: MyTaskList,
   Action: Action,
   EmptyLayout: EmptyLayout
 };

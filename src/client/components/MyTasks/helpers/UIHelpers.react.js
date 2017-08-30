@@ -157,6 +157,35 @@ class UiHelpers {
   formatAmount = (amount, currency, options) => {
     return amount;
   }
+
+  /**
+   * Get comparator function for specified invoice field.
+   *
+   * @param field
+   * @returns {function(*, *)}
+   */
+  getInvoiceComparator = field => {
+    return (first, second) => {
+      if (typeof first[field] === 'undefined' || first[field] === null) {
+        if (typeof second[field] === 'undefined' || second[field] === null) {
+          return 0;
+        } else {
+          return 1;
+        }
+      } else if (typeof second[field] === 'undefined' || second[field] === null) {
+        return -1;
+      } else if (typeof first[field] === 'number') {
+        return first[field] - second[field];
+      } else if (typeof first[field] === 'string') {
+        if (isNaN(Date.parse(first[field]))) {
+          return first[field].localeCompare(second[field]);
+        } else {
+          return Date.parse(second[field]) - Date.parse(first[field]); // Descending order for dates
+        }
+      }
+      throw new Error(`Unable to compare invoices by field '${field}'. Unsupported type.`);
+    }
+  }
 }
 
 export default new UiHelpers();

@@ -4,18 +4,12 @@ const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
   <div className="oc-invoices-card">
     <div>
       <span className="oc-invoices-card-title">
-        {i18n.getMessage('Details.totals.currency')}
+        <span className="highlight">
+          {i18n.getMessage('Details.totals.grossAmount')}
+        </span>
       </span>
       <span className="oc-invoices-card-value">
-          {`${currency.name}(${currency.symbol})`}
-      </span>
-    </div>
-    <div>
-      <span className="oc-invoices-card-title">
-        {i18n.getMessage('Details.totals.vatAmount')}
-      </span>
-      <span className="oc-invoices-card-value">
-          {i18n.formatDecimalNumber(invoice.vatAmount)}
+          {i18n.formatDecimalNumber(invoice.grossAmount)}
         </span>
     </div>
     <div>
@@ -28,13 +22,19 @@ const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
     </div>
     <div>
       <span className="oc-invoices-card-title">
-        <span className="highlight">
-          {i18n.getMessage('Details.totals.grossAmount')}
-        </span>
+        {i18n.getMessage('Details.totals.vatAmount')}
       </span>
       <span className="oc-invoices-card-value">
-          {i18n.formatDecimalNumber(invoice.grossAmount)}
+          {i18n.formatDecimalNumber(invoice.vatAmount)}
         </span>
+    </div>
+    <div>
+      <span className="oc-invoices-card-title">
+        {i18n.getMessage('Details.totals.currency')}
+      </span>
+      <span className="oc-invoices-card-value">
+          {currency.id}
+      </span>
     </div>
   </div>
 );

@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import './supplierDetails.less';
 
 const supplierDetailsFields = [
-  'supplierName',
-  'supplierId'
+  'supplierId',
+  'supplierName'
 ];
 
 const SupplierDetailsView = ({ supplier, bankAccounts }, { i18n }) => (

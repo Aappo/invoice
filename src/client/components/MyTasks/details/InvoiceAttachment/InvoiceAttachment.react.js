@@ -6,7 +6,7 @@ const InvoiceAttachment = ({invoice}) => (
     width="100%"
     name="invoice_image"
     height="100%"
-    data={`/invoice/api/invoices/${invoice.id}/attachment`}
+    data={`/invoice/api/invoices/${invoice.id}/attachments/image`}
     aria-label="Invoice image"
   />
 );
