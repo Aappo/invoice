@@ -1,23 +1,15 @@
-import React from 'react';
-
+import React, {Component} from 'react';
 import serviceComponent from '@opuscapita/react-loaders/lib/serviceComponent';
 
-export default class Posting extends React.Component {
-  componentWillMount() {
-    const serviceRegistry = (service) => ({
-      url: `${window.location.origin}/posting`
-    });
-    const PostingGrid = serviceComponent({
-      serviceRegistry,
-      serviceName: 'posting',
-      moduleName: 'posting-grid',
-      jsFileName: 'grid-bundle'
-    });
+const PostingGrid = serviceComponent({
+  serviceRegistry: (service) => ({ url: '/posting' }),
+  serviceName: 'posting',
+  moduleName: 'posting-grid',
+  jsFileName: 'grid-bundle'
+});
 
-    this.externalComponents = { PostingGrid };
-  }
+export default class Posting extends Component {
   render() {
-    const { PostingGrid } = this.externalComponents;
     return (
       <PostingGrid />
     );

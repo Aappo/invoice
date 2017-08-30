@@ -1,40 +1,46 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
-    <link rel="stylesheet" href="/invoice/static/css/sidebar-layout.css">
-    <script type="application/javascript" src="/invoice/static/bundle.js"></script>
-    <title>Invoice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
+  <link rel="stylesheet" href="/invoice/static/css/sidebar-layout.css">
+  <!--<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>-->
+  <!--<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>-->
+  <script type="application/javascript" src="/invoice/static/react/react.js"></script>
+  <script type="application/javascript" src="/invoice/static/react/react-dom.js"></script>
+  <script type="application/javascript" src="/invoice/static/bundle.js"></script>
+  <title>Invoice</title>
 </head>
 
 <body class="page-body" style="overflow: auto;">
-<div id="root"></div>
-<script>
-    window.invoice.renderInvoiceApplication(
-            document.getElementById("root"), {
-                formatPatterns: {
-                    'en': {
-                        'datePattern': 'MM/dd/yyyy',
-                        'integerPattern': '#,##0',
-                        'numberPattern': '#,##0.00',
-                        'numberDecimalSeparator': '.',
-                        'numberGroupingSeparator': ',',
-                        'numberGroupingSeparatorUse': true
-                    },
-                    'de': {
-                        'datePattern': "dd.MM.yyyy",
-                        'integerPattern': "#,##0",
-                        'numberPattern': "#,##0.00",
-                        'numberDecimalSeparator': ",",
-                        'numberGroupingSeparator': ".",
-                        'numberGroupingSeparatorUse': true
-                    }
-                },
-                userData: {{{json userData}}}
-            }
-    );
-</script>
+  <div id="root"></div>
+  <script>
+      window.onload = function(e){
+        window.invoice.renderInvoiceApplication(
+          document.getElementById("root"), {
+            formatPatterns: {
+              'en': {
+                  'datePattern': 'MM/dd/yyyy',
+                  'integerPattern': '#,##0',
+                  'numberPattern': '#,##0.00',
+                  'numberDecimalSeparator': '.',
+                  'numberGroupingSeparator': ',',
+                  'numberGroupingSeparatorUse': true
+              },
+              'de': {
+                  'datePattern': "dd.MM.yyyy",
+                  'integerPattern': "#,##0",
+                  'numberPattern': "#,##0.00",
+                  'numberDecimalSeparator': ",",
+                  'numberGroupingSeparator': ".",
+                  'numberGroupingSeparatorUse': true
+              }
+            },
+            userData: {{{json userData}}}
+          }
+        );
+      };
+  </script>
 </body>
 </html>
