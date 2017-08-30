@@ -11,39 +11,40 @@ const TaskItem = ({ invoice }, { i18n }) => (
   <div className="list-item-content">
     <div className="list-item-wide-column">
       <div className="list-item">
-        <span>{i18n.getMessage('TaskItem.customerId')}</span>
         <span className="value">{invoice.customerId}</span>
       </div>
       <div className="divider"/>
       <div className="list-item">
-        <span>{i18n.getMessage('TaskItem.supplierId')}</span>
-        <span className="value">
-              {invoice.supplierId}
-            </span>
+        <span className="value">{invoice.supplierId}</span>
+      </div>
+      <div className="divider"/>
+      <div className="list-item">
+        <span className="value">{invoice.invoiceNo}</span>
       </div>
     </div>
     <div className="list-item-wide-column">
       <div className="list-item">
-        <span>{i18n.getMessage('TaskItem.dueDate')}</span>
-        <span className="value">
-              {i18n.formatDate(invoice.dueDate)}
-            </span>
+        <span className="value">{i18n.formatDate(invoice.dueDate)}</span>
       </div>
+      <div className="divider"/>
+      <span className="value">
+          {UiHelpers.formatAmount(invoice.grossAmount)} {invoice.currencyId}
+        </span>
       <div className="divider"/>
       <div className="list-item">
         <span className="value">
           {i18n.getMessage(`TaskItem.status.${invoice.status}`)}
         </span>
-        <span className="value">
-          {UiHelpers.formatAmount(invoice.totalGrossPrice)} {invoice.currencyId}
-        </span>
       </div>
     </div>
     <div className="list-item-narrow-column">
-      <span className="value">
-        {invoice.invoiceNo}
-      </span>
-      {UiHelpers.getIconForApprovalStatus(invoice.status, iconSize)}
+      <div className="list-item">
+        {invoice.commentary ? UiHelpers.getIconForApprovalStatus('commented', iconSize) : ''}
+      </div>
+      <div className="divider"/>
+      <div className="list-item">
+        {UiHelpers.getIconForApprovalStatus(invoice.status, iconSize)}
+      </div>
     </div>
   </div>
 );
