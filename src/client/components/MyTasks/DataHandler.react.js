@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Promise from 'bluebird';
 import {
   fetchTaskActions,
-  fetchInvoiceReceipt
+  fetchInvoiceReceipt,
+  fetchCustomer,
+  fetchSupplier
 } from './data/fetchers';
 import _ from 'lodash';
 import { INVOICE_VIEWS } from '../../../common/constants';
@@ -65,6 +67,8 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
       return fetchInvoiceReceipt(id).then((invoice) => {
         return Promise.props({
           ...invoice,
+          customer: fetchCustomer(invoice.customerId),
+          supplier: fetchSupplier(invoice.supplierId),
           transitions: fetchTaskActions(invoice.id)
         })
       })
