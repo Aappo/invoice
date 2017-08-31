@@ -1,18 +1,18 @@
 import React, { PropTypes, Component } from 'react';
-import { fetchSupplier, fetchSupplierBankAccounts } from '../../../data/fetchers';
+import { fetchSupplierBankAccounts } from '../../../data/fetchers';
 import Promise from 'bluebird';
 import SupplierDetailsView from './SupplierDetailsView.react'
 import InvoiceDetailsDataHandler from '../InvoiceDetailsDataHandler';
 
-const fetchSupplierData = (supplierId) => Promise.props({
-  supplier: fetchSupplier(supplierId),
-  bankAccounts: fetchSupplierBankAccounts(supplierId)
+const fetchSupplierData = (invoice) => Promise.props({
+  supplier: invoice.supplier,
+  bankAccounts: fetchSupplierBankAccounts(invoice.supplier.supplierId)
 });
 
 const SupplierDetails = ({ invoice }) => (
   <InvoiceDetailsDataHandler
     invoice={invoice}
-    fetchData={(invoice) => fetchSupplierData(invoice.supplierId)}
+    fetchData={(invoice) => fetchSupplierData(invoice)}
     renderView={({ invoice, fetchResult }) =>
       <SupplierDetailsView
         supplier={fetchResult.supplier}

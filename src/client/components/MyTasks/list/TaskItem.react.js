@@ -11,11 +11,11 @@ const TaskItem = ({ invoice }, { i18n }) => (
   <div className="list-item-content">
     <div className="list-item-wide-column">
       <div className="list-item">
-        <span className="value">{invoice.customerId}</span>
+        <span className="value">{invoice.customer.customerName}</span>
       </div>
       <div className="divider"/>
       <div className="list-item">
-        <span className="value">{invoice.supplierId}</span>
+        <span className="value">{invoice.supplier.supplierName}</span>
       </div>
       <div className="divider"/>
       <div className="list-item">
