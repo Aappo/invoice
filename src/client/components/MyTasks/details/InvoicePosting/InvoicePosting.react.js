@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import serviceComponent from '@opuscapita/react-loaders/lib/serviceComponent';
 
 const PostingGrid = serviceComponent({
@@ -11,7 +11,11 @@ const PostingGrid = serviceComponent({
 export default class Posting extends Component {
   render() {
     return (
-      <PostingGrid />
+      <PostingGrid invoice={this.props.invoice}/>
     );
   }
 }
+
+Posting.propTypes = {
+  invoice: PropTypes.object.isRequired
+};

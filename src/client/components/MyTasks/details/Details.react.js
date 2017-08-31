@@ -33,7 +33,7 @@ class Details extends React.Component {
           </div>
         );
       case 3:
-        return <InvoicePosting />
+        return <InvoicePosting invoice={invoice}/>
       default:
         return null;
     }
