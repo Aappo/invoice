@@ -51,7 +51,7 @@ const TaskItem = ({ invoice }, { i18n }) => (
       </div>
       <div className="divider"/>
       <span className="value">
-          {UiHelpers.formatAmount(invoice.grossAmount)} {invoice.currencyId}
+          {Number(invoice.grossAmount).toFixed(2)} {invoice.currencyId}
         </span>
       <div className="divider"/>
       <div className="list-item">
