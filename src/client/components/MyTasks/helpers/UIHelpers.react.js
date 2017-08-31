@@ -140,15 +140,6 @@ class UiHelpers {
   };
 
   /**
-   * Format amount
-   * @param {number} amount - Amount.
-   * @param {string} currency - Currency according to format the amount
-   */
-  formatAmount = (amount, currency, options) => {
-    return amount;
-  }
-
-  /**
    * Get comparator function for specified invoice field.
    *
    * @param field
