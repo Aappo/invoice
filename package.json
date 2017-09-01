@@ -19,7 +19,7 @@
     "@opuscapita/react-icons": "^1.1.0",
     "@opuscapita/react-dashboard": "^0.0.4",
     "@opuscapita/react-select": "^1.0.0-rc.5-oc.5",
-    "@opuscapita/react-navigation": "0.0.7",
+    "@opuscapita/react-navigation": "0.0.8",
     "@opuscapita/react-svg": "1.0.4",
     "@opuscapita/i18n": "1.1.0",
     "ocbesbn-bouncer": "^0.2.11",
