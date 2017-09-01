@@ -32,10 +32,23 @@ class MyTasksList extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.list.length !== 0 &&
-      (prevProps.list.length !== this.props.list.length || prevState.sortedBy !== this.state.sortedBy)
-    ) {
-      this.setState({ selected: 0 }, () => this.props.getInvoice(this.props.list[0].id));
+    if (this.props.list.length !== 0) {
+      if (prevProps.list.length > this.props.list.length) {
+        if (prevProps.list.length - this.state.selected === 1) {
+          // Move previously last selection to the end of the current list
+          this.setState({ selected: this.props.list.length - 1 },
+            () => this.props.getInvoice(this.props.list[this.state.selected].id)
+          );
+        } else {
+          // Leave others in the old position
+          this.setState({ selected: this.state.selected },
+            () => this.props.getInvoice(this.props.list[this.state.selected].id)
+          );
+        }
+      } else if (prevState.sortedBy !== this.state.sortedBy) {
+        // Move to the beginning if sorting rules has been changed
+        this.setState({ selected: 0 }, () => this.props.getInvoice(this.props.list[0].id));
+      }
     }
   }
 
