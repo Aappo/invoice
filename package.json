@@ -20,6 +20,8 @@
     "@opuscapita/react-dashboard": "^0.0.4",
     "@opuscapita/react-loaders": "^0.1.8",
     "@opuscapita/react-select": "^1.0.0-rc.5-oc.5",
+    "@opuscapita/react-navigation": "0.0.8",
+    "@opuscapita/react-svg": "1.0.4",
     "@opuscapita/i18n": "1.1.0",
     "ocbesbn-bouncer": "^0.2.11",
     "ocbesbn-db-init": "^1.1.9",
@@ -60,7 +62,8 @@
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "chai": "3.4.1",
-    "react-svg-loader": "^1.1.1"
+    "react-svg-loader": "^1.1.1",
+    "raw-loader":"^0.5.1"
   },
   "scripts": {
     "start": "npm run build-client ; node src/server/index.js",

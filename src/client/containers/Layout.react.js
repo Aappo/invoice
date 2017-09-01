@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react';
-import SidebarMenu from '../components/common/SidebarMenu';
+import Navigation from '../components/common/Navigation';
 import NotificationProvider from '../components/common/NotificationProvider.react';
 import { HeaderMenu } from 'ocbesbn-react-components';
 
 // TODO: Not place NotificationProvider in representational component
 const Layout = (props, { userData }) => (
   <div className="page-container">
-    <SidebarMenu/>
-    <HeaderMenu currentUserData={userData}/>
+    <Navigation/>
     <div className="main-content">
       <div className="content-wrap">
         <div className="container-fluid">
