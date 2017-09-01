@@ -34,8 +34,8 @@ class MyTasksList extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.list.length !== 0) {
       if (prevProps.list.length > this.props.list.length) {
-        if (prevProps.list.length - this.state.selected < 3) {
-          // Move previously last or one before last selection to the end of the current list
+        if (prevProps.list.length - this.state.selected === 1) {
+          // Move previously last selection to the end of the current list
           this.setState({ selected: this.props.list.length - 1 },
             () => this.props.getInvoice(this.props.list[this.state.selected].id)
           );
