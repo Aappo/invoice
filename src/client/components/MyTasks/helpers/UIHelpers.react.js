@@ -22,18 +22,19 @@ class UiHelpers {
     let indicator = '';
 
     switch (status) {
-      case APPROVAL_STATUS.Approved:
-        indicator = 'ok';
-        break;
-      case APPROVAL_STATUS.Inspected:
-        indicator = 'inspected';
-        break;
-      case APPROVAL_STATUS.InspectionRequired:
-        indicator = 'flagged';
-        break;
-      case APPROVAL_STATUS.InspectedAndApproved:
-        indicator = 'inspectedAndApproved';
-        break;
+      /* Only in clarification and commented icons in demo */
+      // case APPROVAL_STATUS.Approved:
+      //   indicator = 'ok';
+      //   break;
+      // case APPROVAL_STATUS.Inspected:
+      //   indicator = 'inspected';
+      //   break;
+      // case APPROVAL_STATUS.InspectionRequired:
+      //   indicator = 'flagged';
+      //   break;
+      // case APPROVAL_STATUS.InspectedAndApproved:
+      //   indicator = 'inspectedAndApproved';
+      //   break;
       case APPROVAL_STATUS.InspectorClarificationRequired:
         indicator = 'inClarification';
         break;
