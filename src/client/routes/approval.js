@@ -8,26 +8,12 @@ import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.r
 import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 import Promise from 'bluebird';
 
-/**
- * Loads customer and supplier information and injects them to each task.
- *
- * @param tasks - list of tasks
- * @returns {Promise} resolving list of tasks with injected tenants
- */
-const withTenants = tasks => {
-  return Promise.all(tasks.map(task =>
-    Promise.props({
-      customer: fetchCustomer(task.customerId),
-      supplier: fetchSupplier(task.supplierId)
-    }).then(tenants => Object.assign(task, tenants))
-  )).then(() => Promise.resolve(tasks))
-};
 
 /**
  * View displaying all invoices assigned to the customer.
  */
 const AllTaskList = (props) => (
-  <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}).then(tasks => withTenants(tasks)) } />
+  <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
 );
 
 /**
@@ -36,7 +22,7 @@ const AllTaskList = (props) => (
 const TaskList = (props) => {
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}).then(tasks => withTenants(tasks)) }
+      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}) }
       filter={ invoice => invoice.transitions.length > 0 }
     />
   );
@@ -53,7 +39,7 @@ const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {processedByMe: true}}).then(tasks => withTenants(tasks)) }
+      fetcher={ () => fetchApprovalTasks({searchParams: {processedByMe: true}}) }
       filter={filter}
     />
   )
@@ -71,7 +57,7 @@ ProcessedList.contextTypes = {
 const TaskView = ({ params: { invoiceId } }) => {
   return (
     <TaskLayoutHandler
-      fetcher={ () => fetchInvoiceReceipt(invoiceId).then(task => Promise.resolve([task])).then(tasks => withTenants(tasks)) }
+      fetcher={ () => fetchInvoiceReceipt(invoiceId).then(task => Promise.resolve([task])) }
     />
   )
 };

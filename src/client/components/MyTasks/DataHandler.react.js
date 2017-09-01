@@ -9,6 +9,12 @@ import {
 import _ from 'lodash';
 import { INVOICE_VIEWS } from '../../../common/constants';
 
+const withTenants = task => {
+  return Promise.props({
+    customer: fetchCustomer(task.customerId),
+    supplier: fetchSupplier(task.supplierId)
+  }).then(tenants => Object.assign(task, tenants));
+};
 
 /**
  * Injects common invoice operations to wrapped component
@@ -41,7 +47,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     };
 
     componentDidMount() {
-      this.props.fetcher().then((invoices) => {
+      this.props.fetcher().then((invoices) => Promise.all(invoices.map(withTenants))).then((invoices) => {
         if (invoices.length > 0) {
           return this.loadInvoiceData(invoices[0].id).then((invoiceData) =>
             Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }))
@@ -67,11 +73,9 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
       return fetchInvoiceReceipt(id).then((invoice) => {
         return Promise.props({
           ...invoice,
-          customer: fetchCustomer(invoice.customerId),
-          supplier: fetchSupplier(invoice.supplierId),
           transitions: fetchTaskActions(invoice.id)
         })
-      })
+      }).then(withTenants)
     }
 
     getInvoice(id) {
@@ -96,7 +100,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
         )
       ).then(() => {
         return Promise.props({
-          invoice: fetchInvoiceReceipt(id),
+          invoice: fetchInvoiceReceipt(id).then(withTenants),
           invoiceData: this.loadInvoiceData(id)
         }).then(({ invoice, invoiceData }) => {
           let updatedInvoice;
