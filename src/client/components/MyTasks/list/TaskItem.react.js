@@ -28,7 +28,7 @@ const getDueDateBadge = (dueDate) => {
   }
 };
 
-const TaskItem = ({ invoice }, { i18n }) => (
+const TaskItem = ({ invoice, showDueDateBadge }, { i18n }) => (
   <div className="list-item-content">
     <div className="list-item-wide-column">
       <div className="list-item">
@@ -46,7 +46,7 @@ const TaskItem = ({ invoice }, { i18n }) => (
     <div className="list-item-wide-column">
       <div className="list-item">
         <span className="value">
-          {i18n.formatDate(invoice.dueDate)}{' '}{getDueDateBadge(invoice.dueDate)}
+          {i18n.formatDate(invoice.dueDate)}{' '}{showDueDateBadge ? getDueDateBadge(invoice.dueDate) : ''}
         </span>
       </div>
       <div className="divider"/>
@@ -73,7 +73,12 @@ const TaskItem = ({ invoice }, { i18n }) => (
 );
 
 TaskItem.propTypes = {
-  invoice: PropTypes.object.isRequired
+  invoice: PropTypes.object.isRequired,
+  showDueDateBadge: PropTypes.bool
+};
+
+TaskItem.defaultProps = {
+  showDueDateBadge: true
 };
 
 TaskItem.contextTypes = {

@@ -15,7 +15,7 @@ let MyTaskList = {};
 MyTaskList.label = {
   sortBy: 'Sort by',
   dueDate: 'Due date',
-  supplier: 'Supplier',
+  supplierId: 'Supplier',
   grossAmount: 'Gross amount'
 };
 

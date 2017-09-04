@@ -15,7 +15,7 @@ const { INVOICE_VIEWS } = require('../../../common/constants');
 module.exports = ({ request: { referer }, views}) => {
   if (referer && views && views.length > 0) {
     return !views.some(view => {
-      const viewPath = INVOICE_VIEWS[view];
+      const viewPath = INVOICE_VIEWS[view] && INVOICE_VIEWS[view].path;
       if (!viewPath) {
         throw new Error(`Error in 'restrictForViews' guard: view '${view}' is not found.`);
       }

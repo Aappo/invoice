@@ -5,6 +5,7 @@ import {
   APPROVAL_STATUS,
   INVOICE_FLAG
 } from '../constants';
+import { INVOICE_VIEWS } from '../../../../common/constants';
 
 
 /**
@@ -138,13 +139,31 @@ class UiHelpers {
   };
 
   /**
+   * Get view name associated with specified path.
+   * If view isn't found result is undefined.
+   *
+   * @param path - path
+   * @return {string} - view name
+   */
+  getViewForPath(path) {
+    for (let view in INVOICE_VIEWS) {
+      if (INVOICE_VIEWS.hasOwnProperty(view)) {
+        if (INVOICE_VIEWS[view].path === path)
+          return INVOICE_VIEWS[view].name;
+      }
+    }
+  }
+
+  /**
    * Get comparator function for specified invoice field.
    *
-   * @param field
+   * @param field - invoice field
+   * @param revert - flag to revert comparison rule
    * @returns {function(*, *)}
    */
-  getInvoiceComparator = field => {
+  getInvoiceComparator = (field, revert = false) => {
     return (first, second) => {
+      let result;
       if (typeof first[field] === 'undefined' || first[field] === null) {
         if (typeof second[field] === 'undefined' || second[field] === null) {
           return 0;
@@ -154,15 +173,17 @@ class UiHelpers {
       } else if (typeof second[field] === 'undefined' || second[field] === null) {
         return -1;
       } else if (typeof first[field] === 'number') {
-        return first[field] - second[field];
+        result = first[field] - second[field];
       } else if (typeof first[field] === 'string') {
         if (isNaN(Date.parse(first[field]))) {
-          return first[field].localeCompare(second[field]);
+          result = first[field].localeCompare(second[field]);
         } else {
-          return Date.parse(second[field]) - Date.parse(first[field]); // Descending order for dates
+          result = Date.parse(first[field]) - Date.parse(second[field]);
         }
+      } else {
+        throw new Error(`Unable to compare invoices by field '${field}'. Unsupported type.`);
       }
-      throw new Error(`Unable to compare invoices by field '${field}'. Unsupported type.`);
+      return revert ? -result : result;
     }
   }
 }

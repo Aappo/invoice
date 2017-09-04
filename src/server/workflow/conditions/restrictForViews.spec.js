@@ -11,15 +11,15 @@ const { INVOICE_VIEWS } = require('../../../common/constants');
  */
 describe("conditions.restrictForViews tests:", () => {
   it('restriction is applied if referer url and views are matched', () => {
-    assert.equal(restrictForViews({ request: { referer: INVOICE_VIEWS.PROCESSED_TASKS }, views: ['PROCESSED_TASKS', 'MY_TASKS'] }), false)
+    assert.equal(restrictForViews({ request: { referer: INVOICE_VIEWS.PROCESSED_TASKS.path }, views: ['PROCESSED_TASKS', 'MY_TASKS'] }), false)
   });
 
   it('restriction is not applied if referer url and views are not matched', () => {
-    assert.equal(restrictForViews({ request: { referer: INVOICE_VIEWS.ALL_TASKS }, views: ['PROCESSED_TASKS', 'MY_TASKS'] }), true)
+    assert.equal(restrictForViews({ request: { referer: INVOICE_VIEWS.ALL_TASKS.path }, views: ['PROCESSED_TASKS', 'MY_TASKS'] }), true)
   });
 
   it('exception is thrown if view is not found', () => {
-    assert.throws(() => restrictForViews({ request: { referer: INVOICE_VIEWS.PROCESSED_TASKS }, views: ['NOT_EXISTING_VIEW'] }))
+    assert.throws(() => restrictForViews({ request: { referer: INVOICE_VIEWS.PROCESSED_TASKS.path }, views: ['NOT_EXISTING_VIEW'] }))
   });
 
   it('restriction is not applied if referer was not provided', () => {

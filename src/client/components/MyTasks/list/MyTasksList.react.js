@@ -6,6 +6,9 @@ import List from '../select-list/List';
 import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
 import Promise from 'bluebird'
+import _ from 'lodash';
+import { SORTING_ORDER, VIEW_SORTING_RULES } from '../constants';
+import { INVOICE_VIEWS } from '../../../../common/constants';
 
 
 class MyTasksList extends PureComponent {
@@ -14,20 +17,29 @@ class MyTasksList extends PureComponent {
     list: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
     getInvoice: PropTypes.func.isRequired,
-    narrowLayout: PropTypes.bool,
-    router: routerShape.isRequired,
+    narrowLayout: PropTypes.bool
   };
 
   static contextTypes = {
-    i18n: PropTypes.object.isRequired
+    i18n: PropTypes.object.isRequired,
+    router: routerShape.isRequired
   };
 
-  state = {
-    selected: 0,
-    sortedBy: null
-  };
+  constructor(props, context) {
+    super(props);
+    // TODO: Investigate what place would be more appropriate for such common and permanent value as view name.
+    this.view = UiHelpers.getViewForPath(context.router.location.pathname);
+    this.sortingRules = VIEW_SORTING_RULES[this.view];
+    this.state = {
+      selected: 0,
+      sortedBy: null
+    };
+  }
 
   componentDidMount() {
+    if (!this.view) {
+      throw new Error(`View is not defined.`); // View name must be present in any case
+    }
     this.handleSortList('dueDate');
   }
 
@@ -53,8 +65,9 @@ class MyTasksList extends PureComponent {
   }
 
   handleSortList(field) {
+    const order = _.find(this.sortingRules, { field: field }).order;
     if (this.state.sortedBy !== field) {
-      return this.props.onSort(UiHelpers.getInvoiceComparator(field)).then(sorted =>
+      return this.props.onSort(UiHelpers.getInvoiceComparator(field, order === SORTING_ORDER.DESCENDING)).then(sorted =>
         Promise.resolve(this.setState({ sortedBy: field }))
       )
     } else {
@@ -68,12 +81,19 @@ class MyTasksList extends PureComponent {
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
           <SortInvoice
             value={this.state.sortedBy}
+            items={
+              this.sortingRules.map(rule => {
+                return { value: rule.field, label: this.context.i18n.getMessage(`MyTaskList.label.${rule.field}`) };
+              })
+            }
             onChange={({ value }) => this.handleSortList(value)}
           />
         </div>
         <div id="list-content" className="oc-invoices-my-tasks-list-content">
           <List
-            items={this.props.list.map(invoice => <TaskItem invoice={invoice} />)}
+            items={this.props.list.map(invoice =>
+              <TaskItem invoice={invoice} showDueDateBadge={INVOICE_VIEWS.PROCESSED_TASKS.name !== this.view} />
+            )}
             selected={this.props.narrowLayout ? [] : [this.state.selected]}
             multiple={false}
             onChange={(selected) => {
