@@ -1,6 +1,6 @@
 "use strict";
 
-const { INVOICE_VIEWS } = require('../../../common/constants');
+const InvoiceViews = require('../../../common/InvoiceViews');
 
 /**
  * Applies a restriction depending on view the event was sent from.
@@ -15,11 +15,10 @@ const { INVOICE_VIEWS } = require('../../../common/constants');
 module.exports = ({ request: { referer }, views}) => {
   if (referer && views && views.length > 0) {
     return !views.some(view => {
-      const viewPath = INVOICE_VIEWS[view] && INVOICE_VIEWS[view].path;
-      if (!viewPath) {
+      if (!InvoiceViews[view]) {
         throw new Error(`Error in 'restrictForViews' guard: view '${view}' is not found.`);
       }
-      return referer.includes(viewPath);
+      return referer.includes(InvoiceViews[view].path);
     })
   }
   return true;

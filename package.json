@@ -30,6 +30,7 @@
     "ocbesbn-web-init": "^2.1.11",
     "ocbesbn-blob-client": "^1.0.11",
     "bluebird": "3.0.5",
+    "enumify": "1.0.4",
     "react-router": "3.0.0",
     "superagent": "2.3.0",
     "superagent-bluebird-promise": "4.1.0",

@@ -8,7 +8,7 @@ import './MyTasksList.less';
 import Promise from 'bluebird'
 import _ from 'lodash';
 import { SORTING_ORDER, VIEW_SORTING_RULES } from '../constants';
-import { INVOICE_VIEWS } from '../../../../common/constants';
+import InvoiceViews from '../../../../common/InvoiceViews';
 
 
 class MyTasksList extends PureComponent {
@@ -28,8 +28,8 @@ class MyTasksList extends PureComponent {
   constructor(props, context) {
     super(props);
     // TODO: Investigate what place would be more appropriate for such common and permanent value as view name.
-    this.view = UiHelpers.getViewForPath(context.router.location.pathname);
-    this.sortingRules = VIEW_SORTING_RULES[this.view];
+    this.view = InvoiceViews.getByPath(context.router.location.pathname);
+    this.sortingRules = VIEW_SORTING_RULES[this.view.name]; // View must be resolved in any case
     this.state = {
       selected: 0,
       sortedBy: null
@@ -37,9 +37,6 @@ class MyTasksList extends PureComponent {
   }
 
   componentDidMount() {
-    if (!this.view) {
-      throw new Error(`View is not defined.`); // View name must be present in any case
-    }
     this.handleSortList('dueDate');
   }
 
@@ -92,7 +89,7 @@ class MyTasksList extends PureComponent {
         <div id="list-content" className="oc-invoices-my-tasks-list-content">
           <List
             items={this.props.list.map(invoice =>
-              <TaskItem invoice={invoice} showDueDateBadge={INVOICE_VIEWS.PROCESSED_TASKS.name !== this.view} />
+              <TaskItem invoice={invoice} showDueDateBadge={InvoiceViews.PROCESSED_TASKS !== this.view} />
             )}
             selected={this.props.narrowLayout ? [] : [this.state.selected]}
             multiple={false}

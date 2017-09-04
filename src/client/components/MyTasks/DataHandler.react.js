@@ -7,7 +7,7 @@ import {
   fetchSupplier
 } from './data/fetchers';
 import _ from 'lodash';
-import { INVOICE_VIEWS } from '../../../common/constants';
+import InvoiceViews from '../../../common/InvoiceViews';
 
 const withTenants = task => {
   return Promise.props({
@@ -61,7 +61,7 @@ export default function withDataHandler(WrappedComponent, { fetcher, filter = in
     shouldComponentUpdate(nextProps, nextState) {
       if (nextState.taskList && nextState.taskList.length === 0) {
         this.context.router.push({
-          pathname: INVOICE_VIEWS.EMPTY_VIEW.path,
+          pathname: InvoiceViews.EMPTY_VIEW.path,
           query: { prevPath: this.props.location.pathname }
         });
         return false;

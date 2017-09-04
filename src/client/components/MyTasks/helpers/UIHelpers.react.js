@@ -5,7 +5,6 @@ import {
   APPROVAL_STATUS,
   INVOICE_FLAG
 } from '../constants';
-import { INVOICE_VIEWS } from '../../../../common/constants';
 
 
 /**
@@ -137,22 +136,6 @@ class UiHelpers {
       maximumFractionDigits: digits,
     };
   };
-
-  /**
-   * Get view name associated with specified path.
-   * If view isn't found result is undefined.
-   *
-   * @param path - path
-   * @return {string} - view name
-   */
-  getViewForPath(path) {
-    for (let view in INVOICE_VIEWS) {
-      if (INVOICE_VIEWS.hasOwnProperty(view)) {
-        if (INVOICE_VIEWS[view].path === path)
-          return INVOICE_VIEWS[view].name;
-      }
-    }
-  }
 
   /**
    * Get comparator function for specified invoice field.
