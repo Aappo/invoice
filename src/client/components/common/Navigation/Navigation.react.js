@@ -1,24 +1,9 @@
 import React, { PropTypes } from 'react';
-import { Menu, MenuIcon } from '@opuscapita/react-navigation';
+import { Menu, MenuIcon, theme } from '@opuscapita/react-navigation';
 const gridIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/apps.svg');
 const personIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/person.svg');
 import { Link } from 'react-router';
 import messages from './i18n';
-
-
-const menuTheme = {
-  bgColor: '#3b4a56',
-  color: '#fff',
-  navBgColor: '#67707c',
-  navColor: '#fff',
-  menuIconNotificationColor: '#fff',
-  menuIconNotificationBgColor: '#ec6608',
-  navBorderColor: 'transparent',
-  navActiveBorderColor: '#ec6608',
-  navOverlay: 'dark',
-  isNavHoverOverlayDark: false,
-  isMenuIconHoverOverlayDark: false
-};
 
 const personalDataStyle = {
   padding: '6px 12px',
@@ -56,7 +41,7 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
         appName={i18n.getMessage('Navigation.applicationName')}
         activeItem={getTabIndex()}
         alwaysAtTop={false}
-        theme={menuTheme}
+        theme={theme.opuscapitaDark}
         logoSrc={logoUrl}
         logoTitle="OpusCapita"
         logoHref="http://opuscapita.com"
