@@ -10,7 +10,7 @@ const InvoiceApplication = (props) => (
     <I18nProvider formatPatterns={props.formatPatterns}>
       <Router history={browserHistory}>
         {ApprovalRoutes()}
-      </Router >
+      </Router>
     </I18nProvider>
   </UserDataProvider>
 );

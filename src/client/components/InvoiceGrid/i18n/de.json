@@ -1,0 +1,8 @@
+{
+  "InvoiceGrid.customerName.label": "Customer Name",
+  "InvoiceGrid.supplierName.label": "Supplier Name",
+  "InvoiceGrid.dueDate.label": "Due Date",
+  "InvoiceGrid.grossAmount.label": "Gross Amount",
+  "InvoiceGrid.currency.label": "Currency",
+  "InvoiceGrid.invoiceNumber.label": "Invoice Number"
+}

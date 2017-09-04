@@ -7,14 +7,7 @@ import TaskListLayoutHandler from '../components/MyTasks/layouts/TaskListLayoutH
 import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.react';
 import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 import Promise from 'bluebird';
-
-
-/**
- * View displaying all invoices assigned to the customer.
- */
-const AllTaskList = (props) => (
-  <TaskListLayoutHandler fetcher={ () => fetchApprovalTasks({}) } />
-);
+import InvoiceGrid from '../components/InvoiceGrid';
 
 /**
  * View displaying invoices which have available transitions for current user.
@@ -70,7 +63,7 @@ export default (props, context) => (
   <Route component={Layout} path="/invoice">
     <IndexRedirect to="/invoice/taskList"/>
     <Route path="/invoice/import" component={InvoiceImport}/>
-    <Route path="/invoice/allTaskList" component={AllTaskList}/>
+    <Route path="/invoice/allTaskList" component={InvoiceGrid}/>
     <Route path="/invoice/taskList" component={TaskList}/>
     <Route path="/invoice/task/:invoiceId" component={TaskView}/>
     <Route path="/invoice/processed" component={ProcessedList}/>
