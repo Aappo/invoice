@@ -51,7 +51,7 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
   };
 
   return(
-    <div style={{ zIndex: 9999, position: 'relative' }}>
+    <div id="top-navigation" style={{ zIndex: 9999, position: 'relative' }}>
       <Menu
         appName={i18n.getMessage('Navigation.applicationName')}
         activeItem={getTabIndex()}
