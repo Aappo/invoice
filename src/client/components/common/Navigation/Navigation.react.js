@@ -16,7 +16,7 @@ const menuTheme = {
   navBorderColor: 'transparent',
   navActiveBorderColor: '#ec6608',
   navOverlay: 'dark',
-  isNavHoverOverlayDark: true,
+  isNavHoverOverlayDark: false,
   isMenuIconHoverOverlayDark: false
 };
 
