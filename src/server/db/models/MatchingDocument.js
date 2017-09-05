@@ -69,7 +69,7 @@ module.exports.init = function(db, config) {
         }
       },
       methodOfPaymentId: {
-        field: 'TermsOfDeliveryID',
+        field: 'MethodOfPaymentID',
         type: Sequelize.STRING(100),
         allowNull: true,
         validate: {

@@ -61,7 +61,7 @@ module.exports = function(queryInterface) {
       }
     },
     methodOfPaymentId: {
-      field: 'TermsOfDeliveryID',
+      field: 'MethodOfPaymentID',
       type: Sequelize.STRING(100),
       allowNull: true,
       validate: {
