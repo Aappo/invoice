@@ -1,17 +1,39 @@
-const { Enum } = require('enumify');
+/**
+ * Enum-like implementation of the application views storage.
+ */
+class InvoiceViews  {
 
-class InvoiceViews extends Enum {
+  constructor({ name, path }) {
+    this.name = name;
+    this.path = path;
+  }
+
+  /**
+   * Initializes view instances.
+   *
+   * @param views - {Object} with properties of form <view name>:<view path>
+   * @return {InvoiceViews}
+   */
+  static init(views) {
+    this.views = [];
+    for (let key in views) {
+      if (views.hasOwnProperty(key)) {
+        const viewInstance = new InvoiceViews({ name: key, path: views[key] });
+        this.views.push(viewInstance);
+        this[key] = viewInstance;
+      }
+    }
+    return this;
+  }
 
   static getByPath(path) {
-    return this.enumValues.find(value => value.path === path);
+    return this.views.find(view => view.path === path);
   }
 }
 
-InvoiceViews.initEnum({
-  ALL_TASKS: { get path() { return '/invoice/allTaskList' } },
-  MY_TASKS: { get path() { return '/invoice/taskList' } },
-  PROCESSED_TASKS: { get path() { return '/invoice/processed' } },
-  EMPTY_VIEW: { get path() { return '/invoice/notFound' } },
+module.exports = InvoiceViews.init({
+  ALL_TASKS: '/invoice/allTaskList',
+  MY_TASKS: '/invoice/taskList',
+  PROCESSED_TASKS: '/invoice/processed',
+  EMPTY_VIEW: '/invoice/notFound'
 });
-
-module.exports = InvoiceViews;

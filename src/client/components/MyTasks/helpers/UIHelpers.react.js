@@ -3,7 +3,8 @@ import { Icon } from '@opuscapita/react-icons';
 
 import {
   APPROVAL_STATUS,
-  INVOICE_FLAG
+  INVOICE_FLAG,
+  SORTING_ORDER
 } from '../constants';
 
 
@@ -141,10 +142,10 @@ class UiHelpers {
    * Get comparator function for specified invoice field.
    *
    * @param field - invoice field
-   * @param revert - flag to revert comparison rule
+   * @param order - comparison rule order
    * @returns {function(*, *)}
    */
-  getInvoiceComparator = (field, revert = false) => {
+  getInvoiceComparator = (field, order = SORTING_ORDER.ASC) => {
     return (first, second) => {
       let result;
       if (typeof first[field] === 'undefined' || first[field] === null) {
@@ -166,7 +167,7 @@ class UiHelpers {
       } else {
         throw new Error(`Unable to compare invoices by field '${field}'. Unsupported type.`);
       }
-      return revert ? -result : result;
+      return order === SORTING_ORDER.DESC ? -result : result;
     }
   }
 }

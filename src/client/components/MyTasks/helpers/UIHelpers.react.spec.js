@@ -2,6 +2,7 @@
 
 import assert from 'assert';
 import UiHelpers from './UIHelpers.react';
+import { SORTING_ORDER } from '../constants/index';
 const mockData = [
   {
     id: 1,
@@ -36,7 +37,7 @@ describe('Invoice comparator:', () => {
     });
 
     it('descending', () => {
-      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('stringField', true)).map(item => item.id);
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('stringField', SORTING_ORDER.DESC)).map(item => item.id);
       assert.deepEqual(actualResult, [2, 3, 1]);
     });
   });
@@ -49,7 +50,7 @@ describe('Invoice comparator:', () => {
     });
 
     it('descending', () => {
-      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('numberField', true)).map(item => item.id);
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('numberField', SORTING_ORDER.DESC)).map(item => item.id);
       assert.deepEqual(actualResult, [3, 1, 2]);
     });
   });
@@ -62,7 +63,7 @@ describe('Invoice comparator:', () => {
     });
 
     it('descending', () => {
-      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('dateField', true)).map(item => item.id);
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('dateField', SORTING_ORDER.DESC)).map(item => item.id);
       assert.deepEqual(actualResult, [3, 2, 1]);
     });
   });
@@ -75,7 +76,7 @@ describe('Invoice comparator:', () => {
     });
 
     it('descending', () => {
-      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('nullableField', true)).map(item => item.id);
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('nullableField', SORTING_ORDER.DESC)).map(item => item.id);
       assert.deepEqual(actualResult, [2, 1, 3]);
     });
   });
