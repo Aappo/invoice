@@ -64,7 +64,7 @@ class MyTasksList extends PureComponent {
   handleSortList(field) {
     const order = _.find(this.sortingRules, { field: field }).order;
     if (this.state.sortedBy !== field) {
-      return this.props.onSort(UiHelpers.getInvoiceComparator(field, order === SORTING_ORDER.DESCENDING)).then(sorted =>
+      return this.props.onSort(UiHelpers.getInvoiceComparator(field, order === SORTING_ORDER.DESC)).then(sorted =>
         Promise.resolve(this.setState({ sortedBy: field }))
       )
     } else {
