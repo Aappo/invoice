@@ -17,39 +17,45 @@ export default (i18n) => [
     valueKeyPath: ['customerName'],
     valueRender: (invoice) => invoice.get('customer').get('customerName'),
     valueType: 'text',
-    width: 240,
+    width: 205,
   },
   {
     header: i18n.getMessage('InvoiceGrid.supplierName.label'),
     valueKeyPath: ['supplierName'],
     valueRender: (invoice) => invoice.get('supplier').get('supplierName'),
     valueType: 'text',
-    width: 240,
+    width: 205,
   },
   {
     header: i18n.getMessage('InvoiceGrid.dueDate.label'),
     valueKeyPath: ['dueDate'],
     valueType: 'text',
     valueRender: (invoice) => i18n.formatDate(invoice.get('dueDate')),
-    width: 240,
+    width: 205,
   },
   {
     header: i18n.getMessage('InvoiceGrid.grossAmount.label'),
     valueKeyPath: ['grossAmount'],
     valueRender: (invoice) => i18n.formatDecimalNumber(invoice.get('grossAmount')),
     valueType: 'text',
-    width: 240,
+    width: 205,
   },
   {
     header: i18n.getMessage('InvoiceGrid.currency.label'),
     valueKeyPath: ['currencyId'],
     valueType: 'text',
-    width: 240,
+    width: 205,
   },
   {
     header: i18n.getMessage('InvoiceGrid.invoiceNumber.label'),
     valueKeyPath: ['invoiceNo'],
     valueType: 'text',
-    width: 240,
+    width: 205,
+  },
+  {
+    header: i18n.getMessage('InvoiceGrid.orderNumber.label'),
+    valueKeyPath: ['orderNumber'],
+    valueType: 'text',
+    width: 205
   }
 ];
