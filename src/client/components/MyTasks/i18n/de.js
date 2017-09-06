@@ -74,6 +74,9 @@ let Details = {
   attachments: {
     title: 'Attachments',
     noAttachments: 'There are no files attached to the invoice'
+  },
+  comments: {
+    noComments: 'There are no comments posted for the invoice'
   }
 };
 

@@ -48,14 +48,14 @@ const getCommnetView = (invoice, commentData, i18n) => {
 
 const CommentHistoryView = ({ comments, invoice }, { i18n }) => (
   <div className="oc-invoices-card">
-    {comments.length > 0 && comments.map((commentData, idx) => (
+    {comments.length > 0 ? comments.map((commentData, idx) => (
       <div key={`${commentData.date}_${idx}`} className="oc-invoices-comment">
         {getCommnetView(invoice, commentData, i18n)}
         <span className="oc-invoices-card-comment-info">
           {`${i18n.formatDateTime(commentData.date)} ${commentData.firstName} ${commentData.lastName} (${commentData.id})`}
         </span>
       </div>
-    ))}
+    )) : i18n.getMessage('Details.comments.noComments')}
   </div>
 );
 
