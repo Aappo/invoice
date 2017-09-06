@@ -6,9 +6,10 @@ const createPurchaseInvoice2MatchingDocument = require('./matching-document/crea
 
 module.exports.up = function(db, config) {
   return createMatchingDocument(db.getQueryInterface()).then(
-    () => createMatchingDocumentItem(db.getQueryInterface()).then(
+    () => Promise.all([
+      () => createMatchingDocumentItem(db.getQueryInterface()),
       () => createPurchaseInvoice2MatchingDocument(db.getQueryInterface())
-    )
+    ])
   );
 };
 
