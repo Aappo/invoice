@@ -16,10 +16,10 @@ const WideLayout = ({ list, onSort, invoice, getInvoice, updateInvoice }) => {
           getInvoice={getInvoice}
         />
       </div>
-      {invoice ? <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
-        <Actions invoice={invoice} updateInvoice={updateInvoice}/>
-        <Details invoice={invoice}/>
-      </div> : null}
+      <div id="oc-invoices-my-tasks-invoice" className="oc-invoices-my-tasks-wide-invoice">
+        {invoice ? <Actions invoice={invoice} updateInvoice={updateInvoice}/> : null}
+        {invoice ? <Details invoice={invoice}/> : null}
+      </div>
     </div>
   ) : <LoadingLayout />
 };
