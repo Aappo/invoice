@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@opuscapita/react-icons';
+import _ from 'lodash';
 
 import {
   APPROVAL_STATUS,
@@ -141,28 +142,29 @@ class UiHelpers {
   /**
    * Get comparator function for specified invoice field.
    *
-   * @param field - invoice field
+   * @param field - invoice field (notation for nested properties is also supported f.e. 'supplier.supplierName')
    * @param order - comparison rule order
    * @returns {function(*, *)}
    */
   getInvoiceComparator = (field, order = SORTING_ORDER.ASC) => {
     return (first, second) => {
+      const firstValue = _.get(first, field), secondValue = _.get(second, field);
       let result;
-      if (typeof first[field] === 'undefined' || first[field] === null) {
-        if (typeof second[field] === 'undefined' || second[field] === null) {
+      if (typeof firstValue === 'undefined' || firstValue === null) {
+        if (typeof secondValue === 'undefined' || secondValue === null) {
           return 0;
         } else {
           return 1;
         }
-      } else if (typeof second[field] === 'undefined' || second[field] === null) {
+      } else if (typeof secondValue === 'undefined' || secondValue === null) {
         return -1;
-      } else if (typeof first[field] === 'number') {
-        result = first[field] - second[field];
-      } else if (typeof first[field] === 'string') {
-        if (isNaN(Date.parse(first[field]))) {
-          result = first[field].localeCompare(second[field]);
+      } else if (typeof firstValue === 'number') {
+        result = firstValue - secondValue;
+      } else if (typeof firstValue === 'string') {
+        if (isNaN(Date.parse(firstValue))) {
+          result = firstValue.localeCompare(secondValue);
         } else {
-          result = Date.parse(first[field]) - Date.parse(second[field]);
+          result = Date.parse(firstValue) - Date.parse(secondValue);
         }
       } else {
         throw new Error(`Unable to compare invoices by field '${field}'. Unsupported type.`);
