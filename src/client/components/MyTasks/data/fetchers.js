@@ -133,3 +133,16 @@ export const fetchInvoiceAttachmentsInfo = (invoiceId) => {
     Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
 };
+
+/**
+ * Gets comments for specified invoice
+ * @param invoiceId - invoice unique identifier
+ * @return {Promise.<TResult>}
+ */
+export const fetchInvoiceComments = (invoiceId) => {
+  return request.get(`/invoice/api/invoices/${invoiceId}/comments`).set(
+    'Accept', 'application/json'
+  ).then((response) => Promise.resolve(response.body)
+  ).catch((error) => { throw Error(error); })
+};
+

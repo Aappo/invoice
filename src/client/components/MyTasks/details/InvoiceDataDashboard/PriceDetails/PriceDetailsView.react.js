@@ -4,7 +4,7 @@ const PriceDetailsView = ({ invoice, currency }, { i18n }) => (
   <div className="oc-invoices-card">
     <div>
       <span className="oc-invoices-card-title">
-        <span className="highlight">
+        <span className="oc-invoices-card-title">
           {i18n.getMessage('Details.totals.grossAmount')}
         </span>
       </span>

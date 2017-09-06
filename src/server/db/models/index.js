@@ -12,6 +12,9 @@ const Promise = require('bluebird');
 module.exports.init = function(db, config) {
   require('./PurchaseInvoice.js').init(db, config);
   require('./PurchaseInvoiceItem.js').init(db, config);
+  require('./MatchingDocument.js').init(db, config);
+  require('./MatchingDocumentItem.js').init(db, config);
+  require('./PurchaseInvoice2MatchingDocument.js').init(db, config);
 
     // Always return a promise.
   return Promise.resolve();
