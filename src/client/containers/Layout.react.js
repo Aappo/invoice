@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import Navigation from '../components/common/Navigation';
 import NotificationProvider from '../components/common/NotificationProvider.react';
-import { HeaderMenu } from 'ocbesbn-react-components';
+import { OCAlertsProvider } from '@opuscapita/react-alerts';
+
 
 // TODO: Not place NotificationProvider in representational component
 const Layout = (props, { userData }) => (
@@ -13,6 +14,7 @@ const Layout = (props, { userData }) => (
           <NotificationProvider>
             {props.children}
           </NotificationProvider>
+          <OCAlertsProvider />
         </div>
       </div>
     </div>

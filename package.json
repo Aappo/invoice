@@ -15,6 +15,7 @@
   "dependencies": {
     "@opuscapita/fsm-core": "0.0.1-beta.5",
     "@opuscapita/fsm-task-manager": "0.0.1-beta.4",
+    "@opuscapita/react-alerts": "1.1.0",
     "@opuscapita/react-dates": "0.2.6",
     "@opuscapita/react-icons": "^1.1.0",
     "@opuscapita/react-dashboard": "^0.0.4",
