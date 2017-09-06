@@ -296,6 +296,13 @@ module.exports.init = function(db, config) {
             foreignKey: 'purchaseInvoiceId',
             targetKey: 'id'
           });
+          models.PurchaseInvoice.belongsToMany(models.MatchingDocument, {
+            as: 'matchingDocuments',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'PurchaseInvoiceSN',
+            otherKey: 'MatchingDocumentSN',
+            timestamps: false
+          });
         }
       },
       timestamps: false,
