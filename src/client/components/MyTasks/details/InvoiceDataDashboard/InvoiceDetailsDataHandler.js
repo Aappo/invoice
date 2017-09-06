@@ -28,11 +28,9 @@ export default class InvoiceDetailsDataHandler extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.invoice.id !== nextProps.invoice.id) {
-      this.setState({
-        loading: true
-      }, () => this.loadData(nextProps.invoice));
-    }
+    this.setState({
+      loading: true
+    }, () => this.loadData(nextProps.invoice));
   }
 
   componentDidMount() {

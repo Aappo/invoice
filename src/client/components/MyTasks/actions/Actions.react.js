@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react';
-import { updateInvoiceHandler, sendInvoiceEventHandler } from '../data/updateHandlers';
+import {
+  sendInvoiceEventHandler,
+  updateInvoiceCommentHandler
+} from '../data/updateHandlers';
 import ActionsTabs from './ActionsTabs.react';
 
 
@@ -13,14 +16,30 @@ const Actions = ({ invoice, updateInvoice }) => {
     return {
       name: transition.event,
       handler: payload => updateInvoice(invoice.id, invoice => {
-        return sendInvoiceEventHandler(invoice.id, transition.event).then(invoice => updateInvoiceHandler(invoice.id, payload))
+        return sendInvoiceEventHandler(
+          invoice.id,
+          transition.event
+        ).then(invoice => updateInvoiceCommentHandler(
+          invoice.id,
+          {
+            message: payload.commentary,
+            event: transition.event
+          }
+        ))
       })
     }
   });
 
   actions.push({
     name: 'postComment',
-    handler: payload => updateInvoice(invoice.id, invoice => updateInvoiceHandler(invoice.id, payload))
+    handler: payload => updateInvoice(
+      invoice.id,
+      invoice => updateInvoiceCommentHandler(
+        invoice.id,
+        {
+          message: payload.commentary
+        }
+      ))
   });
 
   return (

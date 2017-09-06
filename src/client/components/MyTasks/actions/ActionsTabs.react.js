@@ -20,7 +20,7 @@ export default class ActionsTabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentary: props.invoice.commentary || '',
+      commentary: '',
       activeTab: 0
     }
   }
@@ -28,7 +28,7 @@ export default class ActionsTabs extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.invoice.id !== this.props.invoice.id) {
       this.setState({
-        commentary: nextProps.invoice.commentary || '',
+        commentary: '',
         activeTab: 0
       })
     }

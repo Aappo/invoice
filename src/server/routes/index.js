@@ -9,10 +9,6 @@ const purchaseInvoiceImport = require('./purchaseInvoiceImport');
 const invoiceAttachment = require('./invoiceAttachment');
 const approval = require('./approval');
 const staticResources = require('./staticResources');
-const termsOfPayment = require('./termsOfPayment');
-const termsOfDelivery = require('./termsOfDelivery');
-const methodOfPayment = require('./methodOfPayment');
-const unitsOfMeasure = require('./unitsOfMeasure');
 const epilogue = require('epilogue');
 const exphbs = require('express-handlebars');
 
@@ -37,14 +33,10 @@ module.exports.init = function(app, db, config) {
     base: '/api'
   });
 
-  purchaseInvoiceRoutes(epilogue, db);
+  purchaseInvoiceRoutes(epilogue, app, db);
   purchaseInvoiceItemRoutes(epilogue, db);
   invoiceAttachment(app, db);
   staticResources(app, db);
-  termsOfPayment(app, db);
-  termsOfDelivery(app, db);
-  methodOfPayment(app, db);
-  unitsOfMeasure(app, db);
   purchaseInvoiceImport(app, db);
   approval(app, epilogue, db);
 
