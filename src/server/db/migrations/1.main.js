@@ -14,9 +14,8 @@ module.exports.up = function(db, config) {
 };
 
 module.exports.down = function(db, config) {
-  return db.getQueryInterface().dropTable('MatchingDocumentItem').then(
-    () => db.getQueryInterface().dropTable('PurchaseInvoice2MatchingDocument').then(
-      () => db.getQueryInterface().dropTable('MatchingDocument')
-    )
-  );
+  return Promise.all([
+    db.getQueryInterface().dropTable('MatchingDocumentItem'),
+    db.getQueryInterface().dropTable('PurchaseInvoice2MatchingDocument')
+  ]).then(() => db.getQueryInterface().dropTable('MatchingDocument'));
 };
