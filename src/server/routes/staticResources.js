@@ -9,7 +9,8 @@ module.exports = function(app, db) {
     '/taskList',
     '/allTaskList',
     '/import',
-    '/single/*'
+    '/single/*',
+    '/matching'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
       res.render('index', {

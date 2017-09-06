@@ -1,0 +1,46 @@
+
+@content-margin: 5px;
+
+#matching-items {
+  background-color: #D3DADE;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 48px;
+    background: white;
+    align-items: center;
+    margin-bottom: @content-margin;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background: white;
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      flex: 2;
+    }
+
+    &-candidates {
+      display: flex;
+      flex-direction: column;
+      flex: 8;
+    }
+
+    &-empty{
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 400px;
+      justify-content: center;
+      align-content: center;
+    }
+  }
+}
