@@ -5,7 +5,7 @@ const AttachmentDetailsView = ({ attachments, invoice }, {i18n}) => (
   <div className="oc-invoices-card">
     <div className="oc-invoices-attachment-container">
       {attachments.length > 0? attachments.map((attachmentInfo) => (
-        <div key={attachmentInfo.name} className="oc-invoices-file-icon">
+        <div key={attachmentInfo.name} className="oc-invoices-icon-inline">
           <Icon type="invoices" name={attachmentInfo.extension.slice(1)}/>
           <span>
             <a href={`/invoice/api/invoices/${invoice.id}/attachments/${attachmentInfo.name}`}>
