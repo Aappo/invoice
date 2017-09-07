@@ -125,38 +125,6 @@ module.exports.init = function(db, config) {
         field: 'DeliveredOn',
         type: Sequelize.DATE,
         allowNull: true
-      },
-      /**
-       * Date of creation.
-       */
-      createdOn: {
-        field: 'CreatedOn',
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      /**
-       * Creator identity.
-       */
-      createdBy: {
-        field: 'CreatedBy',
-        type: Sequelize.STRING(60),
-        allowNull: false
-      },
-      /**
-       * Date of change.
-       */
-      changedOn: {
-        field: 'ChangedOn',
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      /**
-       * Author of change.
-       */
-      changedBy: {
-        field: 'ChangedBy',
-        type: Sequelize.STRING(60),
-        allowNull: false
       }
     },
     {
@@ -171,14 +139,17 @@ module.exports.init = function(db, config) {
             as: 'purchaseInvoices',
             through: models.PurchaseInvoice2MatchingDocument,
             foreignKey: 'MatchingDocumentSN',
-            otherKey: 'PurchaseInvoiceSN',
-            timestamps: false
+            otherKey: 'PurchaseInvoiceSN'
+          });
+          models.MatchingDocument.belongsToMany(models.PurchaseInvoiceItem, {
+            as: 'purchaseInvoiceItems',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'MatchingDocumentSN',
+            otherKey: 'PurchaseInvoiceItemSN'
           });
         }
       },
-      timestamps: true,
-      createdAt: 'createdOn',
-      updatedAt: 'changedOn',
+      timestamps: false,
       tableName: 'MatchingDocument'
     });
 };

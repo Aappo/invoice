@@ -213,6 +213,18 @@ module.exports.init = function(db, config) {
           models.PurchaseInvoiceItem.belongsTo(models.PurchaseInvoice, {
             as: 'purchaseInvoice'
           });
+          models.PurchaseInvoiceItem.belongsToMany(models.MatchingDocument, {
+            as: 'matchingDocuments',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'PurchaseInvoiceItemSN',
+            otherKey: 'MatchingDocumentSN'
+          });
+          models.PurchaseInvoiceItem.belongsToMany(models.MatchingDocumentItem, {
+            as: 'matchingDocumentItems',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'PurchaseInvoiceItemSN',
+            otherKey: 'MatchingDocumentItemSN'
+          });
         }
       },
       timestamps: false,

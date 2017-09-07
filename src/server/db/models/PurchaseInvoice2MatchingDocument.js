@@ -21,6 +21,17 @@ module.exports.init = function(db, config) {
       onUpdate: 'cascade',
       onDelete: 'restrict'
     },
+    purchaseInvoiceItemId: {
+      field: 'PurchaseInvoiceItemSN',
+      type: Sequelize.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'PurchaseInvoiceItem',
+        key: 'PurchaseInvoiceItemSN'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'restrict'
+    },
     matchingDocumentId: {
       field: 'MatchingDocumentSN',
       type: Sequelize.BIGINT,
@@ -28,6 +39,17 @@ module.exports.init = function(db, config) {
       references: {
         model: 'MatchingDocument',
         key: 'MatchingDocumentSN'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'restrict'
+    },
+    matchingDocumentItemId: {
+      field: 'MatchingDocumentItemSN',
+      type: Sequelize.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'MatchingDocumentItem',
+        key: 'MatchingDocumentItemSN'
       },
       onUpdate: 'cascade',
       onDelete: 'restrict'
@@ -40,10 +62,20 @@ module.exports.init = function(db, config) {
           foreignKey: 'id',
           targetKey: 'purchaseInvoiceId'
         });
+        models.PurchaseInvoice2MatchingDocument.hasOne(models.PurchaseInvoiceItem, {
+          as: 'purchaseInvoiceItem',
+          foreignKey: 'id',
+          targetKey: 'purchaseInvoiceItemId'
+        });
         models.PurchaseInvoice2MatchingDocument.hasOne(models.MatchingDocument, {
           as: 'matchingDocument',
           foreignKey: 'id',
           targetKey: 'matchingDocumentId'
+        });
+        models.PurchaseInvoice2MatchingDocument.hasOne(models.MatchingDocumentItem, {
+          as: 'matchingDocumentItem',
+          foreignKey: 'id',
+          targetKey: 'matchingDocumentItemId'
         });
       }
     },
