@@ -24,12 +24,12 @@ export const SORTING_ORDER = {
 export const VIEW_SORTING_RULES = {
   MY_TASKS: [
     { field: 'dueDate', order: SORTING_ORDER.ASC },
-    { field: 'supplierId', order: SORTING_ORDER.ASC },
+    { field: 'supplier.supplierName', order: SORTING_ORDER.ASC },
     { field: 'grossAmount', order: SORTING_ORDER.ASC }
   ],
   PROCESSED_TASKS: [
     { field: 'dueDate', order: SORTING_ORDER.DESC },
-    { field: 'supplierId', order: SORTING_ORDER.ASC },
+    { field: 'supplier.supplierName', order: SORTING_ORDER.ASC },
     { field: 'grossAmount', order: SORTING_ORDER.ASC }
   ]
 };

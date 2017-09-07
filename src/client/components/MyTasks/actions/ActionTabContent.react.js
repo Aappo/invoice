@@ -39,8 +39,7 @@ const ActionTabContent = ({ actionName, onAction, onTextAreaChange, commentary }
 ActionTabContent.propTypes = {
   actionName: PropTypes.string.isRequired,
   onAction: PropTypes.func.isRequired,
-  onTextAreaChange: PropTypes.func.isRequired,
-  commentary: PropTypes.string.isRequired
+  onTextAreaChange: PropTypes.func.isRequired
 };
 
 ActionTabContent.contextTypes = {

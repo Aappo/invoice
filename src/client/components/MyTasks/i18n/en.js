@@ -15,7 +15,7 @@ let MyTaskList = {};
 MyTaskList.label = {
   sortBy: 'Sort by',
   dueDate: 'Due date',
-  supplierId: 'Supplier',
+  supplier: { supplierName: 'Supplier' },
   grossAmount: 'Gross amount'
 };
 
@@ -39,6 +39,15 @@ let Action = {
     postComment: 'Comment only',
     rejectApproval: "Cancel status",
     rejectInspection: "Cancel status"
+  },
+  message: {
+    approve: 'Invoice successfully approved.',
+    inspect: 'Invoice successfully reviewed.',
+    rejectApproval: 'Invoice approval successfully cancelled.',
+    rejectInspection: 'Invoice review successfully cancelled.',
+    sendToClarification: 'Invoice successfully set to clarification.',
+    clarifyForInspection: 'Invoice successfully taken out of clarification.',
+    clarifyForApproval: 'Invoice successfully taken out of clarification.'
   }
 };
 Action.headerLabel = 'Optional comment';
@@ -73,6 +82,9 @@ let Details = {
   attachments: {
     title: 'Attachments',
     noAttachments: 'There are no files attached to the invoice'
+  },
+  comments: {
+    noComments: 'There are no comments posted for the invoice'
   }
 };
 

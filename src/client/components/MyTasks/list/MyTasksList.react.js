@@ -7,7 +7,7 @@ import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
 import Promise from 'bluebird'
 import _ from 'lodash';
-import { SORTING_ORDER, VIEW_SORTING_RULES } from '../constants';
+import { VIEW_SORTING_RULES } from '../constants';
 import InvoiceViews from '../../../../common/InvoiceViews';
 
 

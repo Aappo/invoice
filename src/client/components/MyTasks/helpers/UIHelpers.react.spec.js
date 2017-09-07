@@ -9,21 +9,24 @@ const mockData = [
     stringField: 'abc',
     numberField: 5,
     dateField: '2017-07-25T00:00:00.000Z',
-    nullableField: null
+    nullableField: null,
+    nestedField: { nestedField: [3] }
   },
   {
     id: 2,
     stringField: 'ijk',
     numberField: 0,
     dateField: '07/26/2017',
-    nullableField: 'notNull'
+    nullableField: 'notNull',
+    nestedField: { nestedField: [2] }
   },
   {
     id: 3,
     stringField: 'dfg',
     numberField: 15,
     dateField: '2017-07-27',
-    nullableField: null
+    nullableField: null,
+    nestedField: { nestedField: [1] }
   }
 ];
 
@@ -78,6 +81,19 @@ describe('Invoice comparator:', () => {
     it('descending', () => {
       const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('nullableField', SORTING_ORDER.DESC)).map(item => item.id);
       assert.deepEqual(actualResult, [2, 1, 3]);
+    });
+  });
+
+  describe('sorting by nested field', () => {
+
+    it('ascending', () => {
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('nestedField.nestedField[0]')).map(item => item.id);
+      assert.deepEqual(actualResult, [3, 2, 1]);
+    });
+
+    it('descending', () => {
+      const actualResult = mockData.slice(0).sort(UiHelpers.getInvoiceComparator('nestedField.nestedField[0]', SORTING_ORDER.DESC)).map(item => item.id);
+      assert.deepEqual(actualResult, [1, 2, 3]);
     });
   });
 });
