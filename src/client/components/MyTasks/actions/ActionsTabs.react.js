@@ -26,12 +26,11 @@ export default class ActionsTabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let newState = { commentary: '' };
     if (nextProps.invoice.id !== this.props.invoice.id) {
-      this.setState({
-        commentary: '',
-        activeTab: 0
-      })
+      newState.activeTab = 0;
     }
+    this.setState(newState);
   }
 
   handleTextAreaChange(commentary) {

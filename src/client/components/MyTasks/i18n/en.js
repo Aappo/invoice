@@ -39,6 +39,15 @@ let Action = {
     postComment: 'Comment only',
     rejectApproval: "Cancel status",
     rejectInspection: "Cancel status"
+  },
+  message: {
+    approve: 'Invoice successfully approved.',
+    inspect: 'Invoice successfully reviewed.',
+    rejectApproval: 'Invoice approval successfully cancelled.',
+    rejectInspection: 'Invoice review successfully cancelled.',
+    sendToClarification: 'Invoice successfully set to clarification.',
+    clarifyForInspection: 'Invoice successfully taken out of clarification.',
+    clarifyForApproval: 'Invoice successfully taken out of clarification.'
   }
 };
 Action.headerLabel = 'Optional comment';

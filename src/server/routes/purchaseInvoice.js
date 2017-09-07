@@ -25,24 +25,28 @@ module.exports = function(epilogue, app, db) {
     return db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       if (invoice) {
         //we assume object {message: '..', event: '...'}
-        const commentStructure = Object.assign(
-          {
-            date: new Date(),
-            firstName: req.opuscapita.userData('firstName'),
-            lastName: req.opuscapita.userData('lastName'),
-            id: req.opuscapita.userData('id')
-          },
-          req.body
-        );
-
-        if (invoice.commentary) {
-          invoice.commentary = JSON.stringify(
-            JSON.parse(invoice.commentary).concat(commentStructure)
-          )
+        if(!req.body.message) {
+          return  Promise.resolve(res.json(invoice));
         } else {
-          invoice.commentary = JSON.stringify([commentStructure])
+          const commentStructure = Object.assign(
+            {
+              date: new Date(),
+              firstName: req.opuscapita.userData('firstName'),
+              lastName: req.opuscapita.userData('lastName'),
+              id: req.opuscapita.userData('id')
+            },
+            req.body
+          );
+
+          if (invoice.commentary) {
+            invoice.commentary = JSON.stringify(
+              JSON.parse(invoice.commentary).concat(commentStructure)
+            )
+          } else {
+            invoice.commentary = JSON.stringify([commentStructure])
+          }
+          return invoice.save().then(updatedInvoice => Promise.resolve(res.json(updatedInvoice)));
         }
-        return invoice.save().then(updatedInvoice => Promise.resolve(res.json(updatedInvoice)));
       } else {
         return Promise.resolve(res.status(500).send(new Error("Invalid invoice id")));
       }
