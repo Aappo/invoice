@@ -7,7 +7,7 @@ const CommentHistory = ({invoice}) => (
   <InvoiceDetailsDataHandler
     invoice={invoice}
     fetchData={(invoice) => fetchInvoiceComments(invoice.id)}
-    renderView={({invoice, fetchResult}) => <CommentHistoryView comments={fetchResult} invoice={invoice}/>}
+    renderView={({invoice, fetchResult}) => <CommentHistoryView comments={fetchResult}/>}
   />
 );
 

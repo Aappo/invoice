@@ -25,8 +25,8 @@ module.exports = function(epilogue, app, db) {
     return db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       if (invoice) {
         //we assume object {message: '..', event: '...'}
-        if(!req.body.message) {
-          return  Promise.resolve(res.json(invoice));
+        if (!req.body.message) {
+          return Promise.resolve(res.json(invoice));
         } else {
           const commentStructure = Object.assign(
             {
@@ -39,13 +39,17 @@ module.exports = function(epilogue, app, db) {
           );
 
           if (invoice.commentary) {
-            invoice.commentary = JSON.stringify(
-              JSON.parse(invoice.commentary).concat(commentStructure)
-            )
+            let commentData = JSON.parse(invoice.commentary);
+            commentData.unshift(commentStructure);
+            invoice.commentary = JSON.stringify(commentData);
           } else {
-            invoice.commentary = JSON.stringify([commentStructure])
+            invoice.commentary = JSON.stringify([commentStructure]);
           }
-          return invoice.save().then(updatedInvoice => Promise.resolve(res.json(updatedInvoice)));
+          return invoice.validate().then(() =>
+            invoice.save().then(updatedInvoice => Promise.resolve(res.json(updatedInvoice)))
+          ).catch(
+            errors => Promise.resolve(res.status(400).send(errors))
+          )
         }
       } else {
         return Promise.resolve(res.status(500).send(new Error("Invalid invoice id")));
@@ -62,7 +66,7 @@ module.exports = function(epilogue, app, db) {
   app.get('/api/invoices/:id/comments', (req, res) => {
     return db.models.PurchaseInvoice.findById(req.params.id).then(invoice => {
       if (invoice) {
-        return Promise.resolve(res.send(invoice.commentary? JSON.parse(invoice.commentary) : []));
+        return Promise.resolve(res.send(invoice.commentary ? JSON.parse(invoice.commentary) : []));
       } else {
         return Promise.resolve(res.status(500).send(new Error("Invalid invoice id")));
       }

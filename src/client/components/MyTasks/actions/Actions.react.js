@@ -12,6 +12,12 @@ import { OCAlert } from '@opuscapita/react-alerts';
  */
 const Actions = ({ invoice, updateInvoice }, {i18n}) => {
 
+  const failedMessageHandler = (errors) => (
+    OCAlert.alertError(
+      i18n.getMessage('Commentary length is exceeded, please try to shorten it.')
+    )
+  );
+
   const actions = invoice.transitions.map(transition => {
     return {
       name: transition.event,
@@ -23,11 +29,12 @@ const Actions = ({ invoice, updateInvoice }, {i18n}) => {
           invoice.id,
           {
             message: payload.commentary,
-            event: transition.event
+            event: transition.event,
+            status: invoice.status
           }
         )).then(() => OCAlert.alertSuccess(
           i18n.getMessage(`Action.message.${transition.event}`, 1000)
-        ))
+        )).catch(failedMessageHandler)
       })
     }
   });
@@ -39,9 +46,10 @@ const Actions = ({ invoice, updateInvoice }, {i18n}) => {
       invoice => updateInvoiceCommentHandler(
         invoice.id,
         {
-          message: payload.commentary
+          message: payload.commentary,
+          status: invoice.status
         }
-      ))
+      )).catch(failedMessageHandler)
   });
 
   return (

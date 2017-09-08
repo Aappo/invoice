@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { Icon } from '@opuscapita/react-icons';
 import './comments.less';
 
-const getCommentBadge = (invoice) => {
-  switch (invoice.status) {
+const getCommentBadge = (status) => {
+  switch (status) {
     case 'inspectionRequired':
       return <Icon type="indicator" name="pinned"/>;
     case 'approvalRequired':
@@ -19,14 +19,14 @@ const getCommentBadge = (invoice) => {
   }
 };
 
-const getCommnetView = (invoice, commentData, i18n) => {
+const getCommnetView = (commentData, i18n) => {
   if (commentData.event) {
     return (
       <div>
         <div className="oc-invoices-icon-inline">
-          {getCommentBadge(invoice)}
+          {getCommentBadge(commentData.status)}
           <span className="oc-invoices-card-value">
-            {i18n.getMessage(`TaskItem.status.${invoice.status}`)}
+            {i18n.getMessage(`TaskItem.status.${commentData.status}`)}
           </span>
         </div>
         <div className="oc-invoices-card-value">
@@ -46,11 +46,11 @@ const getCommnetView = (invoice, commentData, i18n) => {
   }
 };
 
-const CommentHistoryView = ({ comments, invoice }, { i18n }) => (
+const CommentHistoryView = ({ comments }, { i18n }) => (
   <div className="oc-invoices-card">
     {comments.length > 0 ? comments.map((commentData, idx) => (
       <div key={`${commentData.date}_${idx}`} className="oc-invoices-comment">
-        {getCommnetView(invoice, commentData, i18n)}
+        {getCommnetView(commentData, i18n)}
         <span className="oc-invoices-card-comment-info">
           {`${i18n.formatDateTime(commentData.date)} ${commentData.firstName} ${commentData.lastName} (${commentData.id})`}
         </span>
@@ -60,8 +60,7 @@ const CommentHistoryView = ({ comments, invoice }, { i18n }) => (
 );
 
 CommentHistoryView.propTypes = {
-  comments: PropTypes.array.isRequired,
-  invoice: PropTypes.object.isRequired
+  comments: PropTypes.array.isRequired
 };
 
 CommentHistoryView.contextTypes = {
