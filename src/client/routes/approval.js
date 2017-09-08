@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Route, Redirect, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
-import { fetchApprovalTasks, fetchInvoiceReceipt, fetchCustomer, fetchSupplier } from '../components/MyTasks/data/fetchers';
+import { fetchApprovalTasks, fetchInvoiceReceipt } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
 import TaskListLayoutHandler from '../components/MyTasks/layouts/TaskListLayoutHandler.react';
 import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.react';
 import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 import Promise from 'bluebird';
 import InvoiceGrid from '../components/InvoiceGrid';
+import MatchingView from '../components/Matching';
 
 /**
  * View displaying invoices which have available transitions for current user.
@@ -65,6 +66,7 @@ export default (props, context) => (
     <Route path="/invoice/import" component={InvoiceImport}/>
     <Route path="/invoice/allTaskList" component={InvoiceGrid}/>
     <Route path="/invoice/taskList" component={TaskList}/>
+    <Route path="/invoice/matching" component={MatchingView}/>
     <Route path="/invoice/task/:invoiceId" component={TaskView}/>
     <Route path="/invoice/processed" component={ProcessedList}/>
     <Route path="/invoice/notFound" component={EmptyLayout}/>

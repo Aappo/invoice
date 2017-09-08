@@ -3,6 +3,7 @@ import InvoiceViews from '../../../../common/InvoiceViews';
 import messages from '../i18n';
 
 // TODO: It better be pure functional component. Find another way to reload message bundles.
+// TODO: Check out logic that depends on current location cause it's lost after redirect to empty view (f.e. navigation bar selection)
 export default class EmptyLayout extends Component {
 
   static propTypes = {
@@ -31,6 +32,8 @@ export default class EmptyLayout extends Component {
         return this.context.i18n.getMessage('EmptyLayout.message.assignedTasks');
       case InvoiceViews.PROCESSED_TASKS:
         return this.context.i18n.getMessage('EmptyLayout.message.processedTasks');
+      case InvoiceViews.MATCHING_TASKS:
+        return this.context.i18n.getMessage('EmptyLayout.message.matchingTasks');
       default:
         throw new Error('Could not find a view the request originated from');
     }

@@ -32,6 +32,10 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
       index = 2;
     }
 
+    if(router.location.pathname.indexOf('matching') !== -1) {
+      index = 4;
+    }
+
     return index;
   };
 
@@ -81,7 +85,13 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
               )
             },
             { children: i18n.getMessage('Navigation.workflow.header') },
-            { children: i18n.getMessage('Navigation.matching.header') },
+            {
+              children: (
+                <div onClick={() => router.push('/invoice/matching')}>
+                  {i18n.getMessage('Navigation.matching.header')}
+                </div>
+              )
+            },
             { children: i18n.getMessage('Navigation.contracts.header') }
           ]}
         iconsBarItems={

@@ -95,6 +95,16 @@
         "type": "rest",
         "resourceId": "/task/[%w | %p]*",
         "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/matching",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/matching/tasks",
+        "actions": ["view", "head"]
       }
     ]
   }

@@ -2,6 +2,8 @@ let TaskItem = {};
 TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
+TaskItem.invoiceNo = 'Inv.no.';
+TaskItem.matching = 'Matching approval';
 TaskItem.status = {
   inspectionRequired: 'Review required',
   approvalRequired: 'Approval required',
@@ -16,7 +18,8 @@ MyTaskList.label = {
   sortBy: 'Sort by',
   dueDate: 'Due date',
   supplier: { supplierName: 'Supplier' },
-  grossAmount: 'Gross amount'
+  grossAmount: 'Gross amount',
+  matching: 'Matching'
 };
 
 let Action = {
@@ -55,7 +58,8 @@ Action.headerLabel = 'Optional comment';
 let EmptyLayout = {
   message: {
     assignedTasks: "At the moment you don't have any invoice to review, approve or in clarification state.",
-    processedTasks: "At the moment you don't have any processed invoices."
+    processedTasks: "At the moment you don't have any processed invoices.",
+    matchingTasks: "At the moment you don't have any invoices for matching."
   }
 };
 

@@ -8,6 +8,7 @@ module.exports = function(app, db) {
     '/',
     '/taskList',
     '/allTaskList',
+    '/matching',
     '/import',
     '/single/*'
   ], function (req, res) {

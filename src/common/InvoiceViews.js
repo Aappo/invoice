@@ -35,5 +35,6 @@ module.exports = InvoiceViews.init({
   ALL_TASKS: '/invoice/allTaskList',
   MY_TASKS: '/invoice/taskList',
   PROCESSED_TASKS: '/invoice/processed',
+  MATCHING_TASKS: '/invoice/matching',
   EMPTY_VIEW: '/invoice/notFound'
 });

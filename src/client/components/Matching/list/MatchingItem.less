@@ -1,0 +1,37 @@
+.list-item-content {
+  display: flex;
+  flex-direction: row;
+
+  .list-item-wide-column {
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+
+    .list-item {
+      display: flex;
+      flex-direction: column;
+
+      .value {
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .divider {
+    height: 5px;
+  }
+
+  .list-item-narrow-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+
+    .list-item {
+      display: inline-flex;
+      flex-direction: column;
+    }
+  }
+}

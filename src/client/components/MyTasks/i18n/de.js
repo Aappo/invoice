@@ -2,6 +2,8 @@ let TaskItem = {};
 TaskItem.customerId = 'Gesellschaft-Zahler';
 TaskItem.supplierId = 'Lieferant';
 TaskItem.dueDate = 'Fälligkeitsdatum';
+TaskItem.invoiceNo = 'Inv.no.';
+TaskItem.matching = 'Matching approval';
 TaskItem.status = {
   inspectionRequired: 'Überprüfung erforderlich',
   approvalRequired: 'Genehmigung erforderlich',
@@ -16,7 +18,8 @@ MyTaskList.label = {
   sortBy: 'Sort by',
   dueDate: 'Due date',
   supplier: { supplierName: 'Supplier' },
-  grossAmount: 'Gross amount'
+  grossAmount: 'Gross amount',
+  matching: 'Matching'
 };
 
 let Action = {
@@ -55,7 +58,8 @@ Action.headerLabel = 'Optionaler Kommentar';
 let EmptyLayout = {
   message: {
     assignedTasks: "Zur Zeit gibt es keine Rechnungen für Überprufung, Genehmigung oder im Status Klärung.",
-    processedTasks: "Zur Zeit gibt es keine Rechnungen in Bearbeitung."
+    processedTasks: "Zur Zeit gibt es keine Rechnungen in Bearbeitung.",
+    matchingTasks: "At the moment you don't have any invoices for matching."
   }
 };
 
