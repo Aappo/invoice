@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   FormGroup,
   FormControl,
@@ -46,7 +46,10 @@ export default class CandidateList extends React.Component {
               </FormGroup>
             </div>
             <div id="content">
-              <CandidatesGrid />
+              <CandidatesGrid
+                candidates={this.props.candidates}
+                setSelectedCandidates={this.props.setSelectedCandidates}
+              />
             </div>
           </div>
         </IntlProvider>
@@ -54,3 +57,8 @@ export default class CandidateList extends React.Component {
     );
   }
 }
+
+CandidateList.propTypes = {
+  candidates: PropTypes.array.isRequired,
+  setSelectedCandidates: PropTypes.func.isRequired,
+};
