@@ -39,6 +39,8 @@ class MatchingItemsLayout extends React.Component {
     const newCandidates = this.state.candidates;
     newCandidates.splice(0, 1);
     this.setState({
+      selectedItems: new Set([1]),
+      selectedCandidates: new Set([1]),
       items: newItems,
       candidates: newCandidates,
     });

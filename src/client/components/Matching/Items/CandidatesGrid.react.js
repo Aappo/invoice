@@ -16,7 +16,6 @@ class CandidatesGrid extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.props.gridActions.setData(GRID_ID, this.props.candidates);
     this.props.setSelectedCandidates(new Set(nextProps.selectedItems.toJS()));
   }

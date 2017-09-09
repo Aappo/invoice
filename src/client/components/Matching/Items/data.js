@@ -1,6 +1,10 @@
 const items = [
   0,
   1,
+  2,
+  3,
+  4,
+  5,
 ];
 
 const candidates = [{
@@ -16,6 +20,36 @@ const candidates = [{
 }, {
   matchPercent: 100,
   orderNro: 24432,
+  article: 'Seat belt',
+  productID: 'P12375',
+  ordered: 34,
+  delivered: 34,
+  charged: 34,
+  unitPrice: 56.45,
+  unit: 'Piece',
+}, {
+  matchPercent: 100,
+  orderNro: 24433,
+  article: 'Seat belt',
+  productID: 'P12375',
+  ordered: 34,
+  delivered: 34,
+  charged: 34,
+  unitPrice: 56.45,
+  unit: 'Piece',
+}, {
+  matchPercent: 100,
+  orderNro: 24434,
+  article: 'Seat belt',
+  productID: 'P12375',
+  ordered: 34,
+  delivered: 34,
+  charged: 34,
+  unitPrice: 56.45,
+  unit: 'Piece',
+}, {
+  matchPercent: 100,
+  orderNro: 24435,
   article: 'Seat belt',
   productID: 'P12375',
   ordered: 34,

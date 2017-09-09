@@ -11,7 +11,7 @@ import {
 } from 'redux';
 import { Provider } from 'react-redux';
 import { IntlProvider, intlReducer } from 'react-intl-redux';
-import { datagridReducer } from '@opuscapita/react-grid';
+import { datagridReducer, DatagridActions } from '@opuscapita/react-grid';
 import thunk from 'redux-thunk';
 
 import CandidatesGrid from './CandidatesGrid.react';
@@ -28,6 +28,14 @@ const store = createStore(
 
 
 export default class CandidateList extends React.Component {
+  componentWillReceiveProps(nextProps) {
+    store.dispatch(DatagridActions.setData('candidates-grid',
+      nextProps.candidates));
+    setTimeout(() => {
+      store.dispatch(DatagridActions.itemSelectionChange(
+      'candidates-grid', 0, ['orderNro']));
+    }, 200);
+  }
   render() {
     return (
       <Provider store={store}>
