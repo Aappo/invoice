@@ -73,7 +73,7 @@
     "raw-loader":"^0.5.1"
   },
   "scripts": {
-    "start": "npm run build-client ; node src/server/index.js",
+    "start": "node src/server/index.js",
     "build-client": "${NODE_PATH}/.bin/webpack --config ./webpack.production.config.js --profile --colors --bail",
     "dev": "npm run setup-consul ; ${NODE_PATH}/.bin/nodemon --watch src/server src/server/index.js",
     "test": "npm run clean ; ${NODE_PATH}/.bin/nyc ${NODE_PATH}/.bin/mocha --require config/mocha-setup.js --recursive '**/*.spec.js'",
