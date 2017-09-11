@@ -4,22 +4,41 @@ import _ from 'lodash';
 import InvoiceViews from '../../../../common/InvoiceViews';
 
 /**
- * Injects common invoice operations to wrapped component
+ * Generic configurable HOC data handler providing common invoice operation.
  *
  * @param WrappedComponent - wrapped component
- * @param fetchers - set of functions for fetching data ('task', 'list', 'invoice')
- * @param filter - filter
+ * @param config - data handler configuration:
+ *  invoiceFetcher - fetcher function to load single invoice
+ *  listFetcher - fetcher function to load list of invoices
+ *  withDetails - wrapper function to add additional details to invoice if needed (optional)
+ *  filter - filter function specifying should invoice be removed from the list after update (optional)
+ *  sorting - sorting configuration of form { <field name>:<comparator> } (optional)
  * @returns {DataHandler}
  */
-export default function withDataHandler(WrappedComponent, { fetchers, filter = task => !!task }) {
+export default function withDataHandler(WrappedComponent, config) {
+
+  const defaultConfig = {
+    withDetails: invoice => Promise.resolve(invoice),
+    filter: invoice => !!invoice,
+    sorting: {}
+  };
+
+  const {
+    invoiceFetcher,
+    listFetcher,
+    withDetails,
+    filter,
+    sorting
+  } = Object.assign({}, defaultConfig, config);
 
   class DataHandler extends Component {
 
     static propTypes = {
-      taskFetcher: PropTypes.func.isRequired,
-      listFetcher: PropTypes.func.isRequired,
       invoiceFetcher: PropTypes.func.isRequired,
-      filter: PropTypes.func.isRequired
+      listFetcher: PropTypes.func.isRequired,
+      withDetails: PropTypes.func.isRequired,
+      filter: PropTypes.func.isRequired,
+      sorting: PropTypes.object.isRequired
     };
 
     static contextTypes = {
@@ -27,30 +46,30 @@ export default function withDataHandler(WrappedComponent, { fetchers, filter = t
     };
 
     static defaultProps = {
-      taskFetcher: fetchers['task'],
-      listFetcher: fetchers['list'],
-      invoiceFetcher: fetchers['invoice'],
-      filter: filter
+      invoiceFetcher: invoiceFetcher,
+      listFetcher: listFetcher,
+      withDetails: withDetails,
+      filter: filter,
+      sorting: sorting
     };
 
     state = {
-      taskList: undefined,
+      list: undefined,
+      invoiceData: undefined
     };
 
     componentDidMount() {
-      this.props.listFetcher().then((invoices) => {
-        if (invoices.length > 0) {
-          return this.props.invoiceFetcher(invoices[0].id).then((invoiceData) =>
-            Promise.resolve(this.setState({ taskList: invoices, invoice: invoiceData }))
-          )
+      this.props.listFetcher().then((list) => {
+        if (list.length > 0) {
+          return Promise.resolve(this.setState({ list }, () => this.getInvoice(list[0].id)))
         } else {
-          return Promise.resolve(this.setState({ taskList: invoices }));
+          return Promise.resolve(this.setState({ list }));
         }
       })
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      if (nextState.taskList && nextState.taskList.length === 0) {
+      if (nextState.list && nextState.list.length === 0) {
         this.context.router.push({
           pathname: InvoiceViews.EMPTY_VIEW.path,
           query: { prevPath: this.context.router.location.pathname }
@@ -60,9 +79,18 @@ export default function withDataHandler(WrappedComponent, { fetchers, filter = t
       return true;
     }
 
+    loadInvoiceData(id) {
+      const invoice = _.find(this.state.list, { id: id });
+      if (invoice) {
+        return this.props.withDetails(_.cloneDeep(invoice)); // Should not allow to mutate list item externally
+      } else {
+        throw new Error('Attempting to load data for invoice which is not present in the list');
+      }
+    }
+
     getInvoice(id) {
-      return this.props.invoiceFetcher(id).then((invoice) => {
-        return Promise.resolve(this.setState({ invoice }))
+      return this.loadInvoiceData(id).then((invoiceData) => {
+        return Promise.resolve(this.setState({ invoiceData }))
       }).catch((err) => {
         throw Error(err);
       });
@@ -78,25 +106,25 @@ export default function withDataHandler(WrappedComponent, { fetchers, filter = t
     updateInvoice(id, updater) {
       return Promise.resolve(
         updater(
-          _.find(this.state.taskList, { id: id })
+          _.find(this.state.list, { id: id })
         )
       ).then(() => {
         return Promise.props({
-          invoice: this.props.taskFetcher(id),
-          invoiceData: this.props.invoiceFetcher(id)
+          invoice: this.props.invoiceFetcher(id),
+          invoiceData: this.loadInvoiceData(id)
         }).then(({ invoice, invoiceData }) => {
           let updatedInvoice;
-          let updatedTaskList;
+          let updatedList;
           if (this.props.filter(invoiceData)) {
             updatedInvoice = invoiceData;
-            updatedTaskList = _.map(this.state.taskList, task => task.id === id ? invoice : task);
+            updatedList = _.map(this.state.list, item => item.id === id ? invoice : item);
           } else {
-            updatedTaskList = _.filter(this.state.taskList, task => task.id !== invoiceData.id);
+            updatedList = _.filter(this.state.list, item => item.id !== invoice.id);
           }
           return Promise.resolve(
             this.setState({
-              invoice: updatedInvoice,
-              taskList: updatedTaskList
+              invoiceData: updatedInvoice,
+              list: updatedList
             })
           );
         })
@@ -107,22 +135,22 @@ export default function withDataHandler(WrappedComponent, { fetchers, filter = t
     }
 
     /**
-     * Sorts task list with comparator function. Returns promise notifying if the list has been sorted.
+     * Sorts list with by specified field. Returns promise notifying if the list has been sorted.
      *
-     * @param comparator
+     * @param field
      */
-    sortTaskList(comparator) {
-      return this.state.taskList ? new Promise(resolve => {
-        this.setState({ taskList: this.state.taskList.slice(0).sort(comparator) }, () => resolve(true))
+    sortList(field) {
+      return this.state.list ? new Promise(resolve => {
+        this.setState({ list: this.state.list.slice(0).sort(sorting[field]) }, () => resolve(true))
       }) : Promise.resolve(false)
     }
 
     render() {
       return (
         <WrappedComponent
-          list={this.state.taskList}
-          onSort={::this.sortTaskList}
-          invoice={this.state.invoice}
+          list={this.state.list}
+          onSort={::this.sortList}
+          invoice={this.state.invoiceData}
           getInvoice={::this.getInvoice}
           updateInvoice={::this.updateInvoice}
         />

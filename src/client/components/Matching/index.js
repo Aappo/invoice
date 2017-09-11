@@ -13,6 +13,7 @@ import {
   fetchInvoiceReceipt
 } from '../MyTasks/data/fetchers'; // TODO: Move all common fetchers to common directory
 import messages from '../MyTasks/i18n'; // TODO: How to share bundle between these views?
+import { SORTING_ORDER } from '../MyTasks/constants';
 
 const withTenants = task => {
   return Promise.props({
@@ -48,15 +49,20 @@ export default class MatchingView extends Component {
   }
 
   render() {
-    return React.createElement(withDataHandler(MatchingLayout, {
-      fetchers: {
-        task: (id) => fetchMatchingTask(id).then(withTenants).then(withMatchingInfo),
-        list: () => fetchMatchingTasks({}).then(tasks =>
-          Promise.all(tasks.map(task => withTenants(task).then(withMatchingInfo)))),
-        invoice: (id) => fetchInvoiceReceipt(id).then(withTenants).then(withMatchingInfo)
-      },
-      filter: task => task.matching.matched !== task.matching.total
-    }));
+    return React.createElement(withDataHandler(
+      MatchingLayout,
+      {
+        invoiceFetcher: (id) => fetchMatchingTask(id).then(withTenants).then(withMatchingInfo),
+        listFetcher: () => fetchMatchingTasks({}).then(invoices =>
+          Promise.all(invoices.map(invoice => withTenants(invoice).then(withMatchingInfo)))),
+        filter: invoice => invoice.matching.matched !== invoice.matching.total,
+        sorting: {
+          'dueDate': SORTING_ORDER.ASC,
+          'supplier.supplierName': SORTING_ORDER.ASC,
+          'grossAmount': SORTING_ORDER.ASC,
+        }
+      }
+    ));
   }
 
 }
