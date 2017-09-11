@@ -6,16 +6,16 @@ const createPurchaseInvoice2MatchingDocument = require('./matching-document/crea
 
 module.exports.up = function(db, config) {
   return createMatchingDocument(db.getQueryInterface()).then(
-    () => Promise.all([
-      createMatchingDocumentItem(db.getQueryInterface()),
-      createPurchaseInvoice2MatchingDocument(db.getQueryInterface())
-    ])
+    () => createMatchingDocumentItem(db.getQueryInterface()).then(
+      () => createPurchaseInvoice2MatchingDocument(db.getQueryInterface())
+    )
   );
 };
 
 module.exports.down = function(db, config) {
-  return Promise.all([
-    db.getQueryInterface().dropTable('MatchingDocumentItem'),
-    db.getQueryInterface().dropTable('PurchaseInvoice2MatchingDocument')
-  ]).then(() => db.getQueryInterface().dropTable('MatchingDocument'));
+  return db.getQueryInterface().dropTable('PurchaseInvoice2MatchingDocument').then(
+    () => db.getQueryInterface().dropTable('MatchingDocumentItem').then(
+      () => db.getQueryInterface().dropTable('MatchingDocument')
+    )
+  );
 };

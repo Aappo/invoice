@@ -22,6 +22,17 @@ module.exports = function(queryInterface) {
       onUpdate: 'cascade',
       onDelete: 'restrict'
     },
+    purchaseInvoiceItemId: {
+      field: 'PurchaseInvoiceItemSN',
+      type: Sequelize.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'PurchaseInvoiceItem',
+        key: 'PurchaseInvoiceItemSN'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'restrict'
+    },
     matchingDocumentId: {
       field: 'MatchingDocumentSN',
       type: Sequelize.BIGINT,
@@ -29,6 +40,17 @@ module.exports = function(queryInterface) {
       references: {
         model: 'MatchingDocument',
         key: 'MatchingDocumentSN'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'restrict'
+    },
+    matchingDocumentItemId: {
+      field: 'MatchingDocumentItemSN',
+      type: Sequelize.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'MatchingDocumentItem',
+        key: 'MatchingDocumentItemSN'
       },
       onUpdate: 'cascade',
       onDelete: 'restrict'

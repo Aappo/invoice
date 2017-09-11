@@ -300,8 +300,13 @@ module.exports.init = function(db, config) {
             as: 'matchingDocuments',
             through: models.PurchaseInvoice2MatchingDocument,
             foreignKey: 'PurchaseInvoiceSN',
-            otherKey: 'MatchingDocumentSN',
-            timestamps: false
+            otherKey: 'MatchingDocumentSN'
+          });
+          models.PurchaseInvoice.belongsToMany(models.MatchingDocumentItem, {
+            as: 'matchingDocumentItems',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'PurchaseInvoiceSN',
+            otherKey: 'MatchingDocumentItemSN'
           });
         }
       },

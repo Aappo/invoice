@@ -218,38 +218,6 @@ module.exports.init = function(db, config) {
         field: 'QuantityReceived',
         type: Sequelize.DECIMAL(19, 2),
         allowNull: true
-      },
-      /**
-       * Date of creation.
-       */
-      createdOn: {
-        field: 'CreatedOn',
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      /**
-       * Creator identity.
-       */
-      createdBy: {
-        field: 'CreatedBy',
-        type: Sequelize.STRING(60),
-        allowNull: false
-      },
-      /**
-       * Date of change.
-       */
-      changedOn: {
-        field: 'ChangedOn',
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      /**
-       * Author of change.
-       */
-      changedBy: {
-        field: 'ChangedBy',
-        type: Sequelize.STRING(60),
-        allowNull: false
       }
     },
     {
@@ -258,11 +226,21 @@ module.exports.init = function(db, config) {
           models.MatchingDocumentItem.belongsTo(models.MatchingDocument, {
             as: 'matchingDocument'
           });
+          models.MatchingDocumentItem.belongsToMany(models.PurchaseInvoice, {
+            as: 'purchaseInvoices',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'MatchingDocumentItemSN',
+            otherKey: 'PurchaseInvoiceSN'
+          });
+          models.MatchingDocumentItem.belongsToMany(models.PurchaseInvoiceItem, {
+            as: 'purchaseInvoiceItems',
+            through: models.PurchaseInvoice2MatchingDocument,
+            foreignKey: 'MatchingDocumentItemSN',
+            otherKey: 'PurchaseInvoiceItemSN'
+          });
         }
       },
-      timestamps: true,
-      createdAt: 'createdOn',
-      updatedAt: 'changedOn',
+      timestamps: false,
       tableName: 'MatchingDocumentItem'
     });
 };
