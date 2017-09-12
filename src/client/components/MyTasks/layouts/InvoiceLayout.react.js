@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-
 import InvoiceDataDashboard from '../details/InvoiceDataDashboard';
 import UiHelpers from '../helpers/UIHelpers.react';
 import { Icon } from '@opuscapita/react-icons';
-
+import InvoiceViews from '../../../../common/InvoiceViews';
 import './InvoiceLayout.less';
 
 export default class InvoiceLayout extends React.Component {
@@ -37,7 +36,7 @@ export default class InvoiceLayout extends React.Component {
     return this.props.invoice ? (
       <div id="single-invoice">
         <div id="content">
-          <Link to={'/invoice/taskList'}>
+          <Link to={InvoiceViews.MY_TASKS}>
             <Icon type="indicator" name="arrowLeft" />
           </Link>
           {this.state.activePage === "image" && this.getImage(this.props.invoice ) }
