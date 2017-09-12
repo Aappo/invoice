@@ -8,12 +8,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - deploy:
-          name: Build and push Docker base image
-          command: |
-            docker build -t opuscapita/$CIRCLE_PROJECT_REPONAME:base -f Dockerfile.base .
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push opuscapita/$CIRCLE_PROJECT_REPONAME:base
       - run:
           name: Deployment script
           command: |
