@@ -7,11 +7,7 @@ const Layout = (props, { userData }) => (
     <Navigation/>
     <OCAlertsProvider/>
     <div className="main-content">
-      <div className="content-wrap">
-        <div className="container-fluid">
-          {props.children}
-        </div>
-      </div>
+      {props.children}
     </div>
   </div>
 );
