@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
-import { Route, Redirect, IndexRedirect } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
-import { fetchApprovalTasks, fetchInvoiceReceipt, fetchCustomer, fetchSupplier } from '../components/MyTasks/data/fetchers';
+import {
+  fetchApprovalTasks,
+  fetchInvoiceReceipt,
+} from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
 import TaskListLayoutHandler from '../components/MyTasks/layouts/TaskListLayoutHandler.react';
 import TaskLayoutHandler from '../components/MyTasks/layouts/TaskLayoutHandler.react';
@@ -15,7 +18,10 @@ import InvoiceGrid from '../components/InvoiceGrid';
 const TaskList = (props) => {
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}) }
+      fetcher={ () => fetchApprovalTasks({
+        searchParams: { assignedToMe: true
+        }
+      })}
       filter={ invoice => invoice.transitions.length > 0 }
     />
   );
@@ -32,7 +38,11 @@ const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {processedByMe: true}}) }
+      fetcher={ () => fetchApprovalTasks({
+        searchParams: {
+          processedByMe: true
+        }
+      })}
       filter={filter}
     />
   )
