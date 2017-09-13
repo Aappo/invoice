@@ -37,7 +37,7 @@ export default (i18n) => [
     header: i18n.getMessage('InvoiceGrid.grossAmount.label'),
     valueKeyPath: ['grossAmount'],
     valueRender: (invoice) => i18n.formatDecimalNumber(invoice.get('grossAmount')),
-    valueType: 'text',
+    valueType: 'float',
     width: 205,
   },
   {
