@@ -3,7 +3,6 @@ import withDataHandler from '../DataHandler.react';
 import WideLayout from './WideLayout.react';
 import NarrowLayout from './NarrowLayout.react';
 import './TaskLayout.less';
-import myTasksMessages from '../i18n';
 import { withRouter } from 'react-router';
 const NARROW_MODE_BREAK_POINT = 860;
 
@@ -22,16 +21,6 @@ export default class TaskListLayoutHandler extends Component {
   state = {
     useNarrow: false,
   };
-
-  componentWillMount() {
-    this.context.i18n.register('MyTasks', myTasksMessages);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext){
-    if(nextContext.i18n.locale !== this.context.i18n.locale){
-      nextContext.i18n.register('MyTasks', myTasksMessages);
-    }
-  }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     //optimization for odd rerendering - as component is descendant to Layout component

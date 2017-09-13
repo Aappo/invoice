@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Datagrid } from '@opuscapita/react-grid';
 import columns from './columns';
 import { connect } from 'react-redux';
-import messages from './i18n';
 import { INVOICE_GRID } from './constants';
 import { loadInvoiceData } from './actions';
 
@@ -16,7 +15,6 @@ const mapDispatchToProps = {
  * @author Daniel Zhitomirsky
  */
 const InvoiceGrid = ({ loadInvoiceData }, { i18n }) => {
-  i18n.register('InvoiceGrid', messages);
   loadInvoiceData();
 
   return (
