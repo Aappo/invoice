@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import InvoiceViews from '../../../../common/InvoiceViews';
-import messages from '../i18n';
 
 // TODO: It better be pure functional component. Find another way to reload message bundles.
 export default class EmptyLayout extends Component {
@@ -12,16 +11,6 @@ export default class EmptyLayout extends Component {
   static contextTypes = {
     i18n: PropTypes.object.isRequired
   };
-
-  componentWillMount() {
-    this.context.i18n.register('MyTasks', messages);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext){
-    if(nextContext.i18n.locale !== this.context.i18n.locale){
-      nextContext.i18n.register('MyTasks', messages);
-    }
-  }
 
   getMessageForView(view) {
     switch(view) {

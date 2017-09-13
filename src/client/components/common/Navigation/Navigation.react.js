@@ -7,8 +7,6 @@ import {
   MenuDropdownGrid
 } from '@opuscapita/react-navigation';
 const gridIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/apps.svg');
-import { Link } from 'react-router';
-import messages from './i18n';
 import InvoiceViews from '../../../../common/InvoiceViews';
 
 const userActions = (i18n) => [
@@ -53,8 +51,8 @@ const renderUserMenuBottomElement = (userData, i18n, setLocale) => (
       <MenuSelect className="oc-menu-account__select-item-select" onChange={(e) => {
         setLocale(e.target.value)
       }}>
-        <option>{i18n.getMessage('Navigation.userMenu.language.en.label')}</option>
-        <option>{i18n.getMessage('Navigation.userMenu.language.de.label')}</option>
+        <option value="en">{i18n.getMessage('Navigation.userMenu.language.en.label')}</option>
+        <option value="de">{i18n.getMessage('Navigation.userMenu.language.de.label')}</option>
       </MenuSelect>
     </div>
   </div>
@@ -63,8 +61,6 @@ const renderUserMenuBottomElement = (userData, i18n, setLocale) => (
 const logoUrl = '/invoice/static/img/oc-logo-white.svg';
 
 const Navigation = (props, { i18n, userData, setLocale, router }) => {
-  i18n.register('Navigation', messages);
-
   const getTabIndex = () => {
     let index = 0;
 

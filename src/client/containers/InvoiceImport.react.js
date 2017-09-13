@@ -4,7 +4,6 @@ import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
 import { INVOICE_IMPORT_CHUNK_SIZE } from '../constants/invoiceImport';
 import lodash from 'lodash';
-import messages from './i18n/InvoiceImport';
 
 export default class InvoiceImport extends Component {
 
@@ -19,19 +18,8 @@ export default class InvoiceImport extends Component {
   }
 
   static contextTypes = {
-    i18n: PropTypes.object.isRequired,
     router: PropTypes.object.isRequired
   };
-
-  componentWillMount() {
-    this.context.i18n.register('InvoiceImport', messages);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext){
-    if(nextContext.i18n.locale !== this.context.i18n.locale){
-      nextContext.i18n.register('InvoiceImport', messages);
-    }
-  }
 
   _calculateImportPercentage(currentPercentage = 0, importSize) {
     if (lodash.isNil(importSize) || importSize === 0) {
