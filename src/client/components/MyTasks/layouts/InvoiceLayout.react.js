@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Icon } from '@opuscapita/react-icons';
-
 import InvoiceDataDashboard from '../details/InvoiceDataDashboard';
 import Actions from '../actions/Actions.react';
 import UiHelpers from '../helpers/UIHelpers.react';
 import TaskItem from '../list/TaskItem.react';
 import InvoicePosting from '../details/InvoicePosting/InvoicePosting.react';
-
+import { Icon } from '@opuscapita/react-icons';
+import InvoiceViews from '../../../../common/InvoiceViews';
 import './InvoiceLayout.less';
 
 
@@ -64,7 +63,7 @@ export default class InvoiceLayout extends React.Component {
       <div id="single-invoice">
         <div id="content-container">
           <div id="header">
-            {this.state.activePage === 'approval' && <Link to={'/invoice/taskList'}>
+            {this.state.activePage === 'approval' && <Link to={InvoiceViews.MY_TASKS}>
               <Icon type="indicator" name="arrowLeft" />
             </Link>}
             {this.state.activePage !== 'approval' &&

@@ -2,23 +2,18 @@
   "capturing": {
     "translations": {
       "name" : {
-        "en": "Invoice capturing app",
-        "de": "Invoice capturing app (de)"
+        "en": "Purchase Invoice",
+        "de": "Purchase Invoice (de)"
       },
       "description": {
-        "en": "CRUD + import for Invoices",
-        "de": "CRUD + import for Invoices (de)"
+        "en": "Approval, matching functionality",
+        "de": "Approval, matching functionality (de)"
       }
     },
     "resources": [
       {
         "type": "rest",
         "resourceId": "^[/]$",
-        "actions": ["view"]
-      },
-      {
-        "type": "rest",
-        "resourceId": "/approval",
         "actions": ["view"]
       },
       {
@@ -73,27 +68,27 @@
       },
       {
         "type": "rest",
-        "resourceId": "/api/statuses",
+        "resourceId": "/tasks/active",
         "actions": ["view"]
       },
       {
         "type": "rest",
-        "resourceId": "/taskList",
+        "resourceId": "/list",
         "actions": ["view"]
       },
       {
         "type": "rest",
-        "resourceId": "/allTaskList",
+        "resourceId": "/import",
         "actions": ["view"]
       },
       {
         "type": "rest",
-        "resourceId": "/processed",
+        "resourceId": "/tasks/processed",
         "actions": ["view"]
       },
       {
         "type": "rest",
-        "resourceId": "/task/[%w | %p]*",
+        "resourceId": "/tasks/[%w | %p]*",
         "actions": ["view"]
       }
     ]

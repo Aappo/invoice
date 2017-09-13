@@ -6,8 +6,9 @@ module.exports = function(app, db) {
 
   app.get([
     '/',
-    '/taskList',
-    '/allTaskList',
+    '/tasks/active',
+    '/tasks/processed',
+    '/list',
     '/import',
     '/task/*'
   ], function (req, res) {
