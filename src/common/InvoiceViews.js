@@ -27,7 +27,7 @@ class InvoiceViews  {
   }
 
   static getByPath(path) {
-    return this.views.find(view => view.path === path);
+    return this.views.filter(view => view.path === path)[0];
   }
 }
 

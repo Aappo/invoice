@@ -1,4 +1,10 @@
 FROM node:6-alpine
 MAINTAINER OpusCapita
 
-RUN apk add --no-cache rsync curl
+WORKDIR /var/tmp/base
+
+COPY package.json .
+
+ENV NODE_ENV=development
+
+RUN apk add --no-cache rsync curl ; npm set progress=false && npm install && npm cache clean

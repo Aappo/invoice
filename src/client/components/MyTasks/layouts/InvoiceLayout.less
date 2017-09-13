@@ -1,59 +1,89 @@
 
 #single-invoice {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100%;
+  background-color: #D3DADE;
+  width: 100%;
 
-  #content {
+  #content-container {
     display: flex;
-    flex: 1;
-    overflow: auto;
-  }
+    flex-direction: column;
+    width: 100%;
 
-  #navigation {
-    display: flex;
-    flex: 0 0 40px;
-
-    > ul {
+    #header {
       display: flex;
-      flex-direction: row;
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
       width: 100%;
-      height: 100%;
-      background-color: #F1F1F1;
+      background-color: white;
+      align-items: center;
+    }
 
-      li {
-        flex: 1 1 auto;
-        height: 100%;
-        text-align: center;
-        cursor: pointer;
+    #content {
+      display: flex;
+      flex: 1;
+      overflow: auto;
 
-        &.topborder {
-          border-top: solid 1px lightgray;
+      #approval {
+        width: 100%;
+
+        .list-item-content {
+          padding: 10px;
+          margin: 5px;
+          border: solid 2px gray;
+          background: white;
         }
 
-        &.border {
-          border-top: solid 1px lightgray;
-          border-left: solid 1px lightgray;
-        }
-
-        &.doing {
-          background-color: #DEDEDE;
+        #actions {
+          margin-right: 5px;
         }
       }
+    }
 
-      li a {
-          display: flex;
-          flex-direction: row;
+    #navigation {
+      display: flex;
+      flex: 0 0 40px;
+
+      > ul {
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        width: 100%;
+        height: 100%;
+        background-color: #F1F1F1;
+
+        li {
+          flex: 1 1 auto;
           height: 100%;
-          align-items: center;
-          justify-content: center;
           text-align: center;
-          text-decoration: none;
-          color: #67707c;
+          cursor: pointer;
+
+          &.topborder {
+            border-top: solid 1px lightgray;
+          }
+
+          &.border {
+            border-top: solid 1px lightgray;
+            border-left: solid 1px lightgray;
+          }
+
+          &.doing {
+            background-color: #DEDEDE;
+          }
+        }
+
+        li a {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            color: #67707c;
+        }
       }
     }
   }
