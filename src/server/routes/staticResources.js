@@ -6,10 +6,11 @@ module.exports = function(app, db) {
 
   app.get([
     '/',
-    '/taskList',
-    '/allTaskList',
+    '/tasks/active',
+    '/tasks/processed',
+    '/list',
     '/import',
-    '/single/*'
+    '/task/*'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
       res.render('index', {

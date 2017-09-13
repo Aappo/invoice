@@ -9,7 +9,7 @@ import Promise from 'bluebird'
 import _ from 'lodash';
 import { VIEW_SORTING_RULES } from '../constants';
 import InvoiceViews from '../../../../common/InvoiceViews';
-
+import { Link } from 'react-router';
 
 class MyTasksList extends PureComponent {
 
@@ -76,6 +76,17 @@ class MyTasksList extends PureComponent {
     return (
       <div id="list-container" className="oc-invoices-my-tasks-list">
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
+
+          <div className="oc-task-link oc-task-link--active">
+            <Link to={InvoiceViews.MY_TASKS.path}>
+              {this.context.i18n.getMessage('Navigation.myInvoices.myTaskList')}
+            </Link>
+          </div>
+          <div className="oc-task-link">
+            <Link to={InvoiceViews.PROCESSED_TASKS.path}>
+              {this.context.i18n.getMessage('Navigation.myInvoices.processed')}
+            </Link>
+          </div>
           <SortInvoice
             value={this.state.sortedBy}
             items={
@@ -99,7 +110,7 @@ class MyTasksList extends PureComponent {
                 this.setState({ selected });
               } else {
                 this.props.router.push(
-                  `/invoice/task/${this.props.list[selected].id}`);
+                  `/invoice/tasks/${this.props.list[selected].id}`);
               }
             }}
           />

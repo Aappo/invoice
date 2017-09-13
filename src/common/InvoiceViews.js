@@ -32,8 +32,9 @@ class InvoiceViews  {
 }
 
 module.exports = InvoiceViews.init({
-  ALL_TASKS: '/invoice/allTaskList',
-  MY_TASKS: '/invoice/taskList',
-  PROCESSED_TASKS: '/invoice/processed',
-  EMPTY_VIEW: '/invoice/notFound'
+  ALL_TASKS: '/invoice/list',
+  MY_TASKS: '/invoice/tasks/active',
+  PROCESSED_TASKS: '/invoice/tasks/processed',
+  EMPTY_VIEW: '/invoice/tasks/notFound',
+  IMPORT: '/invoice/import'
 });
