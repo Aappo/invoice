@@ -19,15 +19,18 @@ export default class TaskLayoutHandler extends React.Component {
     this.context.i18n.register('MyTasks', myTasksMessages);
   }
 
-  componentWillReceiveProps(nextProps, nextContext){
-    if(nextContext.i18n.locale !== this.context.i18n.locale){
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (nextContext.i18n.locale !== this.context.i18n.locale) {
       nextContext.i18n.register('MyTasks', myTasksMessages);
     }
   }
 
   render() {
     return React.createElement(
-      withRouter(withDataHandler(InvoiceLayout, { fetcher: this.props.fetcher, filter: this.props.filter })),
+      withRouter(withDataHandler(InvoiceLayout, {
+        fetcher: this.props.fetcher,
+        filter: this.props.filter
+      })),
       { ...this.props },
       null
     );
