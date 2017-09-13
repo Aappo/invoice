@@ -185,26 +185,6 @@ module.exports = function(queryInterface) {
       field: 'QuantityReceived',
       type: Sequelize.DECIMAL(19, 2),
       allowNull: true
-    },
-    createdOn: {
-      field: 'CreatedOn',
-      type: Sequelize.DATE,
-      allowNull: false
-    },
-    createdBy: {
-      field: 'CreatedBy',
-      type: Sequelize.STRING(60),
-      allowNull: false
-    },
-    changedOn: {
-      field: 'ChangedOn',
-      type: Sequelize.DATE,
-      allowNull: false
-    },
-    changedBy: {
-      field: 'ChangedBy',
-      type: Sequelize.STRING(60),
-      allowNull: false
     }
   }).then(() => {
     return Promise.all([
