@@ -12,6 +12,8 @@ import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 import Promise from 'bluebird';
 import InvoiceGrid from '../components/InvoiceGrid';
 import InvoiceViews from '../../common/InvoiceViews';
+import MatchingView from '../components/Matching';
+// import { TaskList, ProcessedList, TaskView } from '../components/MyTasks'; // Uncomment to use updated versions
 
 /**
  * View displaying invoices which have available transitions for current user.
@@ -77,6 +79,7 @@ export default (props, context) => (
     <Route path={InvoiceViews.ALL_TASKS.path} component={InvoiceGrid}/>
     <Route path={InvoiceViews.MY_TASKS.path} component={TaskList}/>
     <Route path={InvoiceViews.PROCESSED_TASKS.path} component={ProcessedList}/>
+    <Route path={InvoiceViews.MATCHING.path} component={MatchingView}/>
     <Route path={InvoiceViews.EMPTY_VIEW.path} component={EmptyLayout}/>
     <Route path="/invoice/tasks/:invoiceId" component={TaskView}/>
   </Route>

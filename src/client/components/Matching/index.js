@@ -12,15 +12,15 @@ import {
   fetchSupplier
 } from '../common/data/fetchers';
 
-const withTenants = task => {
+const withTenants = invoice => {
   return Promise.props({
-    customer: fetchCustomer(task.customerId),
-    supplier: fetchSupplier(task.supplierId)
-  }).then(tenants => Object.assign(task, tenants));
+    customer: fetchCustomer(invoice.customerId),
+    supplier: fetchSupplier(invoice.supplierId)
+  }).then(tenants => Object.assign(invoice, tenants));
 };
 
-const withMatchingInfo = task => {
-  return fetchMatchingTaskInfo(task.id).then(info => Object.assign(task, { matching: info }));
+const withMatchingInfo = invoice => {
+  return fetchMatchingTaskInfo(invoice.id).then(info => Object.assign(invoice, { matching: info }));
 };
 
 const MatchingView = () => {
@@ -31,7 +31,7 @@ const MatchingView = () => {
       invoiceFetcher: (id) => fetchMatchingTask(id).then(withTenants).then(withMatchingInfo),
       listFetcher: () => fetchMatchingTasks({}).then(invoices =>
         Promise.all(invoices.map(invoice => withTenants(invoice).then(withMatchingInfo)))),
-      filter: invoice => invoice.matching.matched !== invoice.matching.total
+      filter: invoice => invoice.matching.match !== invoice.matching.total
     }
   ));
 };

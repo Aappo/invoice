@@ -16,7 +16,7 @@ module.exports = function(app, epilogue, db) {
 
   /**
    * Fetch matching information about invoice. Information is set in X-Matching-Info header
-   * in a form { matched: <matched items quantity>, total: <total items for matching quantity> }.
+   * in a form { match: <matched items quantity>, total: <total items for matching quantity> }.
    */
   app.head('/api/matching/tasks/:id', function (req, res) {
     db.models.PurchaseInvoice.findById(req.params.id).then(task => {
@@ -24,7 +24,7 @@ module.exports = function(app, epilogue, db) {
         res.status(404);
       }
       return Promise.props({
-        matched: db.models.PurchaseInvoice2MatchingDocument.aggregate(
+        match: db.models.PurchaseInvoice2MatchingDocument.aggregate(
           'purchaseInvoiceItemId',
           'count',
           {

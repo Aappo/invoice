@@ -2,6 +2,9 @@
   "TaskItem.customerId": "Gesellschaft-Zahler",
   "TaskItem.supplierId": "Lieferant",
   "TaskItem.dueDate": "Fälligkeitsdatum",
+  "TaskItem.invoiceNo": "Inv. No.",
+  "TaskItem.purchaseOrderId": "Order No.",
+  "TaskItem.matching": "Matching approval",
   "TaskItem.status.inspectionRequired": "Überprüfung erforderlich",
   "TaskItem.status.approvalRequired": "Genehmigung erforderlich",
   "TaskItem.status.inspClrRequired": "Klärung erforderlich",
@@ -13,6 +16,7 @@
   "MyTaskList.label.dueDate": "Due date",
   "MyTaskList.label.supplier.supplierName": "Supplier",
   "MyTaskList.label.grossAmount": "Gross amount",
+  "MyTaskList.label.matching": "Matching",
 
   "Action.event.inspect": "Prüfen",
   "Action.event.sendToClarification": "Zur Klärung weiterleiten",
@@ -41,6 +45,7 @@
 
   "EmptyLayout.message.assignedTasks": "Zur Zeit gibt es keine Rechnungen für Überprufung, Genehmigung oder im Status Klärung.",
   "EmptyLayout.message.processedTasks": "Zur Zeit gibt es keine Rechnungen in Bearbeitung.",
+  "EmptyLayout.message.matchingTasks": "At the moment you don't have any invoices for matching.",
 
   "Details.header.image": "Invoice image",
   "Details.header.details": "Invoice details",
