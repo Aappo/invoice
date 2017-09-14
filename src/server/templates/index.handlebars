@@ -6,8 +6,13 @@
   <link rel="shortcut icon" type="image/x-icon" href="/invoice/static/img/favicon.ico">
   <link rel="stylesheet" href="/invoice/static/css/ocui-bootstrap-bundle-0.1.2.css">
   <link rel="stylesheet" href="/invoice/static/css/sidebar-layout.css">
-  <script type="application/javascript" src="/invoice/static/react/react.js"></script>
-  <script type="application/javascript" src="/invoice/static/react/react-dom.js"></script>
+  {{#if useMinifiedReact}}
+    <script type="application/javascript" src="/invoice/static/react/react.min.js"></script>
+    <script type="application/javascript" src="/invoice/static/react/react-dom.js"></script>
+  {{else}}
+    <script type="application/javascript" src="/invoice/static/react/react.js"></script>
+    <script type="application/javascript" src="/invoice/static/react/react-dom.js"></script>
+  {{/if}}
   <script type="application/javascript" src="/invoice/static/bundle.js"></script>
   <title>Invoice</title>
 </head>
@@ -18,26 +23,6 @@
       window.onload = function(e){
         window.invoice.renderInvoiceApplication(
           document.getElementById("root"), {
-            formatPatterns: {
-              'en': {
-                  'datePattern': 'MM/dd/yyyy',
-                  'dateTimePattern': 'MM/dd/yyyy HH:mm:ss',
-                  'integerPattern': '#,##0',
-                  'numberPattern': '#,##0.00',
-                  'numberDecimalSeparator': '.',
-                  'numberGroupingSeparator': ',',
-                  'numberGroupingSeparatorUse': true
-              },
-              'de': {
-                  'datePattern': "dd.MM.yyyy",
-                  'dateTimePattern': 'dd.MM.yyyy HH:mm:ss',
-                  'integerPattern': "#,##0",
-                  'numberPattern': "#,##0.00",
-                  'numberDecimalSeparator': ",",
-                  'numberGroupingSeparator': ".",
-                  'numberGroupingSeparatorUse': true
-              }
-            },
             userData: {{{json userData}}}
           }
         );

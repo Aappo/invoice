@@ -32,7 +32,7 @@
     "@opuscapita/react-dashboard": "^0.0.5",
     "@opuscapita/react-loaders": "^0.1.8",
     "@opuscapita/react-select": "^1.0.0-rc.5-oc.5",
-    "@opuscapita/react-navigation": "0.0.14",
+    "@opuscapita/react-navigation": "0.0.16",
     "@opuscapita/react-svg": "^2.0.0",
     "@opuscapita/i18n": "1.1.0",
     "@opuscapita/react-grid": "1.0.9",

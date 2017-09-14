@@ -16,7 +16,7 @@ const InvoiceApplication = (props) => (
 );
 
 InvoiceApplication.propTypes = {
-  formatPatterns: React.PropTypes.object.isRequired
+  formatPatterns: React.PropTypes.object
 };
 
 export default InvoiceApplication;

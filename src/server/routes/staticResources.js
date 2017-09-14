@@ -15,6 +15,7 @@ module.exports = function(app, db) {
     if (req.opuscapita.userData().customerid) {
       res.render('index', {
         userData: req.opuscapita.userData() || {},
+        useMinifiedReact: process.env.NODE_ENV !== 'development',
         helpers: { json: JSON.stringify }
       });
     } else {
