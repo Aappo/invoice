@@ -8,6 +8,7 @@ const purchaseInvoiceItemRoutes = require('./purchaseInvoiceItem');
 const purchaseInvoiceImport = require('./purchaseInvoiceImport');
 const invoiceAttachment = require('./invoiceAttachment');
 const approval = require('./approval');
+const matching = require('./matching');
 const staticResources = require('./staticResources');
 const epilogue = require('epilogue');
 const exphbs = require('express-handlebars');
@@ -39,6 +40,7 @@ module.exports.init = function(app, db, config) {
   staticResources(app, db);
   purchaseInvoiceImport(app, db);
   approval(app, epilogue, db);
+  matching(app, epilogue, db);
 
   // Always return a promise.
   return Promise.resolve();

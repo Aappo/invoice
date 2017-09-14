@@ -10,6 +10,7 @@ module.exports = function(app, db) {
     '/tasks/processed',
     '/list',
     '/import',
+    '/matching',
     '/tasks/*'
   ], function (req, res) {
     if (req.opuscapita.userData().customerid) {
