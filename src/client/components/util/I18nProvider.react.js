@@ -7,7 +7,11 @@ const DEFAULT_LOCALE = 'en';
 export default class I18nProvider extends Component {
 
   static propTypes = {
-    formatPatterns: PropTypes.object.isRequired
+    formatPatterns: PropTypes.object
+  };
+
+  static defaultProps = {
+    formatPatterns: require('./formatPatterns.json')
   };
 
   static contextTypes = {
