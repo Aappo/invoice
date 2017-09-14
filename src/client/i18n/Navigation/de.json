@@ -18,6 +18,7 @@
   "Navigation.userActions.services.label": "My Services",
   "Navigation.userActions.settings.label": "Settings",
   "Navigation.userActions.help.label": "Help",
+  "Navigation.userActions.logout.label": "Log out",
 
   "Navigation.applications.shop.label": "Shop",
   "Navigation.applications.rfq.label": "RfQ",

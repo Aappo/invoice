@@ -3,10 +3,7 @@ import _ from 'lodash';
 /**
  * Enumeration of locales that is supported by the app
  */
-const supportedLocales = [
-  'en',
-  'de'
-];
+const supportedLocales = require('./locales.json');
 
 /**
  * Enumeration of locale bundles

@@ -8,12 +8,23 @@ import {
 } from '@opuscapita/react-navigation';
 const gridIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/apps.svg');
 import InvoiceViews from '../../../../common/InvoiceViews';
+const supportedLocales = require('../../../i18n/locales.json');
 
 const userActions = (i18n) => [
-  'services',
-  'settings',
-  'help'
-].map(item => ({label: i18n.getMessage(`Navigation.userActions.${item}.label`)}));
+  {
+    label: i18n.getMessage(`Navigation.userActions.services.label`)
+  },
+  {
+    label: i18n.getMessage(`Navigation.userActions.settings.label`)
+  },
+  {
+    label: i18n.getMessage(`Navigation.userActions.help.label`)
+  },
+  {
+    label: i18n.getMessage(`Navigation.userActions.logout.label`),
+    onClick: () => window.location = '/auth/logout?backTo=/invoice'
+  }
+];
 
 const applications = (i18n) => [
   {
@@ -51,8 +62,9 @@ const renderUserMenuBottomElement = (userData, i18n, setLocale) => (
       <MenuSelect className="oc-menu-account__select-item-select" onChange={(e) => {
         setLocale(e.target.value)
       }}>
-        <option value="en">{i18n.getMessage('Navigation.userMenu.language.en.label')}</option>
-        <option value="de">{i18n.getMessage('Navigation.userMenu.language.de.label')}</option>
+        {supportedLocales.map(locale =>
+          <option key={locale} value={locale}>{i18n.getMessage(`Navigation.userMenu.language.${locale}.label`)}</option>
+        )}
       </MenuSelect>
     </div>
   </div>
@@ -64,11 +76,11 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
   const getTabIndex = () => {
     let index = 0;
 
-    if(InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.ALL_TASKS) {
+    if (InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.ALL_TASKS) {
       index = 1;
     }
 
-    if(InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.IMPORT) {
+    if (InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.IMPORT) {
       index = 2;
     }
     return index;
@@ -124,7 +136,6 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
                 userName={userData.id}
                 initials={`${userData.firstname[0]}${userData.lastname[0]}`}
                 avatarSrc={`/invoice/static/img/avatars/${userData.firstname}.${userData.lastname}.png`}
-                onLogout={() => window.location = '/auth/logout?backTo=/invoice'}
                 actions={userActions(i18n)}
                 bottomElement={renderUserMenuBottomElement(userData, i18n, setLocale)}
               />
