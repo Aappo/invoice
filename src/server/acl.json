@@ -90,6 +90,16 @@
         "type": "rest",
         "resourceId": "/tasks/[%w | %p]*",
         "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/matching",
+        "actions": ["view"]
+      },
+      {
+        "type": "rest",
+        "resourceId": "/api/matching/tasks",
+        "actions": ["view", "head"]
       }
     ]
   }

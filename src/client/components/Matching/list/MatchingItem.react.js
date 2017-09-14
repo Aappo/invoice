@@ -36,7 +36,7 @@ const MatchingItem = ({ invoice }, { i18n }) => (
       </span>
       <div className="divider"/>
       <span className="value">
-          {i18n.getMessage('TaskItem.matching')} {`(${invoice.matching.matched}/${invoice.matching.total})`}
+          {i18n.getMessage('TaskItem.matching')} {`(${invoice.matching.match}/${invoice.matching.total})`}
       </span>
     </div>
   </div>

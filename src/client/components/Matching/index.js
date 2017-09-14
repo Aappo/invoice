@@ -31,7 +31,7 @@ const MatchingView = () => {
       invoiceFetcher: (id) => fetchMatchingTask(id).then(withTenants).then(withMatchingInfo),
       listFetcher: () => fetchMatchingTasks({}).then(invoices =>
         Promise.all(invoices.map(invoice => withTenants(invoice).then(withMatchingInfo)))),
-      filter: invoice => invoice.matching.matched !== invoice.matching.total
+      filter: invoice => invoice.matching.match !== invoice.matching.total
     }
   ));
 };
