@@ -6,7 +6,7 @@ import {
   APPROVAL_STATUS,
   INVOICE_FLAG,
   SORTING_ORDER
-} from '../constants';
+} from '../MyTasks/constants';
 
 
 /**

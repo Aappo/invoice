@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import Select from '@opuscapita/react-select';
-import './SortInvoice.less';
+import './Sorting.less';
 
 const SortInvoice = ({ value, items, onChange}, {i18n}) => (
   <div className="oc-invoices-sort-invoice">

@@ -1,22 +1,11 @@
 import React, { PureComponent, PropTypes } from 'react';
 import Promise from 'bluebird'
-import _ from 'lodash';
 import { Button } from 'react-bootstrap';
+import SortInvoice from '../../common/Sorting/index';
+import List from '../../common/SelectList/index';
 import MatchingItem from './MatchingItem.react';
 import './MatchingList.less';
 
-// imports from MyTasks
-import UiHelpers from '../../MyTasks/helpers/UIHelpers.react';
-import SortInvoice from '../../MyTasks/sort-invoice/SortInvoice.react';
-import List from '../../MyTasks/select-list/List';
-import { SORTING_ORDER } from '../../MyTasks/constants';
-
-// TODO: Find other place to specify sorting rules
-const sortingRules = [
-  { field: 'dueDate', order: SORTING_ORDER.DESC },
-  { field: 'supplier.supplierName', order: SORTING_ORDER.ASC },
-  { field: 'grossAmount', order: SORTING_ORDER.ASC }
-];
 
 export default class MatchingList extends PureComponent {
 
@@ -49,11 +38,8 @@ export default class MatchingList extends PureComponent {
   }
 
   handleSortList(field) {
-    const order = _.find(sortingRules, { field: field }).order;
     if (this.state.sortedBy !== field) {
-      return this.props.onSort(UiHelpers.getInvoiceComparator(field, order)).then(sorted =>
-        Promise.resolve(this.setState({ sortedBy: field }))
-      )
+      return this.props.onSort(field).then(sorted => Promise.resolve(this.setState({ sortedBy: field })));
     } else {
       return Promise.resolve();
     }
@@ -65,11 +51,11 @@ export default class MatchingList extends PureComponent {
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
           <SortInvoice
             value={this.state.sortedBy}
-            items={
-              sortingRules.map(rule => {
-                return { value: rule.field, label: this.context.i18n.getMessage(`MyTaskList.label.${rule.field}`) };
-              })
-            }
+            items={[
+              { value: 'dueDate', label: this.context.i18n.getMessage(`MyTaskList.label.dueDate`) },
+              { value: 'supplier.supplierName', label: this.context.i18n.getMessage(`MyTaskList.label.supplier.supplierName`) },
+              { value: 'grossAmount', label: this.context.i18n.getMessage(`MyTaskList.label.grossAmount`) }
+            ]}
             onChange={({ value }) => this.handleSortList(value)}
           />
           <Button bsStyle="primary">

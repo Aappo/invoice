@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Route, Redirect, IndexRedirect } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 import Layout from '../containers/Layout.react';
 import { fetchApprovalTasks, fetchInvoiceReceipt } from '../components/MyTasks/data/fetchers';
 import InvoiceImport from '../containers/InvoiceImport.react';
@@ -9,6 +9,8 @@ import EmptyLayout from '../components/MyTasks/layouts/EmptyLayout.react';
 import Promise from 'bluebird';
 import InvoiceGrid from '../components/InvoiceGrid';
 import MatchingView from '../components/Matching';
+import InvoiceViews from '../../common/InvoiceViews';
+// import { TaskList, ProcessedList, TaskView } from '../components/MyTasks'; // Uncomment for updated versions
 
 /**
  * View displaying invoices which have available transitions for current user.
@@ -16,7 +18,10 @@ import MatchingView from '../components/Matching';
 const TaskList = (props) => {
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {assignedToMe: true}}) }
+      fetcher={ () => fetchApprovalTasks({
+        searchParams: { assignedToMe: true
+        }
+      })}
       filter={ invoice => invoice.transitions.length > 0 }
     />
   );
@@ -33,7 +38,11 @@ const ProcessedList = (props, { userData }) => {
   const filter = (invoice) => invoice.inspectedBy === userData.id || invoice.approvedBy === userData.id;
   return (
     <TaskListLayoutHandler
-      fetcher={ () => fetchApprovalTasks({searchParams: {processedByMe: true}}) }
+      fetcher={ () => fetchApprovalTasks({
+        searchParams: {
+          processedByMe: true
+        }
+      })}
       filter={filter}
     />
   )
@@ -62,13 +71,13 @@ TaskView.propTypes = {
 
 export default (props, context) => (
   <Route component={Layout} path="/invoice">
-    <IndexRedirect to="/invoice/taskList"/>
-    <Route path="/invoice/import" component={InvoiceImport}/>
-    <Route path="/invoice/allTaskList" component={InvoiceGrid}/>
-    <Route path="/invoice/taskList" component={TaskList}/>
-    <Route path="/invoice/matching" component={MatchingView}/>
-    <Route path="/invoice/task/:invoiceId" component={TaskView}/>
-    <Route path="/invoice/processed" component={ProcessedList}/>
-    <Route path="/invoice/notFound" component={EmptyLayout}/>
+    <IndexRedirect to={InvoiceViews.MY_TASKS.path}/>
+    <Route path={InvoiceViews.IMPORT.path} component={InvoiceImport}/>
+    <Route path={InvoiceViews.ALL_TASKS.path} component={InvoiceGrid}/>
+    <Route path={InvoiceViews.MY_TASKS.path} component={TaskList}/>
+    <Route path={InvoiceViews.PROCESSED_TASKS.path} component={ProcessedList}/>
+    <Route path={InvoiceViews.MATCHING.path} component={MatchingView}/>
+    <Route path={InvoiceViews.EMPTY_VIEW.path} component={EmptyLayout}/>
+    <Route path="/invoice/tasks/:invoiceId" component={TaskView}/>
   </Route>
 );

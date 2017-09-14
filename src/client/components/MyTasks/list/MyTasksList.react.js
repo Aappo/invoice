@@ -1,15 +1,15 @@
 import React, { PureComponent, PropTypes } from 'react';
 import { withRouter, routerShape } from 'react-router';
-import UiHelpers from '../helpers/UIHelpers.react';
-import SortInvoice from '../sort-invoice/SortInvoice.react';
-import List from '../select-list/List';
+import UiHelpers from '../../util/UIHelpers.react';
+import SortInvoice from '../../common/Sorting/index';
+import List from '../../common/SelectList/index';
 import TaskItem from './TaskItem.react';
 import './MyTasksList.less';
 import Promise from 'bluebird'
 import _ from 'lodash';
 import { VIEW_SORTING_RULES } from '../constants';
 import InvoiceViews from '../../../../common/InvoiceViews';
-
+import DisplayModeSwitcher from './DisplayModeSwitcher.react';
 
 class MyTasksList extends PureComponent {
 
@@ -76,6 +76,7 @@ class MyTasksList extends PureComponent {
     return (
       <div id="list-container" className="oc-invoices-my-tasks-list">
         <div id="list-header" className="oc-invoices-my-tasks-list-header">
+          <DisplayModeSwitcher/>
           <SortInvoice
             value={this.state.sortedBy}
             items={
@@ -99,7 +100,7 @@ class MyTasksList extends PureComponent {
                 this.setState({ selected });
               } else {
                 this.props.router.push(
-                  `/invoice/task/${this.props.list[selected].id}`);
+                  `/invoice/tasks/${this.props.list[selected].id}`);
               }
             }}
           />

@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import { fetchInvoiceAttachmentsInfo } from '../../../data/fetchers';
+import { fetchInvoiceAttachmentsInfo } from '../../../../MyTasks/data/fetchers';
 import InvoiceDetailsDataHandler from '../InvoiceDetailsDataHandler';
 import AttachmentDetailsView from './AttachmentDetailsView.react';
 

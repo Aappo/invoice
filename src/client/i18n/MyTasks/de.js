@@ -3,6 +3,7 @@ TaskItem.customerId = 'Gesellschaft-Zahler';
 TaskItem.supplierId = 'Lieferant';
 TaskItem.dueDate = 'Fälligkeitsdatum';
 TaskItem.invoiceNo = 'Inv.no.';
+TaskItem.purchaseOrderId = 'Order no.';
 TaskItem.matching = 'Matching approval';
 TaskItem.status = {
   inspectionRequired: 'Überprüfung erforderlich',

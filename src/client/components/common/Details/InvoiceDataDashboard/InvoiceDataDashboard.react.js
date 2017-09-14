@@ -1,8 +1,8 @@
 import React from 'react';
-import AttachmentDetails from './AttachmentDetails';
-import SupplierDetails from './SupplierDetails'
-import PriceDetails from './PriceDetails'
-import CommentHistory from './CommentHistory'
+import AttachmentDetails from './AttachmentDetails/index';
+import SupplierDetails from './SupplierDetails/index'
+import PriceDetails from './PriceDetails/index'
+import CommentHistory from './CommentHistory/index'
 import { Collapsible, Dashboard, DashboardWidget } from '@opuscapita/react-dashboard';
 
 const InvoiceDataDashboard = ({invoice}, context) => (

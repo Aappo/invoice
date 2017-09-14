@@ -17,6 +17,12 @@ const MatchingItem = ({ invoice }, { i18n }) => (
           {`${i18n.getMessage('TaskItem.invoiceNo')} ${invoice.invoiceNo}`}
         </span>
       </div>
+      <div className="divider"/>
+      <div className="list-item">
+        <span className="value">
+          {`${i18n.getMessage('TaskItem.purchaseOrderId')} ${invoice.purchaseOrderId}`}
+        </span>
+      </div>
     </div>
     <div className="list-item-wide-column">
       <div className="list-item">

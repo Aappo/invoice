@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import MyTasksList from '../list/MyTasksList.react';
 import Actions from '../actions/Actions.react';
-import Details from '../details/Details.react';
+import Details from '../../common/Details/index';
 import LoadingLayout from './LoadingLayout.react';
 
 import './WideLayout.less';

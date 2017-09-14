@@ -27,14 +27,15 @@ class InvoiceViews  {
   }
 
   static getByPath(path) {
-    return this.views.find(view => view.path === path);
+    return this.views.filter(view => view.path === path)[0];
   }
 }
 
 module.exports = InvoiceViews.init({
-  ALL_TASKS: '/invoice/allTaskList',
-  MY_TASKS: '/invoice/taskList',
-  PROCESSED_TASKS: '/invoice/processed',
-  MATCHING_TASKS: '/invoice/matching',
-  EMPTY_VIEW: '/invoice/notFound'
+  ALL_TASKS: '/invoice/list',
+  MY_TASKS: '/invoice/tasks/active',
+  PROCESSED_TASKS: '/invoice/tasks/processed',
+  EMPTY_VIEW: '/invoice/tasks/notFound',
+  IMPORT: '/invoice/import',
+  MATCHING: '/invoice/matching'
 });

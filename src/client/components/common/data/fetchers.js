@@ -1,32 +1,11 @@
 import request from 'superagent-bluebird-promise';
 import Promise from 'bluebird';
 
-// TODO: Leave only MyTasks related fetcher.
-
 export const fetchInvoiceReceipts = () => {
   return request.get(`/invoice/api/invoices`).set(
     'Accept', 'application/json'
   ).then((response) => Promise.resolve(response.body)
   ).catch((error) => { throw Error(error); })
-};
-
-export const fetchApprovalTasks = ({searchParams, offset = 0, count = 10000}) => {
-  return request.get('/invoice/api/approval/tasks').query(
-    searchParams
-  ).query({
-    offset: offset,
-    count: count
-  }).then((response) => Promise.resolve(response.body)).catch((error) => {
-    throw Error(error);
-  })
-};
-
-export const fetchTaskActions = (id) => {
-  return request.get(`/invoice/api/approval/events/${id}`).then((response) => {
-    return Promise.resolve(response.body)
-  }).catch((error) => {
-    throw Error(error);
-  })
 };
 
 export const fetchInvoiceReceipt = (id) => {

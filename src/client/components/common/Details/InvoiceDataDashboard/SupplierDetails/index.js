@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { fetchSupplierBankAccounts } from '../../../data/fetchers';
+import { fetchSupplierBankAccounts } from '../../../../MyTasks/data/fetchers';
 import Promise from 'bluebird';
 import SupplierDetailsView from './SupplierDetailsView.react'
 import InvoiceDetailsDataHandler from '../InvoiceDetailsDataHandler';

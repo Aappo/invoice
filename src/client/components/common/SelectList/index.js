@@ -25,7 +25,7 @@ import {
   values,
 } from 'lodash';
 
-import ListItem from './ListItem';
+import ListItem from './ListItem.react';
 import './List.less';
 
 const cx = require('classnames');

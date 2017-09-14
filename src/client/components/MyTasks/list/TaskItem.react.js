@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import UiHelpers from '../helpers/UIHelpers.react';
+import UiHelpers from '../../util/UIHelpers.react';
 import './TaskItem.less';
 import moment from 'moment';
 import { INVOICE_FLAG } from '../constants'

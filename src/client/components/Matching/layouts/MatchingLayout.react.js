@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
+import Details from '../../common/Details';
 import MatchingList from '../list/MatchingList.react';
 import './MatchingLayout.less';
 
 // imports from MyTasks
-import Details from '../../MyTasks/details/Details.react';
 import LoadingLayout from '../../MyTasks/layouts/LoadingLayout.react';
 
 

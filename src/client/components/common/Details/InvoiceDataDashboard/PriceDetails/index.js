@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import { fetchCurrency } from '../../../data/fetchers';
+import { fetchCurrency } from '../../../../MyTasks/data/fetchers';
 import InvoiceDetailsDataHandler from '../InvoiceDetailsDataHandler';
 import PriceDetailsView from './PriceDetailsView.react';
 

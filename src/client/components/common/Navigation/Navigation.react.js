@@ -1,85 +1,112 @@
 import React, { PropTypes } from 'react';
-import { Menu, MenuIcon, theme } from '@opuscapita/react-navigation';
+import {
+  Menu,
+  MenuIcon,
+  MenuAccount,
+  MenuSelect,
+  MenuDropdownGrid
+} from '@opuscapita/react-navigation';
 const gridIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/apps.svg');
-const personIcon = require('!!raw-loader!@opuscapita/svg-icons/lib/person.svg');
-import { Link } from 'react-router';
-import messages from './i18n';
+import InvoiceViews from '../../../../common/InvoiceViews';
 
-const personalDataStyle = {
-  padding: '6px 12px',
-  whiteSpace: 'nowrap'
-};
+const userActions = (i18n) => [
+  'services',
+  'settings',
+  'help'
+].map(item => ({label: i18n.getMessage(`Navigation.userActions.${item}.label`)}));
 
-const personalDataItemsStyle = {
-  listStyle: 'none',
-  padding: '0',
-  textAlign: 'center'
-};
+const applications = (i18n) => [
+  {
+    label: i18n.getMessage(`Navigation.applications.shop.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/local_mall.svg')
+  },
+  {
+    label: i18n.getMessage(`Navigation.applications.rfq.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/monetization_on.svg')
+  },
+  {
+    label: i18n.getMessage(`Navigation.applications.request.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/room_service.svg')
+  },
+  {
+    label: i18n.getMessage(`Navigation.applications.order.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/insert_drive_file.svg')
+  },
+  {
+    label: i18n.getMessage(`Navigation.applications.invoice.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/receipt.svg')
+  },
+  {
+    label: i18n.getMessage(`Navigation.applications.analyze.label`),
+    svg: require('!!raw-loader!@opuscapita/svg-icons/lib/trending_up.svg')
+  }
+];
+
+const renderUserMenuBottomElement = (userData, i18n, setLocale) => (
+  <div>
+    <div className="oc-menu-account__select-item">
+      <span className="oc-menu-account__select-item-label">
+        {i18n.getMessage('Navigation.userMenu.language.label')}
+      </span>
+      <MenuSelect className="oc-menu-account__select-item-select" onChange={(e) => {
+        setLocale(e.target.value)
+      }}>
+        <option value="en">{i18n.getMessage('Navigation.userMenu.language.en.label')}</option>
+        <option value="de">{i18n.getMessage('Navigation.userMenu.language.de.label')}</option>
+      </MenuSelect>
+    </div>
+  </div>
+);
 
 const logoUrl = '/invoice/static/img/oc-logo-white.svg';
 
 const Navigation = (props, { i18n, userData, setLocale, router }) => {
-  i18n.register('Navigation', messages);
-
   const getTabIndex = () => {
     let index = 0;
 
-    if(router.location.pathname.indexOf('allTaskList') !== -1) {
+    if(InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.ALL_TASKS) {
       index = 1;
     }
 
-    if(router.location.pathname.indexOf('import') !== -1) {
+    if(InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.IMPORT) {
       index = 2;
     }
 
-    if(router.location.pathname.indexOf('matching') !== -1) {
+    if(InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.MATCHING) {
       index = 4;
     }
-
     return index;
   };
 
-  return(
+  return (
     <div id="top-navigation" style={{ zIndex: 9999, position: 'relative' }}>
       <Menu
         appName={i18n.getMessage('Navigation.applicationName')}
         activeItem={getTabIndex()}
         alwaysAtTop={false}
-        theme={theme.opuscapitaDark}
         logoSrc={logoUrl}
         logoTitle="OpusCapita"
         logoHref="http://opuscapita.com"
+        className="oc-menu--opuscapita-dark-theme"
         navigationItems={
           [
             {
-              children: i18n.getMessage('Navigation.myInvoices.header'),
-              subItems: [
-                {
-                  children: (
-                    <Link to="/invoice/taskList">
-                      {i18n.getMessage('Navigation.myInvoices.myTaskList')}
-                    </Link>
-                  )
-                },
-                {
-                  children: (
-                    <Link to="/invoice/processed">
-                      {i18n.getMessage('Navigation.myInvoices.processed')}
-                    </Link>
-                  )
-                }
-              ]
+              children: (
+                <div onClick={() => router.push(InvoiceViews.MY_TASKS.path)}>
+                  {i18n.getMessage('Navigation.myInvoices.header')}
+                </div>
+              )
             },
             {
               children: (
-                <div onClick={() => router.push('/invoice/allTaskList')}>
+                <div onClick={() => router.push(InvoiceViews.ALL_TASKS.path)}>
                   {i18n.getMessage('Navigation.allInvoices.header')}
                 </div>
               )
             },
             {
               children: (
-                <div onClick={() => router.push('/invoice/import')}>
+                <div onClick={() => router.push(InvoiceViews.IMPORT.path)}>
                   {i18n.getMessage('Navigation.import.header')}
                 </div>
               )
@@ -96,29 +123,21 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
           ]}
         iconsBarItems={
           [
-            <MenuIcon svg={gridIcon} title={i18n.getMessage('Navigation.icons.search.label')}/>,
+            <MenuIcon svg={gridIcon} title={i18n.getMessage('Navigation.icons.search.label')} hideDropdownArrow={true}>
+              <MenuDropdownGrid activeItem={4} items={applications(i18n)}/>
+            </MenuIcon>,
 
-            <MenuIcon svg={personIcon} title={i18n.getMessage('Navigation.icons.user.label')}>
-              <div style={personalDataStyle}>
-                <h5>{i18n.getMessage('Navigation.userMenu.language.label')}</h5>
-                <ul style={personalDataItemsStyle}>
-                  <li>
-                    <a href="#" onClick={() => setLocale('en')}>
-                      {i18n.getMessage('Navigation.userMenu.language.en.label')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" onClick={() => setLocale('de')}>
-                      {i18n.getMessage('Navigation.userMenu.language.de.label')}
-                    </a>
-                  </li>
-                  <li style={{borderTop: '1px solid #e5e5e5'}}>
-                    <a href="/auth/logout">
-                      {i18n.getMessage('Navigation.userMenu.logout')}
-                    </a>
-                  </li>
-                </ul>
-              </div>
+            <MenuIcon title="Account settings" label={`${userData.firstname}`} hideDropdownArrow={true}>
+              <MenuAccount
+                firstName={userData.firstname}
+                lastName={userData.lastname}
+                userName={userData.id}
+                initials={`${userData.firstname[0]}${userData.lastname[0]}`}
+                avatarSrc={`/invoice/static/img/avatars/${userData.firstname}.${userData.lastname}.png`}
+                onLogout={() => window.location = '/auth/logout?backTo=/invoice'}
+                actions={userActions(i18n)}
+                bottomElement={renderUserMenuBottomElement(userData, i18n, setLocale)}
+              />
             </MenuIcon>
           ]
         }

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Promise from 'bluebird';
 import _ from 'lodash';
 import InvoiceViews from '../../../../common/InvoiceViews';
+import UIHelpers from '../../util/UIHelpers.react';
 
 /**
  * Generic configurable HOC data handler providing common invoice operation.
@@ -20,7 +21,11 @@ export default function withDataHandler(WrappedComponent, config) {
   const defaultConfig = {
     withDetails: invoice => Promise.resolve(invoice),
     filter: invoice => !!invoice,
-    sorting: {}
+    sorting: {
+      'dueDate': UIHelpers.getInvoiceComparator('dueDate'),
+      'supplier.supplierName': UIHelpers.getInvoiceComparator('supplier.supplierName'),
+      'grossAmount': UIHelpers.getInvoiceComparator('grossAmount')
+    }
   };
 
   const {
@@ -97,7 +102,7 @@ export default function withDataHandler(WrappedComponent, config) {
     }
 
     /**
-     * id - is the invoice (or task key to update and the updater -
+     * id - is the invoice to update id and the updater -
      * is the function to call for invoice, invoice with 'id' will be
      * passed to it as an argument)
      * @param id
@@ -135,13 +140,18 @@ export default function withDataHandler(WrappedComponent, config) {
     }
 
     /**
-     * Sorts list with by specified field. Returns promise notifying if the list has been sorted.
+     * Sorts list by specified field. Returns promise notifying if the list has been sorted.
      *
      * @param field
      */
     sortList(field) {
+      let comparator = this.props.sorting[field];
+      if (!comparator) {
+        console.warn(`Comparator for a field '${field}' is not defined. Using default.`);
+        comparator = UIHelpers.getInvoiceComparator(field);
+      }
       return this.state.list ? new Promise(resolve => {
-        this.setState({ list: this.state.list.slice(0).sort(sorting[field]) }, () => resolve(true))
+        this.setState({ list: this.state.list.slice(0).sort(comparator) }, () => resolve(true))
       }) : Promise.resolve(false)
     }
 

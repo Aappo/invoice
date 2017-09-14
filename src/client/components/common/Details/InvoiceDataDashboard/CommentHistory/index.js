@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from 'react';
-import { fetchInvoiceComments } from '../../../data/fetchers';
+import { fetchInvoiceComments } from '../../../../MyTasks/data/fetchers';
 import InvoiceDetailsDataHandler from '../InvoiceDetailsDataHandler';
 import CommentHistoryView from './CommentHistoryView.react';
 

@@ -3,6 +3,7 @@ TaskItem.customerId = 'Payer Company';
 TaskItem.supplierId = 'Supplier';
 TaskItem.dueDate = 'Due Date';
 TaskItem.invoiceNo = 'Inv.no.';
+TaskItem.purchaseOrderId = 'Order no.';
 TaskItem.matching = 'Matching approval';
 TaskItem.status = {
   inspectionRequired: 'Review required',

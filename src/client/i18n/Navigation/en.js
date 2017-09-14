@@ -13,7 +13,18 @@ let Navigation = {
   'userMenu.language.de.label': 'German',
   'userMenu.logout': 'Logout',
   'icons.search.label': 'Search',
-  'icons.user.label': 'Account Settings'
+  'icons.user.label': 'Account Settings',
+
+  'userActions.services.label': 'My Services',
+  'userActions.settings.label': 'Settings',
+  'userActions.help.label': 'Help',
+
+  'applications.shop.label': 'Shop',
+  'applications.rfq.label': 'RfQ',
+  'applications.request.label': 'Request',
+  'applications.order.label': 'Order',
+  'applications.invoice.label': 'Invoice',
+  'applications.analyze.label': 'Analyze'
 };
 
 export default {
