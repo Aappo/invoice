@@ -29,6 +29,10 @@ class InvoiceViews  {
   static getByPath(path) {
     return this.views.filter(view => view.path === path)[0];
   }
+
+  toString() {
+    return this.name;
+  }
 }
 
 module.exports = InvoiceViews.init({
@@ -36,5 +40,6 @@ module.exports = InvoiceViews.init({
   MY_TASKS: '/invoice/tasks/active',
   PROCESSED_TASKS: '/invoice/tasks/processed',
   EMPTY_VIEW: '/invoice/tasks/notFound',
-  IMPORT: '/invoice/import'
+  IMPORT: '/invoice/import',
+  MATCHING: '/invoice/matching'
 });

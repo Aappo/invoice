@@ -2,6 +2,9 @@
   "TaskItem.customerId": "Gesellschaft-Zahler",
   "TaskItem.supplierId": "Lieferant",
   "TaskItem.dueDate": "Fälligkeitsdatum",
+  "TaskItem.invoiceNo": "Inv. No.",
+  "TaskItem.purchaseOrderId": "Order No.",
+  "TaskItem.matching": "Matching approval",
   "TaskItem.status.inspectionRequired": "Überprüfung erforderlich",
   "TaskItem.status.approvalRequired": "Genehmigung erforderlich",
   "TaskItem.status.inspClrRequired": "Klärung erforderlich",
@@ -13,6 +16,7 @@
   "MyTaskList.label.dueDate": "Due date",
   "MyTaskList.label.supplier.supplierName": "Supplier",
   "MyTaskList.label.grossAmount": "Gross amount",
+  "MyTaskList.label.matching": "Matching",
 
   "Action.event.inspect": "Prüfen",
   "Action.event.sendToClarification": "Zur Klärung weiterleiten",

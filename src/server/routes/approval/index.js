@@ -30,8 +30,14 @@ module.exports = (app, epilogue, db) => {
           where: customerId ? { customerId } : {}
         }
       );
-
-      return db.models.PurchaseInvoice.findAll(query);
+      // TODO: Try to combine it into a single query
+      return db.models.PurchaseInvoice.findAll(query).filter(task =>
+        db.models.PurchaseInvoiceItem.count(
+          {
+            where: { 'purchaseInvoiceId': { $eq: task.id }, 'purchaseOrderId': { $ne: null } }
+          }
+        ).then(matchedItems => matchedItems === 0)
+      )
     },
     update: invoice => {
       return invoice.save();

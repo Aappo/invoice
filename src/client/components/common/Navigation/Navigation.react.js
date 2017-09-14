@@ -83,6 +83,10 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
     if (InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.IMPORT) {
       index = 2;
     }
+
+    if (InvoiceViews.getByPath(router.location.pathname) === InvoiceViews.MATCHING) {
+      index = 4;
+    }
     return index;
   };
 
@@ -120,7 +124,13 @@ const Navigation = (props, { i18n, userData, setLocale, router }) => {
               )
             },
             { children: i18n.getMessage('Navigation.workflow.header') },
-            { children: i18n.getMessage('Navigation.matching.header') },
+            {
+              children: (
+                <div onClick={() => router.push(InvoiceViews.MATCHING.path)}>
+                  {i18n.getMessage('Navigation.matching.header')}
+                </div>
+              )
+            },
             { children: i18n.getMessage('Navigation.contracts.header') }
           ]}
         iconsBarItems={
