@@ -1,0 +1,29 @@
+{
+  "Navigation.applicationName": "Invoices",
+  "Navigation.myInvoices.header": "My Invoices",
+  "Navigation.import.header": "Import Invoices",
+  "Navigation.allInvoices.header": "All invoices",
+  "Navigation.workflow.header": "Workflow",
+  "Navigation.matching.header": "Matching",
+  "Navigation.contracts.header": "Contracts",
+  "Navigation.myInvoices.myTaskList": "My Tasks",
+  "Navigation.myInvoices.processed": "Processed",
+  "Navigation.userMenu.language.label": "Language",
+  "Navigation.userMenu.language.en.label": "English",
+  "Navigation.userMenu.language.de.label": "German",
+  "Navigation.userMenu.logout": "Logout",
+  "Navigation.icons.search.label": "Search",
+  "Navigation.icons.user.label": "Account Settings",
+
+  "Navigation.userActions.services.label": "My Services",
+  "Navigation.userActions.settings.label": "Settings",
+  "Navigation.userActions.help.label": "Help",
+  "Navigation.userActions.logout.label": "Log out",
+
+  "Navigation.applications.shop.label": "Shop",
+  "Navigation.applications.rfq.label": "RfQ",
+  "Navigation.applications.request.label": "Request",
+  "Navigation.applications.order.label": "Order",
+  "Navigation.applications.invoice.label": "Invoice",
+  "Navigation.applications.analyze.label": "Analyze"
+}
