@@ -1,12 +1,19 @@
 
 .oc-invoices-my-tasks-list {
-  //display: flex;
+  display: flex;
   flex-direction: column;
   background-color: white;
   height: 100%;
-  //flex: 1;
+  flex: 1;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+
+  .oc-invoices-my-tasks-list-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    padding-left: 5px;
+  }
 
   .oc-card {
     border: solid 1px;
@@ -32,12 +39,5 @@
 
   .oc-task-link--active {
     border-bottom: 4px solid #EC6608;
-  }
-
-  .oc-invoices-my-tasks-list-header {
-    display: flex;
-    flex: 1 0 auto;
-    align-items: center;
-    padding-left: 5px;
   }
 }

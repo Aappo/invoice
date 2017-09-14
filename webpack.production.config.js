@@ -1,5 +1,8 @@
 let path = require('path');
 let webpack = require('webpack');
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
+const flexbugs = require('postcss-flexbugs-fixes');
 
 module.exports = {
   entry: [
@@ -81,6 +84,12 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [flexbugs, precss, autoprefixer],
+            },
+          },
           "less-loader"
         ]
       },

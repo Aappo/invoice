@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { INVOICE_GRID } from './constants';
 import { loadInvoiceData } from './actions';
 
+import './InvoiceGrid.less';
+
 const mapDispatchToProps = {
   loadInvoiceData: loadInvoiceData
 };
@@ -18,7 +20,9 @@ const InvoiceGrid = ({ loadInvoiceData }, { i18n }) => {
   loadInvoiceData();
 
   return (
-    <Datagrid id={INVOICE_GRID} columns={columns(i18n)}/>
+    <div id="all-invoices-grid">
+      <Datagrid id={INVOICE_GRID} columns={columns(i18n)}/>
+    </div>
   );
 };
 
