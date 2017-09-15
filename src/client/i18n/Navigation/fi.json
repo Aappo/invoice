@@ -1,0 +1,29 @@
+{
+  "Navigation.applicationName": "Invoices",
+  "Navigation.myInvoices.header": "Omat laskut",
+  "Navigation.import.header": "Tuo laskuja",
+  "Navigation.allInvoices.header": "Kaikki laskut",
+  "Navigation.workflow.header": "Työnkulku",
+  "Navigation.matching.header": "Täsmäytys",
+  "Navigation.contracts.header": "Sopimukset",
+  "Navigation.myInvoices.myTaskList": "Omat tehtävät",
+  "Navigation.myInvoices.processed": "Käsitelty",
+  "Navigation.userMenu.language.label": "Kieli",
+  "Navigation.userMenu.language.en.label": "Englanti",
+  "Navigation.userMenu.language.de.label": "Saksa",
+  "Navigation.userMenu.logout": "Kirjaudu ulos",
+  "Navigation.icons.search.label": "Haku",
+  "Navigation.icons.user.label": "Käyttäjätilin asetukset",
+
+  "Navigation.userActions.services.label": "Omat palvelut",
+  "Navigation.userActions.settings.label": "Asetukset",
+  "Navigation.userActions.help.label": "Ohjeet",
+  "Navigation.userActions.logout.label": "Kirjaudu ulos",
+
+  "Navigation.applications.shop.label": "Kauppa",
+  "Navigation.applications.rfq.label": "Tarjouspyyntö",
+  "Navigation.applications.request.label": "Pyyntö",
+  "Navigation.applications.order.label": "Tilaus",
+  "Navigation.applications.invoice.label": "Laskut",
+  "Navigation.applications.analyze.label": "Analysointi"
+}
