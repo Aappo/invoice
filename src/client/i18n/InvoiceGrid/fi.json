@@ -1,0 +1,9 @@
+{
+  "InvoiceGrid.customerName.label": "Yrityksen nimi",
+  "InvoiceGrid.supplierName.label": "Toimittajan nimi",
+  "InvoiceGrid.dueDate.label": "Eräpäivä",
+  "InvoiceGrid.grossAmount.label": "Bruttosumma",
+  "InvoiceGrid.currency.label": "Valuutta",
+  "InvoiceGrid.invoiceNumber.label": "Laskun numero",
+  "InvoiceGrid.orderNumber.label": "Tilausnumero"
+}
