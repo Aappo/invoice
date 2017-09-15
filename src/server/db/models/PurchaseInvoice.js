@@ -286,6 +286,16 @@ module.exports.init = function(db, config) {
         field: 'ApprovedBy',
         type: Sequelize.STRING(255),
         allowNull: true
+      },
+      /**
+       * Unique Identifier of the Purchase Order linked to PurchaseInvoice
+       * Used for matching functionality
+       * invoice issue #154
+       */
+      purchaseOrderId: {
+        field: 'PurchaseOrderId',
+        type: Sequelize.STRING(50),
+        allowNull: true
       }
     },
     {

@@ -250,6 +250,15 @@ module.exports = function(queryInterface) {
     ApprovedBy: {
       type: Sequelize.STRING(255),
       allowNull: true
+    },
+    /**
+     * Unique Identifier of the Purchase Order linked to PurchaseInvoice
+     * Used for matching functionality
+     * invoice issue #154
+     */
+    PurchaseOrderId: {
+      type: Sequelize.STRING(50),
+      allowNull: true
     }
   }).then(() => {
     return Promise.all([
